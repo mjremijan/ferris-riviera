@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+    <properties>
+        <title>Ferris Riviera</title>
+        <author email="mjremijan@yahoo.com">Michael Remijan</author>
+    </properties>
+
+    <!-- Optional HEAD element, which is copied as is into the XHTML <head> element
+<head>
+     <meta ... />
+</head>
+    -->
+
+    <body>
+        <section name="">
+            <div id="twStart">
+                <h2>Start Using Riviera</h2>
+                <span class="nav-header">A database versioning source code management tool</span>
+                <a href="${project.scm.url}/releases/download/${project.build.finalName}/${project.build.finalName}-${ferrisWindowsAssemblyId}.zip">
+                    <img src="images/windows-icon.png" />Download for Windows
+                </a>                
+		&nbsp; &nbsp; &nbsp; &nbsp;
+                <a href="${project.scm.url}/releases/download/${project.build.finalName}/${project.build.finalName}-${ferrisLinuxAssemblyId}.tar.gz">
+                    <img src="images/linux-icon.png" />Download for Linux
+                </a>
+                &nbsp; &nbsp; &nbsp; &nbsp;
+                <a href="${project.scm.url}">
+                    <img src="images/octocat-icon.png" />Visit on GitHub
+                </a>
+            </div>
+        </section>
+		
+        <section name="About">
+            <p>
+                Riviera is a database versioning source code management tool 
+                based on the Ode to Code Versioning Databases technique 
+                by K. Scott Allen.              
+            </p>            
+        </section>
+    </body>
+</document>
