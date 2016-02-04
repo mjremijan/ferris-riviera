@@ -99,7 +99,28 @@
 	
     <build>
         <resources>
+            <!--
+             | Include everythin but the properties files
+            -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>*.properties</exclude>
+                </excludes>
+            </resource>
+            <!--
+             | Make sure the properties files get filtered for variables
+            -->            
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+            </resource>
         </resources>
+        
         <plugins>
             <!--
              | Configure how the JAR file(s) are build

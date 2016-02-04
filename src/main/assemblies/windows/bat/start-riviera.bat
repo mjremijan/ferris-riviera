@@ -19,11 +19,5 @@ Echo --------
 Echo "%JAVA_BIN%"
 Echo. 
 
-Echo JAVA VERSION
-Echo ------------
-%JAVA_BIN% -version
-Echo.
-
-Echo START RIVIERA
-Echo -------------
+REM START RIVIERA
 %JAVA_BIN% -jar %PD%\lib\${project.build.finalName}-windows.jar

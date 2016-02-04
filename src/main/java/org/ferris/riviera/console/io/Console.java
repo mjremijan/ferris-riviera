@@ -14,6 +14,16 @@ public class Console {
     protected PrintWriter writer;
     
     /**
+     * Print the string as title
+     * 
+     * @param str The string to print
+     */
+    public void title(String str) {
+        writer.printf("%s%n%n", str);
+        writer.flush();
+    }
+    
+    /**
      * Print the string as heading1
      * 
      * @param str The string to print

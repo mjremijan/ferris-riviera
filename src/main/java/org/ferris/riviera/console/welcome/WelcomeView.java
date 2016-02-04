@@ -19,13 +19,18 @@ public class WelcomeView {
     protected Console console;
 
     @Inject
-    @Key("WelcomePage.Heading")
-    protected String heading;
+    @Key("WelcomePage.Title")
+    protected String title;
+    
+    @Inject
+    @Key("WelcomePage.Version")
+    protected String version;
 
     /**
      * Show the user the welcome page
      */
     public void view() {
-        console.h1(heading);
+        console.title(title);
+        console.p(version);
     }
 }
