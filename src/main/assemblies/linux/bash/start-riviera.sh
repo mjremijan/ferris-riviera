@@ -19,11 +19,5 @@ echo "--------"
 echo "${JAVA_BIN}"
 echo $'\n'
 
-echo "JAVA VERSION"
-echo "------------"
-${JAVA_BIN} -version
-echo $'\n'
-
-echo "START RIVIERA"
-echo "-------------"
+# START RIVIERA
 ${JAVA_BIN} -jar ${PD}/lib/${project.build.finalName}-linux.jar "$@"
