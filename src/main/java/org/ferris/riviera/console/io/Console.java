@@ -19,7 +19,11 @@ public class Console {
      * @param str The string to print
      */
     public void title(String str) {
-        writer.printf("%s%n%n", str);
+        writer.println("************************************************************");
+        writer.println("*                                                          *");
+        writer.printf("* %-57s*%n", str);
+        writer.println("*                                                          *");
+        writer.println("************************************************************");       
         writer.flush();
     }
     
@@ -29,7 +33,12 @@ public class Console {
      * @param str The string to print
      */
     public void h1(String str) {
-        writer.printf("[%s]%n%n", str);
+        writer.printf("%n%s%n", str);
+        for (int i=0; i<str.length(); i++) {
+            writer.print("-");
+        }
+        writer.println();
+        writer.println();
         writer.flush();
     }
     
@@ -39,9 +48,22 @@ public class Console {
      * @param str The string to print
      */
     public void p(String str) {
-        writer.printf("%s%n", str);
+        p(str, null);
+    }
+    
+    
+    /**
+     * Formats the string with the given args then
+     * print the string as a paragraph
+     * 
+     * @param str The format of the string to print
+     * @param args The arguemnts for the format
+     */
+    public void p(String format, String...args) {
+        writer.printf("%s%n", String.format(format, args));
         writer.flush();
     }
+    
     
     /**
      * Print the throwable stack trace as a paragraph

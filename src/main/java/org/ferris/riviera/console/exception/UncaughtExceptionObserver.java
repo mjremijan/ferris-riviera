@@ -8,12 +8,12 @@ import org.apache.log4j.Logger;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Abnormal;
 import org.ferris.riviera.console.lang.ThreadTool;
-import org.ferris.riviera.console.main.StartupEvent;
-import static org.ferris.riviera.console.main.StartupEvent.EXCEPTION;
+import org.ferris.riviera.console.welcome.WelcomeEvent;
+import static org.ferris.riviera.console.welcome.WelcomeEvent.EXCEPTION;
 import org.jboss.weld.experimental.Priority;
 
 /**
- * This observer is configured during application {@link StartupEvent}
+ * This observer is configured during application {@link WelcomeEvent}
  * to catch any uncaught exceptions, display the stack trace, then exit
  * the application abnormally.
  * 
@@ -34,7 +34,7 @@ public class UncaughtExceptionObserver implements UncaughtExceptionHandler {
     protected Event<ExitEvent> exitEvent;
 
     public void observes(
-        @Observes @Priority(EXCEPTION) StartupEvent event
+        @Observes @Priority(EXCEPTION) WelcomeEvent event
     ) {
         log.info("UncaughtExceptionObserver startup configuration observer");
         threadTool.setDefaultUncaughtExceptionHandler(this);

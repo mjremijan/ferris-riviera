@@ -18,9 +18,6 @@
                 <goal>clean</goal>
                 <goal>verify</goal>
             </goals>
-            <properties>
-                <skipTests>true</skipTests>
-            </properties>
             <activatedProfiles>
                 <activatedProfile>zip-assemblies</activatedProfile>
                 <activatedProfile>windows-jre-unzip</activatedProfile>

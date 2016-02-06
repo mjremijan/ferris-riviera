@@ -6,6 +6,9 @@ import javax.enterprise.event.Event;
 import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
+import org.ferris.riviera.console.exit.ExitEvent;
+import org.ferris.riviera.console.exit.qualifier.Normal;
+import org.ferris.riviera.console.welcome.WelcomeEvent;
 
 /**
  * Entry point for the application...this is where it all starts.
@@ -24,14 +27,19 @@ public class Main {
     @Inject
     protected Logger log;
 
-    @Inject
-    protected Event<StartupEvent> startupEvent;
+    @Inject 
+    protected Event<WelcomeEvent> startupEvent;
+    
+    @Inject @Normal
+    protected Event<ExitEvent> exitEvent;
     
     protected void main(List<String> args) {
         log.info("Riviera application has started");
 
         log.debug("Firing StartupEvent"); 
-        startupEvent.fire(new StartupEvent());
+        startupEvent.fire(new WelcomeEvent());
         
+        log.debug("Firing normal ExitEvent"); 
+        exitEvent.fire(new ExitEvent());
     }
 }
