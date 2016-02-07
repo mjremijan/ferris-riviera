@@ -60,7 +60,7 @@ public class Console {
      * @param args The arguemnts for the format
      */
     public void p(String format, String...args) {
-        writer.printf("%s%n", String.format(format, args));
+        writer.printf("   %s%n", String.format(format, args));
         writer.flush();
     }
     
