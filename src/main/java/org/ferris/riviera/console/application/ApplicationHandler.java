@@ -60,7 +60,7 @@ public class ApplicationHandler {
         application.setUrl(attributes.getValue("Implementation-URL"));           
         application.setBuildJdk(attributes.getValue("Build-Jdk"));
         application.setCreatedBy(attributes.getValue("Created-By"));
-        
+        application.setCreatedOn(attributes.getValue("Build-Time"));        
         application.setVendorId(attributes.getValue("Implementation-Vendor-Id"));        
         application.setVendor(attributes.getValue("Implementation-Vendor"));        
         

@@ -3,6 +3,7 @@ package org.ferris.riviera.console.welcome;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.application.Application;
+import org.ferris.riviera.console.application.ApplicationDirectory;
 import org.ferris.riviera.console.application.ApplicationHandler;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
@@ -53,12 +54,23 @@ public class WelcomePage {
     protected String urlFormat;
     
     @Inject
-    @Key("WelcomePage.MavenVersion")
-    protected String mavenVersion;
+    @Key("WelcomePage.MavenVersionFormat")
+    protected String mavenVersionFormat;
     
     @Inject
-    @Key("WelcomePage.JdkVersion")
-    protected String jdkVersion;
+    @Key("WelcomePage.JdkVersionFormat")
+    protected String jdkVersionFormat;
+    
+    @Inject
+    @Key("WelcomePage.DirectoryFormat")
+    protected String directoryFormat;
+    
+    @Inject
+    @Key("WelcomePage.TimestampFormat")
+    protected String timestampFormat;
+    
+    @Inject
+    protected ApplicationDirectory applicationDirectory;
     
     @Inject
     protected ApplicationHandler applicationHandler;
@@ -80,9 +92,10 @@ public class WelcomePage {
         console.p(nameFormat,application.getTitle());
         console.p(versionFormat,application.getVersion());
         console.p(urlFormat,application.getUrl());
-        console.p(mavenVersion,application.getCreatedBy());
-        console.p(jdkVersion,application.getBuildJdk());
-        
+        console.p(mavenVersionFormat,application.getCreatedBy());
+        console.p(timestampFormat, application.getCreatedOn());
+        console.p(jdkVersionFormat,application.getBuildJdk());
+        console.p(directoryFormat, applicationDirectory.getAbsolutePath());
 
     }
 

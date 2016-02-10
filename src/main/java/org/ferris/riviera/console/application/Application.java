@@ -76,4 +76,15 @@ public class Application {
     }
     
     
+    public String createdOn;
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+    
+    
 }
