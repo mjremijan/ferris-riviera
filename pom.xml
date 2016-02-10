@@ -5,7 +5,7 @@
 
 	<groupId>org.ferris</groupId>    
 	<artifactId>ferris-riviera</artifactId>
-	<version>2.0.0.0-SNAPSHOT</version>
+	<version>1.0.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<organization>
@@ -119,7 +119,8 @@
 				<version>1.7</version>
 				<executions>
 					<execution>
-						<phase>generate-resources</phase>
+                                                <id>filter-properties-execution</id>
+						<phase>validate</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>

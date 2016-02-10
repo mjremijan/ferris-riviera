@@ -3,8 +3,8 @@ package org.ferris.riviera.console.welcome;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
-import static org.ferris.riviera.console.welcome.WelcomeEvent.WELCOME;
 import org.jboss.weld.experimental.Priority;
+import static org.ferris.riviera.console.welcome.WelcomeEvent.VIEW;
 
 /**
  * Shows the application welcome page to the user.
@@ -20,7 +20,7 @@ public class WelcomeObserver {
     protected WelcomePage page;
 
     public void observes(
-        @Observes @Priority(WELCOME) WelcomeEvent event
+        @Observes @Priority(VIEW) WelcomeEvent event
     ) {
         log.info("WelcomeObserver startup configuration observer");
         page.view();

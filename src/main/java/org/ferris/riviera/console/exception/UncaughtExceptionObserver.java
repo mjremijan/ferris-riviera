@@ -8,8 +8,9 @@ import org.apache.log4j.Logger;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Abnormal;
 import org.ferris.riviera.console.lang.ThreadTool;
+import org.ferris.riviera.console.main.MainEvent;
+import static org.ferris.riviera.console.main.MainEvent.EXCEPTION;
 import org.ferris.riviera.console.welcome.WelcomeEvent;
-import static org.ferris.riviera.console.welcome.WelcomeEvent.EXCEPTION;
 import org.jboss.weld.experimental.Priority;
 
 /**
@@ -34,7 +35,7 @@ public class UncaughtExceptionObserver implements UncaughtExceptionHandler {
     protected Event<ExitEvent> exitEvent;
 
     public void observes(
-        @Observes @Priority(EXCEPTION) WelcomeEvent event
+        @Observes @Priority(EXCEPTION) MainEvent event
     ) {
         log.info("UncaughtExceptionObserver startup configuration observer");
         threadTool.setDefaultUncaughtExceptionHandler(this);

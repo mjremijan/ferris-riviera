@@ -6,6 +6,7 @@ import javax.enterprise.event.Event;
 import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
+import org.ferris.riviera.console.driver.DriverEvent;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
 import org.ferris.riviera.console.welcome.WelcomeEvent;
@@ -28,16 +29,28 @@ public class Main {
     protected Logger log;
 
     @Inject 
-    protected Event<WelcomeEvent> startupEvent;
+    protected Event<MainEvent> mainEvent;
+    
+    @Inject 
+    protected Event<WelcomeEvent> welcomeEvent;
+    
+    @Inject 
+    protected Event<DriverEvent> driverEvent;
     
     @Inject @Normal
     protected Event<ExitEvent> exitEvent;
     
     protected void main(List<String> args) {
         log.info("Riviera application has started");
-
-        log.debug("Firing StartupEvent"); 
-        startupEvent.fire(new WelcomeEvent());
+        
+        log.debug("Firing MainEvent"); 
+        mainEvent.fire(new MainEvent());
+        
+        log.debug("Firing WelcomeEvent"); 
+        welcomeEvent.fire(new WelcomeEvent());
+        
+        log.debug("Firing DriverEvent"); 
+        driverEvent.fire(new DriverEvent());
         
         log.debug("Firing normal ExitEvent"); 
         exitEvent.fire(new ExitEvent());
