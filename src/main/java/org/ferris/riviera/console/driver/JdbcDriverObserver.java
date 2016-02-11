@@ -9,16 +9,19 @@ import org.jboss.weld.experimental.Priority;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class DriverObserver {
+public class JdbcDriverObserver {
 
     @Inject
     protected Logger log;
     
     @Inject
-    protected DriverPage page;
+    protected JdbcDriverPage page;
+        
+    @Inject
+    protected JdbcDriverHandler handler;
     
-    protected void view(@Observes @Priority(DriverEvent.VIEW) DriverEvent evnt) {
+    protected void view(@Observes @Priority(JdbcDriverEvent.VIEW) JdbcDriverEvent evnt) {
         log.info("ENTER");
-        page.view();
+        page.view(handler.getJdbcDrivers());
     }
 }
