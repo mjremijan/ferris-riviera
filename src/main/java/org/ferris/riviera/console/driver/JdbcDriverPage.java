@@ -18,11 +18,19 @@ public class JdbcDriverPage {
     @Inject
     protected Console console;    
     
-    @Inject @Key("DriverPage.Heading")
+    @Inject @Key("JdbcDriverPage.Heading")
     protected String heading;
+    
+    @Inject @Key("JdbcDriverPage.ListLastUsed")
+    protected String listLastUsed;
     
     public void view(List<JdbcDriver> drivers) {
         console.h1(heading);
-        drivers.forEach(d -> console.p(d.getImplementationClass().getName()));
+        drivers.forEach(d -> console.p(
+            String.format("%s%s"
+                , d.getImplementationClass()
+                , !d.isLastUsed() ? "" : String.format("  %s", listLastUsed)
+            )
+        ));
     }
 }
