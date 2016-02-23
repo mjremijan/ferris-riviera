@@ -14,7 +14,7 @@ public class JdbcDriverHandler {
             = new LinkedList<>();
         
         drivers.add(new JdbcDriver(String.class.getName(), false));
-        drivers.add(new JdbcDriver(Double.class.getName(), true));
+        drivers.add(new JdbcDriver(Double.class.getName(), false));
         drivers.add(new JdbcDriver(Integer.class.getName(), false));
         
         return drivers;

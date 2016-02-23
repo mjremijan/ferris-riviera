@@ -24,13 +24,34 @@ public class JdbcDriverPage {
     @Inject @Key("JdbcDriverPage.ListLastUsed")
     protected String listLastUsed;
     
+    @Inject @Key("JdbcDriverPage.PromptLabel")
+    protected String promptLabel;
+    
+    @Inject @Key("JdbcDriverPage.PromptLastUsed")
+    protected String promptLastUsed;
+    
+    @Inject @Key("JdbcDriverPage.PromptIndicator")
+    protected String promptIndicator;
+    
     public void view(List<JdbcDriver> drivers) {
         console.h1(heading);
-        drivers.forEach(d -> console.p(
+        
+        console.p("List");
+        console.br();
+        
+        drivers.forEach(d -> console.li(
             String.format("%s%s"
                 , d.getImplementationClass()
                 , !d.isLastUsed() ? "" : String.format("  %s", listLastUsed)
             )
         ));
+        
+        console.br();
+        
+        console.p(promptLabel);        
+        if (drivers.stream().filter(d -> d.isLastUsed()).count() != 0) {
+            console.p(promptLastUsed);
+        }
+        console.p(promptIndicator);
     }
 }

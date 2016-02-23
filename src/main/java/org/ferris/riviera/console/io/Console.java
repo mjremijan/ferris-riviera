@@ -1,6 +1,7 @@
 package org.ferris.riviera.console.io;
 
 import java.io.PrintWriter;
+import java.util.Collections;
 import javax.inject.Inject;
 
 /**
@@ -48,7 +49,17 @@ public class Console {
      * @param str The string to print
      */
     public void p(String str) {
-        p(str, null);
+        indentf(3, str, null);
+    }
+    
+    
+    public void br() {
+        writer.println();
+    }
+    
+    
+    public void li(String str) {
+        indentf(6, str, null);
     }
     
     
@@ -60,10 +71,16 @@ public class Console {
      * @param args The arguemnts for the format
      */
     public void p(String format, String...args) {
-        writer.printf("   %s%n", String.format(format, args));
-        writer.flush();
+        indentf(3, format, args);
     }
     
+    private void indentf(int indent, String format, String...args) {
+        writer.printf("%s%s%n"
+            , Collections.nCopies(indent, " ").stream().reduce((t, u) -> t + u).get()
+            , String.format(format, args)
+        );
+        writer.flush();
+    }
     
     /**
      * Print the throwable stack trace as a paragraph
