@@ -3,8 +3,6 @@ package org.ferris.riviera.console.driver;
 import java.util.List;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
-import org.ferris.riviera.console.io.Console;
-import org.ferris.riviera.console.messages.Key;
 
 /**
  *
@@ -16,42 +14,17 @@ public class JdbcDriverPage {
     protected Logger log;
     
     @Inject
-    protected Console console;    
+    protected JdbcDriverPageHeading heading;
     
-    @Inject @Key("JdbcDriverPage.Heading")
-    protected String heading;
+    @Inject
+    protected JdbcDriverPageList list; 
     
-    @Inject @Key("JdbcDriverPage.ListLastUsed")
-    protected String listLastUsed;
-    
-    @Inject @Key("JdbcDriverPage.PromptLabel")
-    protected String promptLabel;
-    
-    @Inject @Key("JdbcDriverPage.PromptLastUsed")
-    protected String promptLastUsed;
-    
-    @Inject @Key("JdbcDriverPage.PromptIndicator")
-    protected String promptIndicator;
-    
+    @Inject
+    protected JdbcDriverPagePrompt prompt; 
+
     public void view(List<JdbcDriver> drivers) {
-        console.h1(heading);
-        
-        console.p("List");
-        console.br();
-        
-        drivers.forEach(d -> console.li(
-            String.format("%s%s"
-                , d.getImplementationClass()
-                , !d.isLastUsed() ? "" : String.format("  %s", listLastUsed)
-            )
-        ));
-        
-        console.br();
-        
-        console.p(promptLabel);        
-        if (drivers.stream().filter(d -> d.isLastUsed()).count() != 0) {
-            console.p(promptLastUsed);
-        }
-        console.p(promptIndicator);
+        heading.view();
+        list.view(drivers);
+        prompt.view(drivers);        
     }
 }
