@@ -113,13 +113,18 @@
 		</filters>
         
 		<plugins>
+			<!--
+			 | Use this plugin to generate a filters.properties file.
+			 | This file contains values for names which will be 
+			 | filtered and replaced in the resources files.
+			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.7</version>
 				<executions>
 					<execution>
-                                                <id>filter-properties-execution</id>
+						<id>filter-properties-execution</id>
 						<phase>validate</phase>
 						<goals>
 							<goal>run</goal>
@@ -128,7 +133,6 @@
 							<target>
 								<!-- Safety -->
 								<mkdir dir="${project.build.directory}"/>
- 
 								<tstamp>
 									<format property="last.updated" pattern="yyyy-MM-dd hh:mm:ss"/>
 								</tstamp>
