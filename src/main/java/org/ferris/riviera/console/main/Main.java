@@ -6,7 +6,7 @@ import javax.enterprise.event.Event;
 import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
-import org.ferris.riviera.console.driver.JdbcDriverEvent;
+import org.ferris.riviera.console.driver.DriverEvent;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
 import org.ferris.riviera.console.welcome.WelcomeEvent;
@@ -35,7 +35,7 @@ public class Main {
     protected Event<WelcomeEvent> welcomeEvent;
     
     @Inject 
-    protected Event<JdbcDriverEvent> driverEvent;
+    protected Event<DriverEvent> driverEvent;
     
     @Inject @Normal
     protected Event<ExitEvent> exitEvent;
@@ -47,10 +47,10 @@ public class Main {
         mainEvent.fire(new MainEvent());
         
         log.debug("Firing WelcomeEvent"); 
-        welcomeEvent.fire(new WelcomeEvent());
-        
-        log.debug("Firing JdbcDriverEvent"); 
-        driverEvent.fire(new JdbcDriverEvent());
+        welcomeEvent.fire(new WelcomeEvent());       
+
+        log.debug("Firing DriverEvent");
+        driverEvent.fire(new DriverEvent());
         
         log.debug("Firing normal ExitEvent"); 
         exitEvent.fire(new ExitEvent());
