@@ -3,7 +3,6 @@ package org.ferris.riviera.console.driver;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
-import static org.ferris.riviera.console.driver.DriverEvent.INIT;
 import static org.ferris.riviera.console.driver.DriverEvent.VIEW;
 import org.jboss.weld.experimental.Priority;
 
@@ -23,11 +22,7 @@ public class DriverObserver {
 //    protected WelcomePage page;
     
     
-    public void init(
-        @Observes @Priority(INIT) DriverEvent event
-    ) {
-        
-    }
+
 
     public void view(
         @Observes @Priority(VIEW) DriverEvent event
