@@ -35,13 +35,12 @@
         </fileSet>
 		
         <fileSet>
-            <directory>src/main/assemblies/conf</directory>
-            <outputDirectory>conf</outputDirectory>
+            <directory>src/main/assemblies/jdbc</directory>
+            <outputDirectory>jdbc</outputDirectory>
             <includes>
                 <include>**</include>
             </includes>
-            <filtered>true</filtered>
-            <lineEnding>unix</lineEnding>
+            <filtered>false</filtered>
         </fileSet>
         
         <fileSet>
