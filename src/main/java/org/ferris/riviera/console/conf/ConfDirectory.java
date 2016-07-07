@@ -1,20 +1,20 @@
-package org.ferris.riviera.console.jdbc;
+package org.ferris.riviera.console.conf;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import static java.lang.String.format;
 import java.util.Properties;
 import javax.inject.Inject;
 import org.ferris.riviera.console.application.ApplicationDirectory;
+import static java.lang.String.format;
 
-public class JdbcDirectory extends File {
+public class ConfDirectory extends File {
 
     private static final long serialVersionUID = 7491901906021288631L;
 
     @Inject
-    public JdbcDirectory(ApplicationDirectory ad) {
-        super(ad, format("%s", "jdbc"));
+    public ConfDirectory(ApplicationDirectory ad) {
+        super(ad, format("%s", "conf"));
     }
 
     public File getDriverJar() {

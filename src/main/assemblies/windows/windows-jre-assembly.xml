@@ -28,8 +28,8 @@
         </fileSet>
         
         <fileSet>
-            <directory>src/main/assemblies/jdbc</directory>
-            <outputDirectory>jdbc</outputDirectory>
+            <directory>src/main/assemblies/conf</directory>
+            <outputDirectory>conf</outputDirectory>
             <includes>
                 <include>**</include>
             </includes>

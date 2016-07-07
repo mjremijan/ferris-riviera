@@ -10,7 +10,7 @@ import javax.inject.Qualifier;
 
 /**
  * Qualifier uses to specify the key value to lookup a string from a {@link ResourceBundle}
- * 
+ *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 @Qualifier
@@ -19,4 +19,7 @@ import javax.inject.Qualifier;
 public @interface Key {
     @Nonbinding
     String value() default "";
+
+    @Nonbinding
+    boolean required() default false;
 }

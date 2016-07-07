@@ -6,6 +6,4 @@ package org.ferris.riviera.console.welcome;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class WelcomeEvent {
-
-    public static final int VIEW = 20;
 }
