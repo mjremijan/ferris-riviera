@@ -19,7 +19,4 @@ import javax.inject.Qualifier;
 public @interface Key {
     @Nonbinding
     String value() default "";
-
-    @Nonbinding
-    boolean required() default false;
 }

@@ -1,11 +1,13 @@
 package org.ferris.riviera.console.welcome;
 
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.application.Application;
 import org.ferris.riviera.console.application.ApplicationDirectory;
 import org.ferris.riviera.console.application.ApplicationHandler;
-import org.ferris.riviera.console.conf.ConfHandler;
+import org.ferris.riviera.console.connection.ConnectionProperties;
+import org.ferris.riviera.console.driver.DriverFile;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
 
@@ -93,12 +95,15 @@ public class WelcomePage {
     protected ApplicationHandler applicationHandler;
 
     @Inject
-    protected ConfHandler confHandler;
+    protected ConnectionProperties connectionProperties;
+
+    @Inject
+    protected DriverFile driverFile;
 
     /**
      * Show the user the welcome page
      */
-    public void view() {
+    public void view(@Observes WelcomeEvent event) {
         Application application
             = applicationHandler.getApplication();
 
@@ -118,9 +123,9 @@ public class WelcomePage {
         console.p(directoryFormat, applicationDirectory.getAbsolutePath());
 
         console.h1(connectionHeading);
-        console.p(connectionUrlFormat, confHandler.getUrl());
-        console.p(connectionCredentialsFormat, confHandler.getUsername(), confHandler.getPassword());
-        console.p(connectionDriverFormat, confHandler.getDriverFile().getAbsolutePath());
+        console.p(connectionUrlFormat, connectionProperties.getUrl());
+        console.p(connectionCredentialsFormat, connectionProperties.getUsername(), connectionProperties.getPassword());
+        console.p(connectionDriverFormat, driverFile.getAbsolutePath());
     }
 
 }

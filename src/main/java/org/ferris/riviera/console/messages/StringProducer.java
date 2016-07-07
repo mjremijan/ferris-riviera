@@ -1,13 +1,11 @@
 package org.ferris.riviera.console.messages;
 
 import java.util.MissingResourceException;
-import java.util.Properties;
 import java.util.ResourceBundle;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
 import org.ferris.riviera.console.conf.ConfDirectory;
-import org.ferris.riviera.console.lang.StringTool;
 
 /**
  * Uses a {@link ResourceBundle} to {@code /ApplicationMessages[__].properties}
@@ -17,11 +15,7 @@ import org.ferris.riviera.console.lang.StringTool;
  */
 public class StringProducer {
 
-    @Inject
-    protected StringTool strTool;
-
     protected ResourceBundle rb;
-    protected Properties pr;
 
     /**
      * Creates the {@link ResourceBundle}
@@ -29,8 +23,6 @@ public class StringProducer {
     @Inject
     public StringProducer(ConfDirectory confDirectory) {
         rb = ResourceBundle.getBundle("ApplicationMessages");
-        pr = confDirectory.getConnectionProperties();
-
     }
 
     /**
@@ -46,27 +38,11 @@ public class StringProducer {
     public String produceString(InjectionPoint ip) {
         Key m = ip.getAnnotated().getAnnotation(Key.class);
         String key = m.value();
-        boolean req = m.required();
-
-        String val = null;
+        String val = "<missing>";
         try {
             val = rb.getString(key);
         } catch (MissingResourceException e) {
-            val = pr.getProperty(key);
-            val = strTool.trimToNull(val);
         }
-
-
-        if (val == null) {
-            if (req) {
-                throw new RuntimeException(
-                    String.format("No \"%s\" property value found", key)
-                );
-            } else {
-                val = "<missing>";
-            }
-        }
-
         return val;
     }
 }

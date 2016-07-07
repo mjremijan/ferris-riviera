@@ -8,6 +8,6 @@ public class MainEvent {
 
     public static final int EXCEPTION = 10;
 
-    public static final int DRIVER = 20;
+    public static final int ADD_URL = 20;
 
 }

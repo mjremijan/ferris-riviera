@@ -10,14 +10,13 @@ import org.ferris.riviera.console.exit.qualifier.Abnormal;
 import org.ferris.riviera.console.lang.ThreadTool;
 import org.ferris.riviera.console.main.MainEvent;
 import static org.ferris.riviera.console.main.MainEvent.EXCEPTION;
-import org.ferris.riviera.console.welcome.WelcomeEvent;
 import org.jboss.weld.experimental.Priority;
 
 /**
- * This observer is configured during application {@link WelcomeEvent}
+ * This observer is configured during application {@link MainEvent}
  * to catch any uncaught exceptions, display the stack trace, then exit
  * the application abnormally.
- * 
+ *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class UncaughtExceptionObserver implements UncaughtExceptionHandler {
