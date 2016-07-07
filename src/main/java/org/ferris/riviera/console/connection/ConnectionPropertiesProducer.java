@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Properties;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import org.apache.log4j.Logger;
 import org.ferris.riviera.console.conf.ConfDirectory;
 import org.ferris.riviera.console.lang.StringTool;
 
@@ -14,9 +16,17 @@ import org.ferris.riviera.console.lang.StringTool;
  */
 public class ConnectionPropertiesProducer {
 
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected ConfDirectory confDirectory;
+
+    @Inject
+    protected StringTool strt;
+
     @Produces
     protected ConnectionProperties produceConnectionProperties(
-        ConfDirectory confDirectory, StringTool strt
     ) {
         File propertiesFile
             = new File(confDirectory, "connection.properties");
@@ -46,6 +56,7 @@ public class ConnectionPropertiesProducer {
                     );
                 } else {
                     props.setProperty(k, v);
+                    log.info(String.format("Connection property %s=\"%s\"",k,v));
                 }
             });
 

@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
+import org.ferris.riviera.console.sc.SchemaChangeRetrievalEvent;
 import org.ferris.riviera.console.welcome.WelcomeEvent;
 
 /**
@@ -33,6 +34,9 @@ public class Main {
     @Inject
     protected Event<WelcomeEvent> welcomeEvent;
 
+    @Inject
+    protected Event<SchemaChangeRetrievalEvent> schemaChangeRetrievalEvent;
+
     @Inject @Normal
     protected Event<ExitEvent> exitEvent;
 
@@ -44,6 +48,9 @@ public class Main {
 
         log.debug("Firing WelcomeEvent");
         welcomeEvent.fire(new WelcomeEvent());
+
+        log.debug("Firing SchemaChangeRetrievalEvent");
+        schemaChangeRetrievalEvent.fire(new SchemaChangeRetrievalEvent());
 
         log.debug("Firing normal ExitEvent");
         exitEvent.fire(new ExitEvent());
