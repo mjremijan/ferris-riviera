@@ -6,7 +6,7 @@ import java.net.URLClassLoader;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
-import org.ferris.riviera.console.conf.ConfDirectory;
+import org.ferris.riviera.console.conf.ConfHandler;
 import org.ferris.riviera.console.main.MainEvent;
 import static org.ferris.riviera.console.main.MainEvent.DRIVER;
 import org.jboss.weld.experimental.Priority;
@@ -21,7 +21,7 @@ public class DriverObserver {
     protected Logger log;
 
     @Inject
-    protected ConfDirectory confDirectory;
+    protected ConfHandler confHandler;
 
     public void observes(
         @Observes @Priority(DRIVER) MainEvent event
@@ -33,15 +33,15 @@ public class DriverObserver {
             method.setAccessible(true);
 
             method.invoke(
-                (URLClassLoader) ClassLoader.getSystemClassLoader(), new Object[]{confDirectory.getDriverJar().toURI().toURL()}
+                (URLClassLoader) ClassLoader.getSystemClassLoader(), new Object[]{confHandler.getDriverFile().toURI().toURL()}
             );
 
-            log.info(String.format("Added JAR %s", confDirectory.getDriverJar().getAbsolutePath()));
+            log.info(String.format("Added JAR %s", confHandler.getDriverFile().getAbsolutePath()));
         } catch (Throwable t) {
             throw new RuntimeException(
                 String.format(
                       "Failure adding driver JAR file \"%s\" to system classloader"
-                    , confDirectory.getDriverJar().getAbsolutePath()
+                    , confHandler.getDriverFile().getAbsolutePath()
                 ), t
             );
         }
