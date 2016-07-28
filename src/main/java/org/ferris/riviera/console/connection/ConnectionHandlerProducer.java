@@ -4,8 +4,11 @@ import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -54,6 +57,20 @@ public class ConnectionHandlerProducer {
 			    new Class[]{Connection.class},
 			    new ConnectionProxy(connection)
 		);
+        
+        if (connectionProperties.getSetSchema() != null) {
+        	log.info(
+                String.format(
+                    "Attempting to change the database schema: '%s'"
+                    , String.valueOf(connectionProperties.getSetSchema())
+                )
+            );
+        	try (Statement stmt = connectionProxy.createStatement();) {
+        		stmt.execute(connectionProperties.getSetSchema());
+        	} catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
         return new ConnectionHandler(connectionProxy);
     }

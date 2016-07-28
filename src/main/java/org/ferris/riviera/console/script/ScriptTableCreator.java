@@ -1,39 +1,59 @@
 package org.ferris.riviera.console.script;
 
-public class ScriptTableCreator {
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.CREATE_SCRIPT_TABLE;
 
-//	protected void loadChangesFromDatabase(
-//	        @Observes @Priority(FIND_SCRIPT_TABLE) ScriptRetrievalEvent event
-//	    ) {
-//	        Connection conn = handler.getConnection();
-//	        try {
-//	            Statement stmt
-//	                = conn.createStatement();
-//
-//	            //stmt.execute("set schema app");
-//
-//	            // http://apache-database.10148.n7.nabble.com/DatabaseMetaData-getTables-resultset-empty-td105623.html
-//	            String catalog = connectionProperties.getCatalog();
-//	            String schemaPattern = connectionProperties.getSchemaPattern();
-//	            String tableNamePattern = connectionProperties.getNamePattern();
-//	            String[] types = connectionProperties.getTypes();
-//	            
-//	            ResultSet tables
-//	                = conn.getMetaData().getTables(catalog, schemaPattern, tableNamePattern, types);
-//	            System.out.printf("TABLES%n");
-//
-//	            while (tables.next()) {
-//	                System.out.printf(
-//	                    "TABLE_TYPE=%s, TABLE_CAT=%s, TABLE_SCHEM=%s, TABLE_NAME=%s%n"
-//	                    , tables.getString("TABLE_TYPE")
-//	                    , tables.getString("TABLE_CAT")
-//	                    , tables.getString("TABLE_SCHEM")
-//	                    , tables.getString("TABLE_NAME")
-//	                );
-//	            }
-//
-//	        } catch (Exception e) {
-//	            throw new RuntimeException(e);
-//	        }
-//	    }
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.StringJoiner;
+
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.connection.ConnectionHandler;
+import org.jboss.weld.experimental.Priority;; 
+
+public class ScriptTableCreator 
+{
+	@Inject
+    protected Logger log;
+
+    @Inject
+    protected ConnectionHandler handler;
+    
+	protected void createScriptTable (
+        @Observes @Priority(CREATE_SCRIPT_TABLE) ScriptRetrievalEvent event
+    ) {
+		if (event.isTableThere()) {
+			return;
+		}
+		
+        Connection conn 
+        	= handler.getConnection();
+        
+        String sql = new StringJoiner(",", "CREATE TABLE DDL_SCRIPT_HISTORY (", ")")
+        	.add("MAJOR INT NOT NULL")
+        	.add("FEATURE INT NOT NULL")
+        	.add("BUG INT NOT NULL")
+        	.add("BUILD INT NOT NULL")
+        	.add("NAME VARCHAR(100) NOT NULL")
+        	.add("APPLIED_ON  TIMESTAMP NOT NULL")
+        	.add(
+        		new StringJoiner(",", "PRIMARY KEY (", ")")
+        		.add("MAJOR").add("FEATURE").add("BUG").add("BUILD")
+        		.toString()
+        	)
+        .toString();            	
+        	        
+        try (Statement stmt = conn.createStatement();) 
+        {        	
+        	log.info(String.format("Creating script table%n%s",sql));
+        	event.setTableCreatedSuccessfully(
+        		stmt.execute(sql)
+        	);        
+        } catch (Exception e) {
+        	throw new RuntimeException(e);
+        }        
+    }
 }

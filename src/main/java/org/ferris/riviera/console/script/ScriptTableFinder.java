@@ -4,7 +4,6 @@ import static org.ferris.riviera.console.script.ScriptRetrievalEvent.FIND_SCRIPT
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;

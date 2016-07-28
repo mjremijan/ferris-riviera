@@ -43,7 +43,7 @@ public class Console {
      * @param str The string to print
      */
     public void h1(String str) {
-        writer.printf("%n%s%n", str);
+        writer.printf("%n%n%s%n", str);
         for (int i = 0; i < str.length(); i++) {
             writer.print("-");
         }
