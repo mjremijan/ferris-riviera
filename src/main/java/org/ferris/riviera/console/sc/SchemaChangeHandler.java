@@ -7,6 +7,8 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
+import org.ferris.riviera.console.connection.ConnectionProperties;
+
 import static org.ferris.riviera.console.sc.SchemaChangeRetrievalEvent.LOAD_CHANGES_FROM_DATABASE;
 import org.jboss.weld.experimental.Priority;
 
@@ -20,6 +22,9 @@ public class SchemaChangeHandler {
 
     @Inject
     protected ConnectionHandler handler;
+    
+    @Inject
+    protected ConnectionProperties connectionProperties;
 
     protected void loadChangesFromDatabase(
         @Observes @Priority(LOAD_CHANGES_FROM_DATABASE) SchemaChangeRetrievalEvent event
@@ -32,10 +37,11 @@ public class SchemaChangeHandler {
             //stmt.execute("set schema app");
 
             // http://apache-database.10148.n7.nabble.com/DatabaseMetaData-getTables-resultset-empty-td105623.html
-            String catalog = null;
-            String schemaPattern = null;
-            String tableNamePattern = null;
-            String[] types = null; //{"TABLE"};
+            String catalog = connectionProperties.getCatalog();
+            String schemaPattern = connectionProperties.getSchemaPattern();
+            String tableNamePattern = connectionProperties.getNamePattern();
+            String[] types = connectionProperties.getTypes();
+            
             ResultSet tables
                 = conn.getMetaData().getTables(catalog, schemaPattern, tableNamePattern, types);
             System.out.printf("TABLES%n");
