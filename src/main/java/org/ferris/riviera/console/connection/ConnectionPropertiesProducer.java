@@ -3,9 +3,13 @@ package org.ferris.riviera.console.connection;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.conf.ConfDirectory;
 import org.ferris.riviera.console.lang.StringTool;
@@ -47,23 +51,32 @@ public class ConnectionPropertiesProducer {
             );
         }
 
-        Arrays.asList("url,username,password".split(","))
+        Map<String, String> scrubbed
+        	= new HashMap<>();
+        	
+        Arrays.asList("url,username,password,set_schema".split(","))
             .forEach(k -> {
                 String v = strt.trimToNull(props.getProperty(k));
-                if (v == null) {
-                    throw new RuntimeException(
-                        String.format("No value for connection property \"%s\"", k)
-                    );
-                } else {
-                    props.setProperty(k, v);
-                    log.info(String.format("Connection property %s=\"%s\"",k,v));
-                }
+                scrubbed.put(k, v);
+                log.info(String.format("Connection property %s=\"%s\"",k,v));
             });
+        
+        Arrays.asList("table_types,table_cat,table_schem_pattern,table_name_pattern".split(","))
+	        .forEach(k -> {
+	            String v = strt.trimUp(props.getProperty(k));
+	            scrubbed.put(k, v);
+	            log.info(String.format("Connection property %s=\"%s\"",k,v));
+	        });       
 
         return new ConnectionProperties(
-              props.getProperty("url")
-            , props.getProperty("username")
-            , props.getProperty("password")
+              scrubbed.get("url")
+            , scrubbed.get("username")
+            , scrubbed.get("password")
+            , scrubbed.get("set_schema")
+            , (scrubbed.get("table_types") != null ? scrubbed.get("table_types").split(",") : null)
+            , scrubbed.get("table_cat")
+            , scrubbed.get("table_schem_pattern")
+            , scrubbed.get("table_name_pattern")
         );
     }
 }

@@ -18,4 +18,16 @@ public class StringTool {
         }
         return retval;
     }
+    
+    public String trimUp(String trimMe) {
+        String retval = trimToNull(trimMe);
+        if (retval == null) {
+        	retval = "";
+        } 
+        else 
+        if (retval.equalsIgnoreCase("null")) {
+        	retval = null;
+        }
+        return retval;
+    }
 }
