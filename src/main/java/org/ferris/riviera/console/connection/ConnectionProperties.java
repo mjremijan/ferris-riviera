@@ -1,9 +1,12 @@
 package org.ferris.riviera.console.connection;
 
+import javax.inject.Singleton;
+
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
+@Singleton
 public class ConnectionProperties {
 
     protected String url, username, password;

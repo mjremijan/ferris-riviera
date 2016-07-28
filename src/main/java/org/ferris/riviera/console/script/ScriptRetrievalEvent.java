@@ -10,7 +10,7 @@ public class ScriptRetrievalEvent {
 
     public static final int CREATE_SCRIPT_TABLE = 20;
 
-    public static final int LOAD_SCRIPT_HISTORY_FROM_DATABASE = 30;
+    public static final int RETRIEVE_SCRIPT_HISTORY_FROM_DATABASE = 30;
 
     public static final int SHOW_SCRIPT_HISTORY = 40;
 
