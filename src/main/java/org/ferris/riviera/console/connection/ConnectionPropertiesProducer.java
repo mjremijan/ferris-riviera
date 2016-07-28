@@ -43,6 +43,7 @@ public class ConnectionPropertiesProducer {
         }
 
         Properties props = new Properties();
+        
         try (FileReader reader = new FileReader(propertiesFile)) {
             props.load(reader);
         } catch (Exception e) {
