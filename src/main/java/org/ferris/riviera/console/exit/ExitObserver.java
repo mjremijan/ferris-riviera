@@ -24,7 +24,7 @@ public class ExitObserver {
         log.info("Abnormal JVM exit");
         systemTool.exitAbnormal();
     }
-    
+
     public void observesNormal(@Observes @Normal ExitEvent exitEvent) {
         log.info("View page");
         exitPage.view();

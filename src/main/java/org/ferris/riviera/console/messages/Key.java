@@ -9,7 +9,8 @@ import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 
 /**
- * Qualifier uses to specify the key value to lookup a string from a {@link ResourceBundle}
+ * Qualifier uses to specify the key value to lookup a string from a
+ * {@link ResourceBundle}
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
@@ -17,6 +18,7 @@ import javax.inject.Qualifier;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 public @interface Key {
+
     @Nonbinding
     String value() default "";
 }

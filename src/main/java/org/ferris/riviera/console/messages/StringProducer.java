@@ -26,12 +26,13 @@ public class StringProducer {
     }
 
     /**
-     * Uses the {@code InjectionPoint ip} to get the {@link Key} qualifier
-     * which has the value of the resource bundle key to lookup.
+     * Uses the {@code InjectionPoint ip} to get the {@link Key} qualifier which
+     * has the value of the resource bundle key to lookup.
      *
      * @param ip Used to get the {@link Key} qualifier on the injection point.
      *
-     * @return Resource bundle value or {@code "<missing>"} if the key is not found.
+     * @return Resource bundle value or {@code "<missing>"} if the key is not
+     * found.
      */
     @Produces
     @Key

@@ -30,54 +30,46 @@ public class ConnectionPropertiesProducer {
     protected StringTool strt;
 
     @Produces
-    protected ConnectionProperties produceConnectionProperties(
-    ) {
+    protected ConnectionProperties produceConnectionProperties() {
         File propertiesFile
-            = new File(confDirectory, "connection.properties");
+                = new File(confDirectory, "connection.properties");
 
         if (!propertiesFile.exists()) {
             throw new RuntimeException(
-                String.format(
-                    "File does not exist \"%s\"", propertiesFile.getAbsolutePath())
+                    String.format(
+                            "File does not exist \"%s\"", propertiesFile.getAbsolutePath())
             );
         }
 
         Properties props = new Properties();
-        
+
         try (FileReader reader = new FileReader(propertiesFile)) {
             props.load(reader);
         } catch (Exception e) {
             throw new RuntimeException(
-                String.format("Cannot read file \"%s\"", propertiesFile.getAbsoluteFile())
+                    String.format("Cannot read file \"%s\"", propertiesFile.getAbsoluteFile())
             );
         }
 
         Map<String, String> scrubbed
-        	= new HashMap<>();
-        	
+                = new HashMap<>();
+
         Arrays.asList("url,username,password,set_schema".split(","))
-            .forEach(k -> {
-                String v = strt.trimToNull(props.getProperty(k));
-                scrubbed.put(k, v);
-                log.info(String.format("Connection property %s=\"%s\"",k,v));
-            });
-        
+                .forEach(k -> {
+                    String v = strt.trimToNull(props.getProperty(k));
+                    scrubbed.put(k, v);
+                    log.info(String.format("Connection property %s=\"%s\"", k, v));
+                });
+
         Arrays.asList("table_types,table_cat,table_schem_pattern,table_name_pattern".split(","))
-	        .forEach(k -> {
-	            String v = strt.trimUp(props.getProperty(k));
-	            scrubbed.put(k, v);
-	            log.info(String.format("Connection property %s=\"%s\"",k,v));
-	        });       
+                .forEach(k -> {
+                    String v = strt.trimUp(props.getProperty(k));
+                    scrubbed.put(k, v);
+                    log.info(String.format("Connection property %s=\"%s\"", k, v));
+                });
 
         return new ConnectionProperties(
-              scrubbed.get("url")
-            , scrubbed.get("username")
-            , scrubbed.get("password")
-            , scrubbed.get("set_schema")
-            , (scrubbed.get("table_types") != null ? scrubbed.get("table_types").split(",") : null)
-            , scrubbed.get("table_cat")
-            , scrubbed.get("table_schem_pattern")
-            , scrubbed.get("table_name_pattern")
+                scrubbed.get("url"), scrubbed.get("username"), scrubbed.get("password"), scrubbed.get("set_schema"), (scrubbed.get("table_types") != null ? scrubbed.get("table_types").split(",") : null), scrubbed.get("table_cat"), scrubbed.get("table_schem_pattern"), scrubbed.get("table_name_pattern")
         );
     }
 }

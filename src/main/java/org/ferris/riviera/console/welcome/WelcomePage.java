@@ -105,7 +105,7 @@ public class WelcomePage {
      */
     public void view(@Observes WelcomeEvent event) {
         Application application
-            = applicationHandler.getApplication();
+                = applicationHandler.getApplication();
 
         console.title(title);
 
@@ -114,12 +114,12 @@ public class WelcomePage {
         console.p(vendorIdFormat, application.getVendorId());
 
         console.h1(applicationProperties);
-        console.p(nameFormat,application.getTitle());
-        console.p(versionFormat,application.getVersion());
-        console.p(siteFormat,application.getUrl());
-        console.p(mavenVersionFormat,application.getCreatedBy());
+        console.p(nameFormat, application.getTitle());
+        console.p(versionFormat, application.getVersion());
+        console.p(siteFormat, application.getUrl());
+        console.p(mavenVersionFormat, application.getCreatedBy());
         console.p(timestampFormat, application.getCreatedOn());
-        console.p(jdkVersionFormat,application.getBuildJdk());
+        console.p(jdkVersionFormat, application.getBuildJdk());
         console.p(directoryFormat, applicationDirectory.getAbsolutePath());
 
         console.h1(connectionHeading);

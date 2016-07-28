@@ -6,10 +6,9 @@ import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
 
 /**
- * If an uncaught exception occurs, the {@link UncaughtExceptionObserver}
- * will handle it then send the exception to this page for displaying
- * to the user.
- * 
+ * If an uncaught exception occurs, the {@link UncaughtExceptionObserver} will
+ * handle it then send the exception to this page for displaying to the user.
+ *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class UncaughtExceptionPage {

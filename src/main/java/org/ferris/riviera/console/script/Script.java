@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class Script {
-	
+
     private int major;
     private int feature;
     private int bug;
@@ -46,19 +46,14 @@ public class Script {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        
-        Script other 
-        	= (Script) obj;
-        
-        return (
-            this.major == other.major
-            &&
-            this.feature == other.feature
-            &&
-            this.bug == other.bug
-            &&
-            this.build == other.build
-        );
+
+        Script other
+                = (Script) obj;
+
+        return (this.major == other.major
+                && this.feature == other.feature
+                && this.bug == other.bug
+                && this.build == other.build);
     }
 
     public int getMajor() {

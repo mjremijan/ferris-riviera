@@ -17,11 +17,10 @@ public class ApplicationHandler {
 
     @Inject
     protected Logger log;
-    
-    
+
     protected Attributes getAttributes() {
         log.info("ENTER");
-        
+
         // This is an example of a JarUrlConnection URL
         //    URL: jar:file:/C:/Users/Michael/..../jboss-annotations-api_1.2_spec-1.0.0.Final.jar!/META-INF/MANIFEST.MF
         //
@@ -29,46 +28,44 @@ public class ApplicationHandler {
         // jarURL:     file:/C:/Users/Michael/..../ferris-riviera-2.0.0.0-SNAPSHOT-windows.jar        
         Attributes attributes;
         try {
-            URL jarURL 
-                = this.getClass().getProtectionDomain().getCodeSource().getLocation();
+            URL jarURL
+                    = this.getClass().getProtectionDomain().getCodeSource().getLocation();
 
-            URI manifestUri 
-                = new URI(String.format("jar:%s!/%s", jarURL, JarFile.MANIFEST_NAME));
+            URI manifestUri
+                    = new URI(String.format("jar:%s!/%s", jarURL, JarFile.MANIFEST_NAME));
 
             InputStream is = manifestUri.toURL().openStream();
             Manifest manifest = new Manifest(is);
-            attributes = manifest.getMainAttributes();            
+            attributes = manifest.getMainAttributes();
             is.close();
         } catch (Exception e) {
             attributes = new Attributes();
         }
-        
+
         return attributes;
     }
-    
+
     public Application getApplication() {
         log.info("ENTER");
-        
-        Attributes attributes 
-            = getAttributes();
-        
-        Application application 
-            = new Application();
-        
+
+        Attributes attributes
+                = getAttributes();
+
+        Application application
+                = new Application();
+
         application.setTitle(attributes.getValue("Implementation-Title"));
         application.setVersion(attributes.getValue("Implementation-Version"));
-        application.setUrl(attributes.getValue("Implementation-URL"));           
+        application.setUrl(attributes.getValue("Implementation-URL"));
         application.setBuildJdk(attributes.getValue("Build-Jdk"));
         application.setCreatedBy(attributes.getValue("Created-By"));
-        application.setCreatedOn(attributes.getValue("Build-Time"));        
-        application.setVendorId(attributes.getValue("Implementation-Vendor-Id"));        
-        application.setVendor(attributes.getValue("Implementation-Vendor"));        
-        
-        
-        
+        application.setCreatedOn(attributes.getValue("Build-Time"));
+        application.setVendorId(attributes.getValue("Implementation-Vendor-Id"));
+        application.setVendor(attributes.getValue("Implementation-Vendor"));
+
         return application;
     }
-    
+
 //    private void fromStackOverflow() {
 //        Enumeration resEnum;
 //        try {

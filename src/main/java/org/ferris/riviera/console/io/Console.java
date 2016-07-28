@@ -13,9 +13,7 @@ public class Console {
 
     private void indentf(int indent, String format, String... args) {
         writer.printf(
-              "%s%s%n"
-            , Collections.nCopies(indent, " ").stream().reduce((t, u) -> t + u).get()
-            , String.format(format, args)
+                "%s%s%n", Collections.nCopies(indent, " ").stream().reduce((t, u) -> t + u).get(), String.format(format, args)
         );
         writer.flush();
     }

@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
         CDI<Object> cdi = CDI.getCDIProvider().initialize();
         Main main
-            = cdi.select(Main.class).get();
+                = cdi.select(Main.class).get();
         main.main(Arrays.asList(args));
     }
 
@@ -37,7 +37,8 @@ public class Main {
     @Inject
     protected Event<ScriptRetrievalEvent> schemaChangeRetrievalEvent;
 
-    @Inject @Normal
+    @Inject
+    @Normal
     protected Event<ExitEvent> exitEvent;
 
     protected void main(List<String> args) {

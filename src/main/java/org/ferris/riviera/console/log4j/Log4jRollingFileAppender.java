@@ -29,15 +29,15 @@ public class Log4jRollingFileAppender extends org.apache.log4j.RollingFileAppend
         File logFile = new File(logsDir, "application.log");
         super.setFile(logFile.toString());
     }
-    
+
     private OutputStream os;
-    
+
     @Override
     protected OutputStreamWriter createWriter(OutputStream os) {
         this.os = os;
         return super.createWriter(os);
     }
-    
+
     public PrintStream getPrintStream() {
         if (os == null) {
             throw new IllegalStateException("The OutputSream property is null");

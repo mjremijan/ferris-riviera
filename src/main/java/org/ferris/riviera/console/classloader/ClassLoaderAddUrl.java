@@ -21,25 +21,24 @@ public class ClassLoaderAddUrl {
     protected Logger log;
 
     public void observes(
-        @Observes @Priority(ADD_URL) MainEvent event, DriverFile jar
+            @Observes @Priority(ADD_URL) MainEvent event, DriverFile jar
     ) {
         try {
             Method method
-                = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]{URL.class});
+                    = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]{URL.class});
 
             method.setAccessible(true);
 
             method.invoke(
-                (URLClassLoader) ClassLoader.getSystemClassLoader(), new Object[]{jar.toURI().toURL()}
+                    (URLClassLoader) ClassLoader.getSystemClassLoader(), new Object[]{jar.toURI().toURL()}
             );
 
             log.info(String.format("Added JAR %s", jar.getAbsolutePath()));
         } catch (Throwable t) {
             throw new RuntimeException(
-                String.format(
-                      "Failure adding driver JAR file \"%s\" to system classloader"
-                    , jar.getAbsolutePath()
-                ), t
+                    String.format(
+                            "Failure adding driver JAR file \"%s\" to system classloader", jar.getAbsolutePath()
+                    ), t
             );
         }
     }

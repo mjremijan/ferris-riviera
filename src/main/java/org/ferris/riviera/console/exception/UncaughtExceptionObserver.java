@@ -13,9 +13,9 @@ import static org.ferris.riviera.console.main.MainEvent.EXCEPTION;
 import org.jboss.weld.experimental.Priority;
 
 /**
- * This observer is configured during application {@link MainEvent}
- * to catch any uncaught exceptions, display the stack trace, then exit
- * the application abnormally.
+ * This observer is configured during application {@link MainEvent} to catch any
+ * uncaught exceptions, display the stack trace, then exit the application
+ * abnormally.
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
@@ -30,11 +30,12 @@ public class UncaughtExceptionObserver implements UncaughtExceptionHandler {
     @Inject
     protected UncaughtExceptionPage uncaughtExceptionPage;
 
-    @Inject @Abnormal
+    @Inject
+    @Abnormal
     protected Event<ExitEvent> exitEvent;
 
     public void observes(
-        @Observes @Priority(EXCEPTION) MainEvent event
+            @Observes @Priority(EXCEPTION) MainEvent event
     ) {
         log.info("UncaughtExceptionObserver startup configuration observer");
         threadTool.setDefaultUncaughtExceptionHandler(this);

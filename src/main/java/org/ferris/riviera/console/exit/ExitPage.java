@@ -13,10 +13,12 @@ public class ExitPage {
     @Inject
     protected Logger log;
 
-    @Inject @Key("ExitPage.Heading")
+    @Inject
+    @Key("ExitPage.Heading")
     protected String heading;
 
-    @Inject @Key("ExitPage.Goodbye")
+    @Inject
+    @Key("ExitPage.Goodbye")
     protected String goodbye;
 
     public void view() {

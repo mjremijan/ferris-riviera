@@ -22,7 +22,7 @@ public class Log4jRollingFileAppenderPrintStreamProducer {
         while (enu.hasMoreElements()) {
             Object o = enu.nextElement();
             if (o instanceof Log4jRollingFileAppender) {
-                os = ((Log4jRollingFileAppender)o).getPrintStream();
+                os = ((Log4jRollingFileAppender) o).getPrintStream();
             }
         }
         return new Log4jRollingFileAppenderPrintStream(os);

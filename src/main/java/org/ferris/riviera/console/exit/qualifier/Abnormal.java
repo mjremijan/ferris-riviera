@@ -8,7 +8,7 @@ import javax.inject.Qualifier;
 
 /**
  * This qualifier represents an abnormal exit of the application
- * 
+ *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 @Qualifier

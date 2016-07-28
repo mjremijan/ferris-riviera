@@ -5,31 +5,25 @@ package org.ferris.riviera.console.connection;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class ConnectionProperties {
+
     protected String url, username, password;
-    
+
     protected String setSchema;
-    
+
     protected String[] types;
     protected String catalog;
     protected String schemaPattern;
     protected String namePattern;
 
     public ConnectionProperties(
-		  String url
-		, String username
-		, String password
-		, String setSchema
-		, String[] types
-		, String catalog
-		, String schemaPattern
-		, String namePattern
-     ) {
+            String url, String username, String password, String setSchema, String[] types, String catalog, String schemaPattern, String namePattern
+    ) {
         this.url = url;
         this.username = username;
         this.password = password;
-        
+
         this.setSchema = setSchema;
-        
+
         this.types = types;
         this.catalog = catalog;
         this.schemaPattern = schemaPattern;
@@ -48,24 +42,24 @@ public class ConnectionProperties {
         return password;
     }
 
-	public String getSetSchema() {
-		return setSchema;
-	}
+    public String getSetSchema() {
+        return setSchema;
+    }
 
-	public String[] getTypes() {
-		return types;
-	}
+    public String[] getTypes() {
+        return types;
+    }
 
-	public String getCatalog() {
-		return catalog;
-	}
+    public String getCatalog() {
+        return catalog;
+    }
 
-	public String getSchemaPattern() {
-		return schemaPattern;
-	}
+    public String getSchemaPattern() {
+        return schemaPattern;
+    }
 
-	public String getNamePattern() {
-		return namePattern;
-	}
+    public String getNamePattern() {
+        return namePattern;
+    }
 
 }

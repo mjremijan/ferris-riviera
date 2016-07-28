@@ -8,6 +8,7 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class StringTool {
+
     public String trimToNull(String trimMe) {
         String retval = null;
         if (trimMe != null) {
@@ -18,15 +19,13 @@ public class StringTool {
         }
         return retval;
     }
-    
+
     public String trimUp(String trimMe) {
         String retval = trimToNull(trimMe);
         if (retval == null) {
-        	retval = "";
-        } 
-        else 
-        if (retval.equalsIgnoreCase("null")) {
-        	retval = null;
+            retval = "";
+        } else if (retval.equalsIgnoreCase("null")) {
+            retval = null;
         }
         return retval;
     }

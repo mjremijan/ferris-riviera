@@ -5,6 +5,7 @@ package org.ferris.riviera.console.application;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class Application {
+
     private String title;
 
     public String getTitle() {
@@ -14,7 +15,7 @@ public class Application {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
     private String version;
 
     public String getVersion() {
@@ -24,7 +25,7 @@ public class Application {
     public void setVersion(String version) {
         this.version = version;
     }
-    
+
     private String vendorId;
 
     public String getVendorId() {
@@ -34,7 +35,7 @@ public class Application {
     public void setVendorId(String vendorId) {
         this.vendorId = vendorId;
     }
-    
+
     private String buildJdk;
 
     public String getBuildJdk() {
@@ -44,7 +45,7 @@ public class Application {
     public void setBuildJdk(String buildJdk) {
         this.buildJdk = buildJdk;
     }
-    
+
     private String vendor;
 
     public String getVendor() {
@@ -54,7 +55,7 @@ public class Application {
     public void setVendor(String vendor) {
         this.vendor = vendor;
     }
-    
+
     public String url;
 
     public String getUrl() {
@@ -64,7 +65,7 @@ public class Application {
     public void setUrl(String url) {
         this.url = url;
     }
-    
+
     public String createdBy;
 
     public String getCreatedBy() {
@@ -74,8 +75,7 @@ public class Application {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
-    
-    
+
     public String createdOn;
 
     public String getCreatedOn() {
@@ -85,6 +85,5 @@ public class Application {
     public void setCreatedOn(String createdOn) {
         this.createdOn = createdOn;
     }
-    
-    
+
 }

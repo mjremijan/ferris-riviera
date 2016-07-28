@@ -12,7 +12,6 @@ import javax.interceptor.InterceptorBinding;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-
 @Inherited
 @InterceptorBinding
 @Retention(RUNTIME)

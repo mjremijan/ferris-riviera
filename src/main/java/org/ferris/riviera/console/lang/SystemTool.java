@@ -1,9 +1,9 @@
 package org.ferris.riviera.console.lang;
 
 /**
- * A tool for the static methods of the {@link System} object
- * for unit testing purposes.
- * 
+ * A tool for the static methods of the {@link System} object for unit testing
+ * purposes.
+ *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class SystemTool {

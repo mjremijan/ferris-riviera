@@ -12,22 +12,20 @@ public class DriverFileProducer {
 
     @Produces
     public DriverFile produceDriverJarFile(ConfDirectory confDirectory) {
-        File [] jars
-            = confDirectory.listFiles(
-                f -> f.isFile() && f.getName().toLowerCase().endsWith(".jar")
-            );
+        File[] jars
+                = confDirectory.listFiles(
+                        f -> f.isFile() && f.getName().toLowerCase().endsWith(".jar")
+                );
 
         if (jars == null || jars.length == 0) {
             throw new RuntimeException(
-                String.format(
-                    "No JAR files in directory \"%s\"", confDirectory.getAbsolutePath())
+                    String.format(
+                            "No JAR files in directory \"%s\"", confDirectory.getAbsolutePath())
             );
-        }
-        else
-        if (jars.length > 1) {
+        } else if (jars.length > 1) {
             throw new RuntimeException(
-                String.format(
-                    "Multiple JAR files in directory \"%s\"", confDirectory.getAbsolutePath())
+                    String.format(
+                            "Multiple JAR files in directory \"%s\"", confDirectory.getAbsolutePath())
             );
         }
 
