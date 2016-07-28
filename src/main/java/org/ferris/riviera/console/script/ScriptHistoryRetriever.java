@@ -26,20 +26,14 @@ public class ScriptHistoryRetriever {
         Connection conn
                 = handler.getConnection();
 
-//        String sql = new StringJoiner(",", "CREATE TABLE DDL_SCRIPT_HISTORY (", ")")
-//                .add("MAJOR INT NOT NULL")
-//                .add("FEATURE INT NOT NULL")
-//                .add("BUG INT NOT NULL")
-//                .add("BUILD INT NOT NULL")
-//                .add("NAME VARCHAR(100) NOT NULL")
-//                .add("APPLIED_ON  TIMESTAMP NOT NULL")
-//                .add(
-//                        new StringJoiner(",", "PRIMARY KEY (", ")")
-//                        .add("MAJOR").add("FEATURE").add("BUG").add("BUILD")
-//                        .toString()
-//                )
-//                .toString();
-//
+        StringBuilder sp = new StringBuilder();
+        sp.append(" SELECT ");
+        sp.append(" MAJOR, FEATURE, BUG, BUILD, NAME, APPLIED_ON ");
+        sp.append(" FROM ");
+        sp.append(" DDL_SCRIPT_HISTORY ");
+        sp.append(" ORDER BY ");
+        sp.append(" MAJOR, FEATURE, BUG, BUILD ASC ");
+        
 //        try (Statement stmt = conn.createStatement();) {
 //            log.info(String.format("Creating script table%n%s", sql));
 //            event.setTableCreatedSuccessfully(
