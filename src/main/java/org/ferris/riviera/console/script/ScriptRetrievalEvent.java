@@ -1,5 +1,8 @@
 package org.ferris.riviera.console.script;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
@@ -16,6 +19,7 @@ public class ScriptRetrievalEvent {
 
     private boolean tableThere;
     private boolean tableCreatedSuccessfully;
+    private List<Script> scriptHistoryFromDatabase;
 
     public boolean isTableCreatedSuccessfully() {
         return tableCreatedSuccessfully;
@@ -31,6 +35,15 @@ public class ScriptRetrievalEvent {
 
     public void setTableThere(boolean tableThere) {
         this.tableThere = tableThere;
+    }
+
+    void setScriptHistoryFromDatabase(List<Script> scriptHistoryFromDatabase) {
+        this.scriptHistoryFromDatabase
+            = new ArrayList<>(scriptHistoryFromDatabase);
+    }
+
+    public List<Script> getScriptHistoryFromDatabase() {
+        return scriptHistoryFromDatabase;
     }
 
 }
