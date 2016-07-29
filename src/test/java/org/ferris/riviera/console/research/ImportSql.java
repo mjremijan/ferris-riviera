@@ -12,7 +12,8 @@ import java.util.Scanner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.ferris.riviera.console.script.Script;
+import org.ferris.riviera.console.script.ScriptBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,13 +23,12 @@ import org.junit.Test;
  */
 public class ImportSql {
     
-    Pattern directoryNamePattern;
-
+    ScriptBuilder builder;
+    
     @Before
     public void before() {
-        directoryNamePattern
-            = Pattern.compile("(\\d+.{1}\\d+.{1}\\d+)(\\s+-\\s+(.+))?/");
-    }
+        builder = new ScriptBuilder();
+    }   
     
     @Test
     public void readFromJar() throws Exception
@@ -37,23 +37,22 @@ public class ImportSql {
         JarFile jarFile = new JarFile(f);
         
         Enumeration<JarEntry> jarEntries
-             = jarFile.entries();
+            = jarFile.entries();
         
-        Map<String,String> dirs
-                = new HashMap<>();
+        Map<Script,JarEntry> scripts
+            = new HashMap<>();
                 
         while (jarEntries.hasMoreElements()) {
             JarEntry je = jarEntries.nextElement();
-            if (je.isDirectory()) {
-                Matcher matcher = directoryNamePattern.matcher(je.getName());
-                if (matcher.matches()) {
-                    String name = matcher.group(0);
-                }
+            Script sc = builder.setJarEntry(je).build();
+            if (sc != null) {
+                scripts.put(sc, je);
             }
-            System.out.printf("-----%n");
-            System.out.printf("Name %s%n", je.getName());
-            System.out.printf("isDirectory %b%n", je.isDirectory());
         }
+        
+        scripts.forEach(
+            (k,v)->System.out.printf("Script: %s, JarEntry: %s%n",k.toString(), v.getName())
+        );
     }
     
     /**

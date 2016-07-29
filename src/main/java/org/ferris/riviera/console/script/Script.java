@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class Script {
+public class Script implements Comparable<Script> {
 
     private int major;
     private int feature;
@@ -23,6 +23,11 @@ public class Script {
         this.build = build;
         this.name = name;
         this.appliedOn = appliedOn;
+    }
+    
+    @Override
+    public String toString() {
+        return this.name;
     }
 
     @Override
@@ -78,5 +83,51 @@ public class Script {
 
     public Date getAppliedOn() {
         return appliedOn;
+    }
+
+    @Override
+    public int compareTo(Script other) {
+        
+        int retval = 9999;
+        
+        if (this.major < other.major) {
+            retval = -1;
+        }
+        else 
+        if (this.major > other.major) {
+            retval = 1;
+        }
+        else {
+            if (this.feature < other.feature) {
+                retval = -1;
+            }
+            else 
+            if (this.feature > other.feature) {
+                retval = 1;
+            }
+            else {
+                if (this.bug < other.bug) {
+                    retval = -1;
+                }
+                else 
+                if (this.bug > other.bug) {
+                    retval = 1;
+                }
+                else {
+                    if (this.build < other.build) {
+                        retval = -1;
+                    }
+                    else 
+                    if (this.build > other.build) {
+                        retval = 1;
+                    }
+                    else {
+                        retval = 0;
+                    }
+                }
+            }
+        }
+        
+        return retval;
     }
 }
