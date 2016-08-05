@@ -39,6 +39,10 @@ public class ScriptPage {
     protected String currentVersionFormat;
 
     @Inject
+    @Key("ScriptPage.CurrentVersionNone")
+    protected String currentVersionNone;
+
+    @Inject
     protected ScriptFormat scriptFormat;
 
     public void view(
@@ -46,27 +50,31 @@ public class ScriptPage {
     ) {
         console.h1(heading);
 
-        if (event.isTableThere())
-        {
+        if (event.isTableThere()) {
             console.p(found);
-            console.br();
+        } else {
+            console.p(created);
+        }
 
-            ScriptHistory history
-                = event.getScriptHistoryFromDatabase();
+        ScriptHistory history
+            = event.getScriptHistoryFromDatabase();
 
-            history
-                .list()
-                .forEach(s -> console.p(scriptFormat.format(s)));
-            console.br();
+        history
+            .list()
+            .forEach(s -> console.p(scriptFormat.format(s)));
+        console.br();
 
-            console.p(
-                historySizeFormat
-              , String.valueOf(history.size())
-            );
-            console.br();
+        console.p(
+            historySizeFormat
+          , String.valueOf(history.size())
+        );
+        console.br();
 
 
-            Script current = history.current();
+        Script current = history.current();
+        if (current == null) {
+            console.p(currentVersionNone);
+        } else {
             console.p(
                 currentVersionFormat
                 , String.format("%d.%d.%d.%d"
@@ -76,17 +84,6 @@ public class ScriptPage {
                     , current.getBuild()
                 )
             );
-
-        } else {
-            console.p(created);
         }
-
-
-
-
-
-
-
-
     }
 }
