@@ -12,7 +12,6 @@ import org.ferris.riviera.console.connection.ConnectionHandler;
 import static org.ferris.riviera.console.script.ScriptRetrievalEvent.RETRIEVE_SCRIPT_HISTORY_FROM_DATABASE;
 import org.jboss.weld.experimental.Priority;
 
-;
 
 public class ScriptHistoryRetriever {
 
@@ -63,7 +62,7 @@ public class ScriptHistoryRetriever {
             );
 
             event.setScriptHistoryFromDatabase(
-                scriptHistory
+                new ScriptHistory(scriptHistory)
             );
         } catch (Exception e) {
             throw new RuntimeException(e);
