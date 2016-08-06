@@ -27,62 +27,62 @@ import org.junit.Test;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class ImportSql {
-    
+
     ScriptBuilder builder;
-    
+
     @Before
     public void before() {
         builder = new ScriptBuilder();
-    }   
-    
+    }
+
     @Test
     public void readFromJar() throws Exception
     {
         File f = new File("src/test/misc/ddl-1.0-SNAPSHOT.jar");
         JarFile jarFile = new JarFile(f);
-        
+
         Enumeration<JarEntry> jarEntries
             = jarFile.entries();
-        
+
         Map<Script,JarEntry> scripts
             = new HashMap<>();
-                
+
         while (jarEntries.hasMoreElements()) {
             JarEntry je = jarEntries.nextElement();
-            
+            System.out.printf("%s%n", je.toString());
             Script sc = builder.setJarEntry(je).build();
             if (sc != null) {
                 scripts.put(sc, je);
             }
         }
-        
+
         scripts.forEach(
             (k,v)->System.out.printf("Script: %s, JarEntry: %s%n",k.toString(), v.getName())
         );
-        
+
         scripts.forEach(
             (k,v)-> {
                 try {
                     InputStream is = jarFile.getInputStream(v);
                     String result = new BufferedReader(new InputStreamReader(is)).lines()
                             .parallel().collect(Collectors.joining("\n"));
-                    
+
                     //System.out.printf("---------------------%n%s---------------------%n",result);
-                    
+
                     List<String> l
                             = split(result);
-                    
+
                     l.forEach(x -> System.out.printf(">>> %s%n",x));
-                    
+
                 } catch (IOException ex) {
                    throw new RuntimeException(ex);
                 }
             }
         );
-        
+
     }
-    
-    
+
+
     /**
      * http://stackoverflow.com/questions/1497569/how-to-execute-sql-script-file-using-jdbc
      *
@@ -109,11 +109,11 @@ public class ImportSql {
                     l.add(line);
                 }
             }
-        } finally {           
+        } finally {
         }
         return l;
     }
-    
+
     /**
      * http://stackoverflow.com/questions/1497569/how-to-execute-sql-script-file-using-jdbc
      *
