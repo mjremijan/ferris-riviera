@@ -1,17 +1,13 @@
 package org.ferris.riviera.console.script;
 
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.CREATE_SCRIPT_TABLE;
-
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.StringJoiner;
-
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.CREATE_SCRIPT_TABLE;
 import org.jboss.weld.experimental.Priority;
 
 ;
@@ -34,7 +30,7 @@ public class ScriptTableCreator {
         Connection conn
                 = handler.getConnection();
 
-        String sql = new StringJoiner(",", "CREATE TABLE DDL_SCRIPT_HISTORY (", ")")
+        String sql = new StringJoiner(",", "CREATE TABLE SCRIPT_HISTORY (", ")")
                 .add("MAJOR INT NOT NULL")
                 .add("FEATURE INT NOT NULL")
                 .add("BUG INT NOT NULL")
