@@ -31,7 +31,7 @@ public class ScriptHistoryRetriever {
         sp.append(" SELECT ");
         sp.append(" MAJOR, FEATURE, BUG, BUILD, NAME, APPLIED_ON ");
         sp.append(" FROM ");
-        sp.append(" DDL_SCRIPT_HISTORY ");
+        sp.append(" SCRIPT_HISTORY ");
         sp.append(" ORDER BY ");
         sp.append(" MAJOR, FEATURE, BUG, BUILD ASC ");
 
