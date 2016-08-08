@@ -25,7 +25,8 @@ public class ScriptJarProducer {
                     String.format(
                         "No JAR files in directory \"%s\"", scriptAppDirectory.getAbsolutePath())
                 );
-            } else
+            }
+            else
             if (jars.length > 1) {
                 throw new RuntimeException(
                     String.format(
@@ -33,8 +34,19 @@ public class ScriptJarProducer {
                 );
             }
 
-            scriptJar
-                = new ScriptJar(scriptAppDirectory, jars[0].getName());
+            try {
+                scriptJar
+                    = new ScriptJar(scriptAppDirectory, jars[0].getName());
+            } catch (Exception e) {
+                throw new RuntimeException(
+                    String.format(
+                        "ERROR creating new ScriptJar object with parameters \"%s\", \"%s\""
+                        , String.valueOf(scriptAppDirectory)
+                        , String.valueOf(jars[0].getName())
+                    )
+                    , e
+                );
+            }
         }
 
         return scriptJar;

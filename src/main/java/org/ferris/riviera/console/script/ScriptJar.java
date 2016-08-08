@@ -1,6 +1,8 @@
 package org.ferris.riviera.console.script;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.jar.JarFile;
 import javax.enterprise.inject.Vetoed;
 
 /**
@@ -8,11 +10,9 @@ import javax.enterprise.inject.Vetoed;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 @Vetoed
-public class ScriptJar extends File {
+public class ScriptJar extends JarFile {
 
-    private static final long serialVersionUID = 14370985973453748L;
-
-    public ScriptJar(File parent, String child) {
-        super(parent, child);
+    public ScriptJar(File parent, String child) throws IOException {
+        super(new File(parent, child));
     }
 }
