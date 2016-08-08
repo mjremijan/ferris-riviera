@@ -17,13 +17,12 @@ public class ScriptFormat {
     protected String combinedFormat;
 
     @PostConstruct
-    public void setFormats() {
+    protected void postConstruct() {
         versionFormat = "%d.%d.%d.%d";
         timestampFormat = new SimpleDateFormat("E, dd MMM yyyy, hh:mm a");
         fileNameFormat = "%s";
-
         combinedFormat
-            = "%-10s    (%s)    %s";
+            = "%-9s    (%s)    %s";
     }
 
     public String format(Script s) {
