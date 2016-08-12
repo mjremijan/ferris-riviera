@@ -35,12 +35,20 @@ public class ScriptPage {
     protected String historySizeFormat;
 
     @Inject
-    @Key("ScriptPage.CurrentVersionFormat")
-    protected String currentVersionFormat;
+    @Key("ScriptPage.LastAppliedVersionFormat")
+    protected String lastAppliedVersionFormat;
 
     @Inject
-    @Key("ScriptPage.CurrentVersionNone")
-    protected String currentVersionNone;
+    @Key("ScriptPage.LastAppliedVersionNone")
+    protected String lastAppliedVersionNone;
+
+    @Inject
+    @Key("ScriptPage.LatestVersionFormat")
+    protected String latestVersionFormat;
+
+    @Inject
+    @Key("ScriptPage.LatestVersionNone")
+    protected String latestVersionNone;
 
     @Inject
     protected ScriptFormat scriptFormat;
@@ -70,18 +78,33 @@ public class ScriptPage {
         );
         console.br();
 
-
-        Script current = history.current();
-        if (current == null) {
-            console.p(currentVersionNone);
+        Script lastApplied = history.getLastAppliedVersion();
+        if (lastApplied == null) {
+            console.p(lastAppliedVersionNone);
         } else {
             console.p(
-                currentVersionFormat
+                lastAppliedVersionFormat
                 , String.format("%d.%d.%d.%d"
-                    , current.getMajor()
-                    , current.getFeature()
-                    , current.getBug()
-                    , current.getBuild()
+                    , lastApplied.getMajor()
+                    , lastApplied.getFeature()
+                    , lastApplied.getBug()
+                    , lastApplied.getBuild()
+                )
+            );
+        }
+        console.br();
+
+        Script latest = history.getLatestVersion();
+        if (latest == null) {
+            console.p(latestVersionNone);
+        } else {
+            console.p(
+                latestVersionFormat
+                , String.format("%d.%d.%d.%d"
+                    , latest.getMajor()
+                    , latest.getFeature()
+                    , latest.getBug()
+                    , latest.getBuild()
                 )
             );
         }
