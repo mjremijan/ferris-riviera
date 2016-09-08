@@ -50,7 +50,7 @@ public class Main {
         log.debug("Firing WelcomeEvent");
         welcomeEvent.fire(new WelcomeEvent());
 
-        log.debug("Firing SchemaChangeRetrievalEvent");
+        log.debug("Firing ScriptRetrievalEvent");
         schemaChangeRetrievalEvent.fire(new ScriptRetrievalEvent());
 
         log.debug("Firing normal ExitEvent");

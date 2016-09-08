@@ -1,7 +1,5 @@
 package org.ferris.riviera.console.script;
 
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.FIND_SCRIPT_TABLE;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import javax.enterprise.event.Observes;
@@ -9,13 +7,14 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import org.ferris.riviera.console.connection.ConnectionProperties;
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.FIND_SCRIPT_TABLE;
 import org.jboss.weld.experimental.Priority;
 
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class ScriptTableFinder {
+public class ScriptHistoryFinder {
 
     @Inject
     protected Logger log;
@@ -26,7 +25,7 @@ public class ScriptTableFinder {
     @Inject
     protected ConnectionProperties connectionProperties;
 
-    protected void loadChangesFromDatabase(
+    protected void findScriptTable(
             @Observes @Priority(FIND_SCRIPT_TABLE) ScriptRetrievalEvent event
     ) {
         try (

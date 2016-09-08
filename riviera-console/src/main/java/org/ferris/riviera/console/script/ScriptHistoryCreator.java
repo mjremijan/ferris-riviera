@@ -10,9 +10,11 @@ import org.ferris.riviera.console.connection.ConnectionHandler;
 import static org.ferris.riviera.console.script.ScriptRetrievalEvent.CREATE_SCRIPT_TABLE;
 import org.jboss.weld.experimental.Priority;
 
-;
-
-public class ScriptTableCreator {
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+public class ScriptHistoryCreator {
 
     @Inject
     protected Logger log;
@@ -36,7 +38,7 @@ public class ScriptTableCreator {
                 .add("BUG INT NOT NULL")
                 .add("BUILD INT NOT NULL")
                 .add("NAME VARCHAR(100) NOT NULL")
-                .add("APPLIED_ON  TIMESTAMP NOT NULL")
+                .add("APPLIED_ON TIMESTAMP NOT NULL")
                 .add(
                         new StringJoiner(",", "PRIMARY KEY (", ")")
                         .add("MAJOR").add("FEATURE").add("BUG").add("BUILD")
