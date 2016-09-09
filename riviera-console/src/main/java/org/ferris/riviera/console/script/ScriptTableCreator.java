@@ -14,7 +14,7 @@ import org.jboss.weld.experimental.Priority;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class ScriptHistoryCreator {
+public class ScriptTableCreator {
 
     @Inject
     protected Logger log;

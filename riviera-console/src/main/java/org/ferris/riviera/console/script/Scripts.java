@@ -8,12 +8,16 @@ import java.util.List;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class ScriptHistory {
+public class Scripts {
 
     private ArrayList<Script> scripts;
 
-    public ScriptHistory(List<Script> scripts) {
+    public Scripts(List<Script> scripts) {
         this.scripts = new ArrayList<>(scripts);
+    }
+
+    public Scripts(Scripts copyMe) {
+        this(copyMe.scripts);
     }
 
     public List<Script> list() {
@@ -38,6 +42,11 @@ public class ScriptHistory {
         } else {
             return scripts.stream().max(Comparator.comparing(Script::getAppliedOn)).get();
         }
+    }
+
+    public Scripts removeAll(Scripts fromDatabase) {
+        scripts.removeAll(fromDatabase.scripts);
+        return this;
     }
 
 }

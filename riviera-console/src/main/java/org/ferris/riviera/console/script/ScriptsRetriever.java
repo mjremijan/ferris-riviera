@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.script;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -12,12 +13,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.RETRIEVE_SCRIPT_HISTORY_FROM_DATABASE;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.RETRIEVE_SCRIPT_HISTORY_FROM_JAR;
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.RETRIEVE_SCRIPTS_FROM_DATABASE;
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.RETRIEVE_SCRIPTS_FROM_JAR;
 import org.jboss.weld.experimental.Priority;
 
 @Singleton
-public class ScriptHistoryRetriever {
+public class ScriptsRetriever {
 
     @Inject
     protected Logger log;
@@ -31,10 +32,10 @@ public class ScriptHistoryRetriever {
     @Inject
     protected ScriptJarFile scriptJarFile;
 
-    protected void retrieveScriptHistoryFromDatabase(
-        @Observes @Priority(RETRIEVE_SCRIPT_HISTORY_FROM_DATABASE) ScriptRetrievalEvent event
+    protected void retrieveScriptsFromDatabase(
+        @Observes @Priority(RETRIEVE_SCRIPTS_FROM_DATABASE) ScriptRetrievalEvent event
     ) {
-        log.info("Retrieving script history from database");
+        log.info("Retrieving scripts from database");
 
         Connection conn
             = handler.getConnection();
@@ -52,52 +53,57 @@ public class ScriptHistoryRetriever {
             ResultSet rs = stmt.executeQuery(sp.toString());) {
             log.info(String.format("Select script history%n%s", sp.toString()));
 
-            List<Script> scriptHistory
+            List<Script> scripts
                 = new LinkedList<>();
 
             while (rs.next()) {
-                scriptHistory.add(
+                scripts.add(
                     builder.setResultSet(rs).build()
                 );
             }
 
             log.info(String.format(
-                "Found %d scripts in database history", scriptHistory.size())
+                "Found %d scripts in database", scripts.size())
             );
 
-            event.setScriptHistoryFromDatabase(
-                new ScriptHistory(scriptHistory)
+            event.setScriptsFromDatabase(
+                new Scripts(scripts)
             );
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected void retrieveScriptHistoryFromJar(
-        @Observes @Priority(RETRIEVE_SCRIPT_HISTORY_FROM_JAR) ScriptRetrievalEvent event
+    protected void retrieveScriptsFromJar(
+        @Observes @Priority(RETRIEVE_SCRIPTS_FROM_JAR) ScriptRetrievalEvent event
     ) {
-        log.info("Retrieving script history from jar");
+        log.info("Retrieving scripts from jar");
 
         Enumeration<JarEntry> jarEntries
             = scriptJarFile.entries();
 
-        List<Script> scriptHistory
+        List<Script> scripts
             = new LinkedList<>();
 
         while (jarEntries.hasMoreElements()) {
             JarEntry je = jarEntries.nextElement();
             Script sc = builder.setJarEntry(je).build();
             if (sc != null) {
-                scriptHistory.add(sc);
+                scripts.add(sc);
             }
         }
 
         log.info(String.format(
-            "Found %d scripts in JAR history", scriptHistory.size())
+            "Found %d scripts in JAR", scripts.size())
         );
 
-        event.setScriptHistoryFromJar(
-            new ScriptHistory(scriptHistory)
+
+        event.setScriptJarFileName(
+            new File(scriptJarFile.getName()).getName()
+        );
+
+        event.setScriptsFromJar(
+            new Scripts(scripts)
         );
     }
 }

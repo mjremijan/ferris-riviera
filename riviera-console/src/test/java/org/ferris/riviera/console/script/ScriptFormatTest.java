@@ -17,7 +17,6 @@ public class ScriptFormatTest {
     @Before
     public void before() {
         format = new ScriptFormat();
-        format.postConstruct();
     }
 
     @Test

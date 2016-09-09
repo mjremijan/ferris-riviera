@@ -1,7 +1,6 @@
 package org.ferris.riviera.console.script;
 
 import java.text.SimpleDateFormat;
-import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
 
 /**
@@ -11,27 +10,25 @@ import javax.inject.Singleton;
 @Singleton
 public class ScriptFormat {
 
-    protected String versionFormat;
-    protected String fileNameFormat;
-    protected SimpleDateFormat timestampFormat;
-    protected String combinedFormat;
-
-    @PostConstruct
-    protected void postConstruct() {
-        versionFormat = "%d.%d.%d.%d";
-        timestampFormat = new SimpleDateFormat("E, dd MMM yyyy, hh:mm a");
-        fileNameFormat = "%s";
-        combinedFormat
-            = "%-9s    (%s)    %s";
-    }
-
     public String format(Script s) {
-        return
-        String.format(
-            combinedFormat
-            , String.format(versionFormat, s.getMajor(),s.getFeature(),s.getBug(),s.getBuild())
-            , (s.getAppliedOn() == null) ? "" : timestampFormat.format(s.getAppliedOn())
-            , String.format(fileNameFormat, s.getName())
-        );
+
+        String version
+            = s.toVersionString();
+
+        String timestamp
+            = (s.getAppliedOn() == null) ? null : new SimpleDateFormat("E, dd MMM yyyy, hh:mm a").format(s.getAppliedOn());
+
+        String fileName
+            = s.getName();
+
+        StringBuilder sp = new StringBuilder();
+        {
+            sp.append(String.format("%-9s    ", version));
+            if (timestamp != null) {
+                sp.append(String.format("(%s)    ", timestamp));
+            }
+            sp.append(fileName);
+        }
+        return sp.toString();
     }
 }

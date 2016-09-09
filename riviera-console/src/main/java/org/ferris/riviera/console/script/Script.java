@@ -24,7 +24,17 @@ public class Script implements Comparable<Script> {
         this.name = name;
         this.appliedOn = appliedOn;
     }
-    
+
+    public String toVersionString() {
+        return
+        String.format("%d.%d.%d.%d"
+            , major
+            , feature
+            , bug
+            , build
+        );
+    }
+
     @Override
     public String toString() {
         return this.name;
@@ -87,13 +97,13 @@ public class Script implements Comparable<Script> {
 
     @Override
     public int compareTo(Script other) {
-        
+
         int retval = 9999;
-        
+
         if (this.major < other.major) {
             retval = -1;
         }
-        else 
+        else
         if (this.major > other.major) {
             retval = 1;
         }
@@ -101,7 +111,7 @@ public class Script implements Comparable<Script> {
             if (this.feature < other.feature) {
                 retval = -1;
             }
-            else 
+            else
             if (this.feature > other.feature) {
                 retval = 1;
             }
@@ -109,7 +119,7 @@ public class Script implements Comparable<Script> {
                 if (this.bug < other.bug) {
                     retval = -1;
                 }
-                else 
+                else
                 if (this.bug > other.bug) {
                     retval = 1;
                 }
@@ -117,7 +127,7 @@ public class Script implements Comparable<Script> {
                     if (this.build < other.build) {
                         retval = -1;
                     }
-                    else 
+                    else
                     if (this.build > other.build) {
                         retval = 1;
                     }
@@ -127,7 +137,7 @@ public class Script implements Comparable<Script> {
                 }
             }
         }
-        
+
         return retval;
     }
 }

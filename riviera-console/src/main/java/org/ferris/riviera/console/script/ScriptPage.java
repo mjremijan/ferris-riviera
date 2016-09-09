@@ -6,8 +6,8 @@ import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.SHOW_SCRIPT_HISTORY_FROM_DATABASE;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.SHOW_SCRIPT_HISTORY_FROM_JAR;
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.SHOW_NEW_SCRIPTS_TO_APPLY;
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.SHOW_SCRIPTS_FROM_DATABASE;
 import org.jboss.weld.experimental.Priority;
 
 @Singleton
@@ -20,42 +20,18 @@ public class ScriptPage {
     protected Console console;
 
     @Inject
-    @Key("ScriptPage.Heading")
-    protected String heading;
-
-    @Inject
-    @Key("ScriptPage.Created")
-    protected String created;
-
-    @Inject
-    @Key("ScriptPage.Found")
-    protected String found;
-
-    @Inject
-    @Key("ScriptPage.HistorySizeFormat")
-    protected String historySizeFormat;
-
-    @Inject
-    @Key("ScriptPage.LastAppliedVersionFormat")
-    protected String lastAppliedVersionFormat;
-
-    @Inject
-    @Key("ScriptPage.LastAppliedVersionNone")
-    protected String lastAppliedVersionNone;
-
-    @Inject
-    @Key("ScriptPage.LatestVersionFormat")
-    protected String latestVersionFormat;
-
-    @Inject
-    @Key("ScriptPage.LatestVersionNone")
-    protected String latestVersionNone;
-
-    @Inject
     protected ScriptFormat scriptFormat;
 
     public void viewFromDatabase(
-            @Observes @Priority(SHOW_SCRIPT_HISTORY_FROM_DATABASE) ScriptRetrievalEvent event
+          @Observes @Priority(SHOW_SCRIPTS_FROM_DATABASE) ScriptRetrievalEvent event
+        , @Key("ScriptPage.db.Heading") String heading
+        , @Key("ScriptPage.db.Created") String created
+        , @Key("ScriptPage.db.Found") String found
+        , @Key("ScriptPage.db.HistorySizeFormat") String historySizeFormat
+        , @Key("ScriptPage.db.LastAppliedVersionFormat") String lastAppliedVersionFormat
+        , @Key("ScriptPage.db.LastAppliedVersionNone") String lastAppliedVersionNone
+        , @Key("ScriptPage.db.LatestVersionFormat") String latestVersionFormat
+        , @Key("ScriptPage.db.LatestVersionNone") String latestVersionNone
     ) {
         console.h1(heading);
 
@@ -65,21 +41,21 @@ public class ScriptPage {
             console.p(created);
         }
 
-        ScriptHistory history
-            = event.getScriptHistoryFromDatabase();
+        Scripts fromDatabase
+            = event.getScriptsFromDatabase();
 
-        history
+        fromDatabase
             .list()
             .forEach(s -> console.p(scriptFormat.format(s)));
         console.br();
 
         console.p(
             historySizeFormat
-          , String.valueOf(history.size())
+          , String.valueOf(fromDatabase.size())
         );
         console.br();
 
-        Script lastApplied = history.getLastAppliedVersion();
+        Script lastApplied = fromDatabase.getLastAppliedVersion();
         if (lastApplied == null) {
             console.p(lastAppliedVersionNone);
         } else {
@@ -95,40 +71,49 @@ public class ScriptPage {
         }
         console.br();
 
-        Script latest = history.getLatestVersion();
+        Script latest = fromDatabase.getLatestVersion();
         if (latest == null) {
             console.p(latestVersionNone);
         } else {
-            console.p(
-                latestVersionFormat
-                , String.format("%d.%d.%d.%d"
-                    , latest.getMajor()
-                    , latest.getFeature()
-                    , latest.getBug()
-                    , latest.getBuild()
-                )
-            );
+            console.p(latestVersionFormat, latest.toVersionString());
         }
     }
 
+
+    /*
+
+
+
+    */
     public void viewFromJar(
-            @Observes @Priority(SHOW_SCRIPT_HISTORY_FROM_JAR) ScriptRetrievalEvent event
+          @Observes @Priority(SHOW_NEW_SCRIPTS_TO_APPLY) ScriptRetrievalEvent event
+        , @Key("ScriptPage.jar.Heading") String heading
+        , @Key("ScriptPage.jar.ScriptFileFormat") String scriptFileFormat
+        , @Key("ScriptPage.jar.ScriptCountFormat") String scriptCountFormat
+        , @Key("ScriptPage.jar.FutureVersionFormat") String futureVersionFormat
     ) {
-        console.h1("FROM JAR FILE");
+        // Available Updates
+        // -----------------
+        console.h1(heading);
 
-        ScriptHistory history
-            = event.getScriptHistoryFromJar();
+        // Found script file 'email-ddl.zip'
+        console.p(scriptFileFormat, event.getScriptJarFileName());
+        console.br();
 
-        history
+        // 1.0.0.1    1.0.0.1[ - Optional].sql
+        // 1.0.0.2    1.0.0.2.sql
+        // 1.0.0.3    1.0.0.3.sql
+        // 1.1.0.0    1.1.0.0[ - New features].sql
+        event.getScriptsFromJar()
             .list()
             .forEach(s -> console.p(scriptFormat.format(s)));
         console.br();
 
-        console.p(
-            historySizeFormat
-          , String.valueOf(history.size())
-        );
+        // Script count: 4
+        console.p(scriptCountFormat, String.valueOf(event.getScriptsFromJar().size()));
         console.br();
 
+        // Future version: 1.1.0.0
+        console.p(futureVersionFormat, event.getScriptsFromJar().getLatestVersion().toVersionString());
     }
 }
