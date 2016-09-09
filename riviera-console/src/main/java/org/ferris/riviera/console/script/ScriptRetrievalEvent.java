@@ -12,11 +12,16 @@ public class ScriptRetrievalEvent {
 
     public static final int RETRIEVE_SCRIPT_HISTORY_FROM_DATABASE = 30;
 
-    public static final int SHOW_SCRIPT_HISTORY = 40;
+    public static final int SHOW_SCRIPT_HISTORY_FROM_DATABASE = 40;
+
+    public static final int RETRIEVE_SCRIPT_HISTORY_FROM_JAR = 50;
+
+    public static final int SHOW_SCRIPT_HISTORY_FROM_JAR = 60;
 
     private boolean tableThere;
     private boolean tableCreatedSuccessfully;
     private ScriptHistory scriptHistoryFromDatabase;
+    private ScriptHistory scriptHistoryFromJar;
 
     public boolean isTableCreatedSuccessfully() {
         return tableCreatedSuccessfully;
@@ -41,6 +46,14 @@ public class ScriptRetrievalEvent {
 
     public ScriptHistory getScriptHistoryFromDatabase() {
         return scriptHistoryFromDatabase;
+    }
+
+    void setScriptHistoryFromJar(ScriptHistory scriptHistory) {
+        this.scriptHistoryFromJar = scriptHistory;
+    }
+
+    public ScriptHistory getScriptHistoryFromJar() {
+        return scriptHistoryFromJar;
     }
 
 }

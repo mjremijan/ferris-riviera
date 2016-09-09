@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.script;
 
+import java.sql.ResultSet;
 import java.util.jar.JarEntry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +14,8 @@ import javax.enterprise.context.Dependent;
 public class ScriptBuilder {
 
     private JarEntry jarEntry;
+
+    private ResultSet rs;
 
     private Pattern p;
 
@@ -30,28 +33,69 @@ public class ScriptBuilder {
         return this;
     }
 
+    public ScriptBuilder setResultSet(ResultSet rs) {
+        this.rs = rs;
+        return this;
+    }
+
     /**
-     * Attempt to build a {@link Script} object with whatever has been
-     * given to the builder to build the instance of the object.
+     * Attempt to build a {@link Script} object with whatever has been given to
+     * the builder to build the instance of the object.
      *
      * @return
-     *  <p>
-     *      Return a {@link Script} object if the builder determines it
-     *      has what it needs to build the object and it is able to build it.
-     *  </p>
-     *  <p>
-     *      Return {@code null} if the builder determines it cannot build
-     *      a {@link Script} with what it's been given.
-     *  </p>
+     * <p>
+     * Return a {@link Script} object if the builder determines it has what it
+     * needs to build the object and it is able to build it.
+     * </p>
+     * <p>
+     * Return {@code null} if the builder determines it cannot build a
+     * {@link Script} with what it's been given.
+     * </p>
      *
      * @throws
-     *  <p>
-     *      Throw an {@link IllegalArgumentException} if the builder determines
-     *      it has what it needs to build the object but is unable to do so
-     *      because of some problem.
-     *  </p>
+     * <p>
+     * Throw an {@link IllegalArgumentException} if the builder determines it
+     * has what it needs to build the object but is unable to do so because of
+     * some problem.
+     * </p>
      */
     public Script build() {
+        Script retval = null;
+
+        if (jarEntry != null) {
+            retval = buildFromJarEntry();
+            jarEntry = null;
+        }
+        else
+        if (rs != null) {
+            retval = buildFromRs();
+            rs = null;
+        }
+        else {
+            throw new IllegalArgumentException("No way to build a Script object");
+        }
+
+        return retval;
+    }
+
+    protected Script buildFromRs() {
+        Script retval = null;
+        try {
+            retval = new Script(
+                rs.getInt("MAJOR")
+                , rs.getInt("FEATURE")
+                , rs.getInt("BUG")
+                , rs.getInt("BUILD")
+                , rs.getString("NAME")
+                , rs.getDate("APPLIED_ON")
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return retval;
+    }
+
+    protected Script buildFromJarEntry() {
         if (jarEntry.isDirectory()) {
             return null;
         }
@@ -73,13 +117,9 @@ public class ScriptBuilder {
 
         if (!fileVersion.startsWith(directoryVersion)) {
             throw new IllegalArgumentException(
-                 String.format(
-                    "The JarEntry \"%s\" is invalid because its file name \"%s\" starts with the version \"%s\" but the directory is \"%s\""
-                    , m.group(0)
-                    , fileName
-                    , fileVersion
-                    , directoryVersion
-                 )
+                String.format(
+                    "The JarEntry \"%s\" is invalid because its file name \"%s\" starts with the version \"%s\" but the directory is \"%s\"", m.group(0), fileName, fileVersion, directoryVersion
+                )
             );
         }
 
@@ -87,12 +127,11 @@ public class ScriptBuilder {
             = fileVersion.split("\\.");
 
         Script s = new Script(
-              Integer.parseInt(fileVersionTokens[0]) //int major
+            Integer.parseInt(fileVersionTokens[0]) //int major
             , Integer.parseInt(fileVersionTokens[1]) //int feature
             , Integer.parseInt(fileVersionTokens[2]) //int bug
             , Integer.parseInt(fileVersionTokens[3]) //int build
-            , fileName
-            , null
+            , fileName, null
         );
 
         return s;

@@ -6,7 +6,8 @@ import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.SHOW_SCRIPT_HISTORY;
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.SHOW_SCRIPT_HISTORY_FROM_DATABASE;
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.SHOW_SCRIPT_HISTORY_FROM_JAR;
 import org.jboss.weld.experimental.Priority;
 
 @Singleton
@@ -53,8 +54,8 @@ public class ScriptPage {
     @Inject
     protected ScriptFormat scriptFormat;
 
-    public void view(
-            @Observes @Priority(SHOW_SCRIPT_HISTORY) ScriptRetrievalEvent event
+    public void viewFromDatabase(
+            @Observes @Priority(SHOW_SCRIPT_HISTORY_FROM_DATABASE) ScriptRetrievalEvent event
     ) {
         console.h1(heading);
 
@@ -108,5 +109,26 @@ public class ScriptPage {
                 )
             );
         }
+    }
+
+    public void viewFromJar(
+            @Observes @Priority(SHOW_SCRIPT_HISTORY_FROM_JAR) ScriptRetrievalEvent event
+    ) {
+        console.h1("FROM JAR FILE");
+
+        ScriptHistory history
+            = event.getScriptHistoryFromJar();
+
+        history
+            .list()
+            .forEach(s -> console.p(scriptFormat.format(s)));
+        console.br();
+
+        console.p(
+            historySizeFormat
+          , String.valueOf(history.size())
+        );
+        console.br();
+
     }
 }

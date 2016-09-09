@@ -7,12 +7,12 @@ import javax.enterprise.inject.Produces;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class ScriptJarProducer {
+public class ScriptJarFileProducer {
 
-    private ScriptJar scriptJar;
+    private ScriptJarFile scriptJar;
 
     @Produces
-    public ScriptJar produceScriptJarFile(ScriptAppDirectory scriptAppDirectory) {
+    public ScriptJarFile produceScriptJarFile(ScriptAppDirectory scriptAppDirectory) {
         if (scriptJar == null)
         {
             File[] jars
@@ -36,7 +36,7 @@ public class ScriptJarProducer {
 
             try {
                 scriptJar
-                    = new ScriptJar(scriptAppDirectory, jars[0].getName());
+                    = new ScriptJarFile(scriptAppDirectory, jars[0].getName());
             } catch (Exception e) {
                 throw new RuntimeException(
                     String.format(

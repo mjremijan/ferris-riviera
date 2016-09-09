@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>riviera-console</module>
         <module>riviera-scripts</module>
+        <module>riviera-console</module>        
     </modules>
 </project>

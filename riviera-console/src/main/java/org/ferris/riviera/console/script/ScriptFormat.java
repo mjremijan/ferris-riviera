@@ -30,7 +30,7 @@ public class ScriptFormat {
         String.format(
             combinedFormat
             , String.format(versionFormat, s.getMajor(),s.getFeature(),s.getBug(),s.getBuild())
-            , timestampFormat.format(s.getAppliedOn())
+            , (s.getAppliedOn() == null) ? "" : timestampFormat.format(s.getAppliedOn())
             , String.format(fileNameFormat, s.getName())
         );
     }

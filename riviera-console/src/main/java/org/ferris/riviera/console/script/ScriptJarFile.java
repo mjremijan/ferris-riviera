@@ -10,9 +10,9 @@ import javax.enterprise.inject.Vetoed;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 @Vetoed
-public class ScriptJar extends JarFile {
+public class ScriptJarFile extends JarFile {
 
-    public ScriptJar(File parent, String child) throws IOException {
+    public ScriptJarFile(File parent, String child) throws IOException {
         super(new File(parent, child));
     }
 }
