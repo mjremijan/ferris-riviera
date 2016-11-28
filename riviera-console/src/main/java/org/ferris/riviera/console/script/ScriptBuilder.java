@@ -3,7 +3,6 @@ package org.ferris.riviera.console.script;
 import java.sql.ResultSet;
 import java.util.jar.JarEntry;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
@@ -19,19 +18,8 @@ public class ScriptBuilder {
     protected Logger log;
 
     protected JarEntry jarEntry;
-
     protected ResultSet rs;
 
-    private Pattern p;
-
-    public ScriptBuilder() {
-        String dirRegex
-            = "((\\d+.{1}\\d+.{1}\\d+)(\\s+-\\s+(.+))?)";
-        String fileRegex
-            = "((\\d+.{1}\\d+.{1}\\d+.{1}\\d+)(\\s+-\\s+(.+))?\\.sql)";
-        p = Pattern.compile(dirRegex + "/" + fileRegex);
-
-    }
 
     public ScriptBuilder setJarEntry(JarEntry jarEntry) {
         this.jarEntry = jarEntry;
@@ -94,18 +82,8 @@ public class ScriptBuilder {
     }
 
     private Script buildFromJarEntry() {
-        if (jarEntry.isDirectory()) {
-            System.out.printf("Is directory, returning null. JAR_ENTRY: %s%n", jarEntry);
-            return null;
-        }
 
-        Matcher m
-            = p.matcher(jarEntry.getName());
-
-        if (!m.matches()) {
-            System.out.printf("Does not match, returning null. PATTERN: %s, JAR_ENTRY: %s%n", p.toString(), jarEntry);
-            return null;
-        }
+        Matcher m = null;
 
         //String directoryName = m.group(1);
         String directoryVersion = m.group(2);

@@ -3,11 +3,12 @@ package org.ferris.riviera.console.script;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,6 +30,16 @@ public class ScriptsRetriever {
     @Inject
     protected ConnectionHandler handler;
 
+    private Pattern p;
+
+    @PostConstruct
+    protected void postConstruct() {
+        String dirRegex
+            = "((\\d+.{1}\\d+.{1}\\d+)(\\s+-\\s+(.+))?)";
+        String fileRegex
+            = "((\\d+.{1}\\d+.{1}\\d+.{1}\\d+)(\\s+-\\s+(.+))?\\.sql)";
+        p = Pattern.compile(dirRegex + "/" + fileRegex);
+    }
 
     protected void retrieveScriptsFromDatabaseOrderedAscending(
         @Observes @Priority(RETRIEVE_SCRIPTS_FROM_DATABASE) ScriptRetrievalEvent event
@@ -76,22 +87,27 @@ public class ScriptsRetriever {
         @Observes @Priority(RETRIEVE_SCRIPTS_FROM_JAR) ScriptRetrievalEvent event
     ) {
         log.info("Retrieving scripts from jar");
-        try (JarFile jar = new JarFile(event.getScriptJarFile().toAbsolutePath().toString()))
-        {
-            Enumeration<JarEntry> jarEntries
-                = jar.entries();
+        try (JarFile jar = new JarFile(event.getScriptJarFile().toAbsolutePath().toString())) {
+            List<Script> scripts = jar.stream()
+                .filter(j -> j.isDirectory() == false)
+                .filter(j -> p.matcher(j.getName()).matches())
+                .map(j -> builder.setJarEntry(j).build())
+                .sorted()
+                .collect(Collectors.toList());
 
-            List<Script> scripts
-                = new LinkedList<>();
-
-            while (jarEntries.hasMoreElements()) {
-                JarEntry je = jarEntries.nextElement();
-                Script sc = builder.setJarEntry(je).build();
-                if (sc != null) {
-                    scripts.add(sc);
-                }
-            }
-
+//            Enumeration<JarEntry> jarEntries
+//                = jar.entries();
+//
+//            List<Script> scripts
+//                = new LinkedList<>();
+//
+//            while (jarEntries.hasMoreElements()) {
+//                JarEntry je = jarEntries.nextElement();
+//                Script sc = builder.setJarEntry(je).build();
+//                if (sc != null) {
+//                    scripts.add(sc);
+//                }
+//            }
             log.info(String.format(
                 "Found %d scripts in JAR", scripts.size())
             );
