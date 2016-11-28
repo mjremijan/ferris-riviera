@@ -90,8 +90,9 @@ public class ScriptsRetriever {
         try (JarFile jar = new JarFile(event.getScriptJarFile().toAbsolutePath().toString())) {
             List<Script> scripts = jar.stream()
                 .filter(j -> j.isDirectory() == false)
-                .filter(j -> p.matcher(j.getName()).matches())
-                .map(j -> builder.setJarEntry(j).build())
+                .map(j -> p.matcher(j.getName()))
+                .filter(m -> m.matches())
+                .map(m -> builder.setMatcher(m).build())
                 .sorted()
                 .collect(Collectors.toList());
 

@@ -1,7 +1,6 @@
 package org.ferris.riviera.console.script;
 
 import java.sql.ResultSet;
-import java.util.jar.JarEntry;
 import java.util.regex.Matcher;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -17,12 +16,12 @@ public class ScriptBuilder {
     @Inject
     protected Logger log;
 
-    protected JarEntry jarEntry;
+    protected Matcher matcher;
     protected ResultSet rs;
 
 
-    public ScriptBuilder setJarEntry(JarEntry jarEntry) {
-        this.jarEntry = jarEntry;
+    public ScriptBuilder setMatcher(Matcher matcher) {
+        this.matcher = matcher;
         return this;
     }
 
@@ -49,9 +48,9 @@ public class ScriptBuilder {
     public Script build() {
         Script retval = null;
 
-        if (jarEntry != null) {
-            retval = buildFromJarEntry();
-            jarEntry = null;
+        if (matcher != null) {
+            retval = buildFromMatcher();
+            matcher = null;
         } else {
             if (rs != null) {
                 retval = buildFromRs();
@@ -81,10 +80,9 @@ public class ScriptBuilder {
         return retval;
     }
 
-    private Script buildFromJarEntry() {
-
-        Matcher m = null;
-
+    private Script buildFromMatcher() {
+        Matcher m = matcher;
+        
         //String directoryName = m.group(1);
         String directoryVersion = m.group(2);
         //String directoryDescription = m.group(4);
