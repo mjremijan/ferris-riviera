@@ -9,18 +9,41 @@ import org.junit.Test;
 
 /**
  *
- * @author student
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class ScriptTest {
+
+
+    @Test
+    public void testHashCode() {
+        Script s1
+            = new Script(1, 2, 3, 4, "some name", Calendar.getInstance().getTime());
+
+        Assert.assertEquals(314432287, s1.hashCode());
+    }
+
+    @Test
+    public void testToString() {
+        Script s1
+            = new Script(1, 0, 0, 0, "some name", Calendar.getInstance().getTime());
+
+        Assert.assertEquals("some name", s1.toString());
+    }
+
 
     @Test
     public void equals() {
         Script s1
             = new Script(1, 0, 0, 0, "name", Calendar.getInstance().getTime());
+        Assert.assertEquals(s1,s1);
+
         Script s2
             = new Script(1, 0, 0, 0, "name", Calendar.getInstance().getTime());
-
         Assert.assertEquals(s1, s2);
+
+        Assert.assertFalse(s1.equals(null));
+
+        Assert.assertFalse(s1.equals("foo"));
     }
 
     @Test
@@ -62,6 +85,7 @@ public class ScriptTest {
         list.add(new Script(2, 0, 0, 0, "name", Calendar.getInstance().getTime()));
         list.add(new Script(1, 4, 1, 1, "name", Calendar.getInstance().getTime()));
         list.add(new Script(1, 0, 0, 5, "name", Calendar.getInstance().getTime()));
+        list.add(new Script(1, 0, 0, 5, "name", Calendar.getInstance().getTime()));
 
         Collections.sort(list);
 
@@ -95,6 +119,13 @@ public class ScriptTest {
             Assert.assertEquals(0, s.getFeature());
             Assert.assertEquals(0, s.getBug());
             Assert.assertEquals(4, s.getBuild());
+        }
+        s = list.get(i++);
+        {
+            Assert.assertEquals(1, s.getMajor());
+            Assert.assertEquals(0, s.getFeature());
+            Assert.assertEquals(0, s.getBug());
+            Assert.assertEquals(5, s.getBuild());
         }
         s = list.get(i++);
         {

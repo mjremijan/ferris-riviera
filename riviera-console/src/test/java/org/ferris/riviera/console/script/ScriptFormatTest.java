@@ -76,4 +76,21 @@ public class ScriptFormatTest {
             , actual
         );
     }
+
+
+    @Test
+    public void noTimestamp() {
+        // setup
+        Script s = new Script(1,0,0,1,"1.0.0.1 - First.sql", null);
+
+        // action
+        String actual
+            = format.format(s);
+
+        // verify
+        Assert.assertEquals(
+            "1.0.0.1      1.0.0.1 - First.sql"
+            , actual
+        );
+    }
 }

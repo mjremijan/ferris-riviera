@@ -5,6 +5,8 @@ import java.util.jar.JarEntry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -13,9 +15,12 @@ import javax.enterprise.context.Dependent;
 @Dependent
 public class ScriptBuilder {
 
-    private JarEntry jarEntry;
+    @Inject
+    protected Logger log;
 
-    private ResultSet rs;
+    protected JarEntry jarEntry;
+
+    protected ResultSet rs;
 
     private Pattern p;
 
@@ -39,25 +44,19 @@ public class ScriptBuilder {
     }
 
     /**
-     * Attempt to build a {@link Script} object with whatever has been given to
-     * the builder to build the instance of the object.
+     * Attempt to build a {@link Script} object with whatever has been given to the builder to build
+     * the instance of the object.
      *
-     * @return
+     * @return Return a {@link Script} object if the builder determines it has what it needs to
+     * build the object and it is able to build it.
      * <p>
-     * Return a {@link Script} object if the builder determines it has what it
-     * needs to build the object and it is able to build it.
-     * </p>
-     * <p>
-     * Return {@code null} if the builder determines it cannot build a
-     * {@link Script} with what it's been given.
+     * Return {@code null} if the builder determines it cannot build a {@link Script} with what it's
+     * been given.
      * </p>
      *
-     * @throws
-     * <p>
-     * Throw an {@link IllegalArgumentException} if the builder determines it
-     * has what it needs to build the object but is unable to do so because of
-     * some problem.
-     * </p>
+     * @throws IllegalArgumentException Throw an {@link IllegalArgumentException} if the builder
+     * determines it has what it needs to build the object but is unable to do so because of some
+     * problem.
      */
     public Script build() {
         Script retval = null;
@@ -65,24 +64,23 @@ public class ScriptBuilder {
         if (jarEntry != null) {
             retval = buildFromJarEntry();
             jarEntry = null;
-        }
-        else
-        if (rs != null) {
-            retval = buildFromRs();
-            rs = null;
-        }
-        else {
-            throw new IllegalArgumentException("No way to build a Script object");
+        } else {
+            if (rs != null) {
+                retval = buildFromRs();
+                rs = null;
+            } else {
+                throw new IllegalArgumentException("No way to build a Script object");
+            }
         }
 
         return retval;
     }
 
-    protected Script buildFromRs() {
+    private Script buildFromRs() {
         Script retval = null;
         try {
             retval = new Script(
-                rs.getInt("MAJOR")
+                  rs.getInt("MAJOR")
                 , rs.getInt("FEATURE")
                 , rs.getInt("BUG")
                 , rs.getInt("BUILD")
@@ -95,8 +93,9 @@ public class ScriptBuilder {
         return retval;
     }
 
-    protected Script buildFromJarEntry() {
+    private Script buildFromJarEntry() {
         if (jarEntry.isDirectory()) {
+            System.out.printf("Is directory, returning null. JAR_ENTRY: %s%n", jarEntry);
             return null;
         }
 
@@ -104,6 +103,7 @@ public class ScriptBuilder {
             = p.matcher(jarEntry.getName());
 
         if (!m.matches()) {
+            System.out.printf("Does not match, returning null. PATTERN: %s, JAR_ENTRY: %s%n", p.toString(), jarEntry);
             return null;
         }
 

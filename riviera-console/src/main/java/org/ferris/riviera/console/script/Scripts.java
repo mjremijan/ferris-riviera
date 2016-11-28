@@ -40,13 +40,19 @@ public class Scripts {
         if (scripts.isEmpty()) {
             return null;
         } else {
-            return scripts.stream().max(Comparator.comparing(Script::getAppliedOn)).get();
+            return scripts.stream()
+                .filter(s -> s.getAppliedOn() != null)
+                .max(Comparator.comparing(Script::getAppliedOn)).get();
         }
     }
 
     public Scripts removeAll(Scripts fromDatabase) {
         scripts.removeAll(fromDatabase.scripts);
         return this;
+    }
+
+    public boolean isEmpty() {
+        return scripts.isEmpty();
     }
 
 }

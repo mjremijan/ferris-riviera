@@ -1,6 +1,5 @@
 package org.ferris.riviera.console.script;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -8,6 +7,7 @@ import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,10 +29,8 @@ public class ScriptsRetriever {
     @Inject
     protected ConnectionHandler handler;
 
-    @Inject
-    protected ScriptJarFile scriptJarFile;
 
-    protected void retrieveScriptsFromDatabase(
+    protected void retrieveScriptsFromDatabaseOrderedAscending(
         @Observes @Priority(RETRIEVE_SCRIPTS_FROM_DATABASE) ScriptRetrievalEvent event
     ) {
         log.info("Retrieving scripts from database");
@@ -74,36 +72,35 @@ public class ScriptsRetriever {
         }
     }
 
-    protected void retrieveScriptsFromJar(
+    protected void retrieveScriptsFromJarOrderedAscending(
         @Observes @Priority(RETRIEVE_SCRIPTS_FROM_JAR) ScriptRetrievalEvent event
     ) {
         log.info("Retrieving scripts from jar");
+        try (JarFile jar = new JarFile(event.getScriptJarFile().toAbsolutePath().toString()))
+        {
+            Enumeration<JarEntry> jarEntries
+                = jar.entries();
 
-        Enumeration<JarEntry> jarEntries
-            = scriptJarFile.entries();
+            List<Script> scripts
+                = new LinkedList<>();
 
-        List<Script> scripts
-            = new LinkedList<>();
-
-        while (jarEntries.hasMoreElements()) {
-            JarEntry je = jarEntries.nextElement();
-            Script sc = builder.setJarEntry(je).build();
-            if (sc != null) {
-                scripts.add(sc);
+            while (jarEntries.hasMoreElements()) {
+                JarEntry je = jarEntries.nextElement();
+                Script sc = builder.setJarEntry(je).build();
+                if (sc != null) {
+                    scripts.add(sc);
+                }
             }
+
+            log.info(String.format(
+                "Found %d scripts in JAR", scripts.size())
+            );
+
+            event.setScriptsFromJar(
+                new Scripts(scripts)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        log.info(String.format(
-            "Found %d scripts in JAR", scripts.size())
-        );
-
-
-        event.setScriptJarFileName(
-            new File(scriptJarFile.getName()).getName()
-        );
-
-        event.setScriptsFromJar(
-            new Scripts(scripts)
-        );
     }
 }

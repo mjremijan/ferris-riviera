@@ -79,41 +79,50 @@ public class ScriptPage {
         }
     }
 
-
     /*
+        Future version: UP TO DATE
 
-
+    Exit
+    ----
 
     */
+
     public void viewFromJar(
           @Observes @Priority(SHOW_NEW_SCRIPTS_TO_APPLY) ScriptRetrievalEvent event
         , @Key("ScriptPage.jar.Heading") String heading
         , @Key("ScriptPage.jar.ScriptFileFormat") String scriptFileFormat
         , @Key("ScriptPage.jar.ScriptCountFormat") String scriptCountFormat
         , @Key("ScriptPage.jar.FutureVersionFormat") String futureVersionFormat
+        , @Key("ScriptPage.jar.FutureVersionUpToDate") String futureVersionUpToDate
     ) {
         // Available Updates
         // -----------------
         console.h1(heading);
 
         // Found script file 'email-ddl.zip'
-        console.p(scriptFileFormat, event.getScriptJarFileName());
+        console.p(scriptFileFormat, String.valueOf(event.getScriptJarFile().getFileName()));
         console.br();
 
         // 1.0.0.1    1.0.0.1[ - Optional].sql
         // 1.0.0.2    1.0.0.2.sql
         // 1.0.0.3    1.0.0.3.sql
         // 1.1.0.0    1.1.0.0[ - New features].sql
-        event.getScriptsFromJar()
-            .list()
-            .forEach(s -> console.p(scriptFormat.format(s)));
-        console.br();
+        if (!event.getScriptsFromJar().isEmpty()) {
+            event.getScriptsFromJar()
+                .list()
+                .forEach(s -> console.p(scriptFormat.format(s)));
+            console.br();
+        }
 
         // Script count: 4
         console.p(scriptCountFormat, String.valueOf(event.getScriptsFromJar().size()));
         console.br();
 
         // Future version: 1.1.0.0
-        console.p(futureVersionFormat, event.getScriptsFromJar().getLatestVersion().toVersionString());
+        if (!event.getScriptsFromJar().isEmpty()) {
+            console.p(futureVersionFormat, event.getScriptsFromJar().getLatestVersion().toVersionString());
+        } else {
+            console.p(futureVersionUpToDate);
+        }
     }
 }

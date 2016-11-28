@@ -1,5 +1,8 @@
 package org.ferris.riviera.console.script;
 
+import java.nio.file.Path;
+
+
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
@@ -14,6 +17,8 @@ public class ScriptRetrievalEvent {
 
     public static final int SHOW_SCRIPTS_FROM_DATABASE = 40;
 
+    public static final int FIND_SCRIPT_JAR_PATH = 45;
+
     public static final int RETRIEVE_SCRIPTS_FROM_JAR = 50;
 
     public static final int FILTER_FOR_NEW_SCRIPTS_TO_APPLY = 60;
@@ -25,18 +30,18 @@ public class ScriptRetrievalEvent {
     private Scripts scriptsFromDatabase;
     private Scripts scriptsFromJar;
     private Scripts scriptsToApply;
-    private String scriptJarFileName;
+    private Path scriptJarFile;
 
     public boolean isTableCreatedSuccessfully() {
         return tableCreatedSuccessfully;
     }
 
-    public String getScriptJarFileName() {
-        return scriptJarFileName;
+    public Path getScriptJarFile() {
+        return scriptJarFile;
     }
 
-    public void setScriptJarFileName(String scriptJarFileName) {
-        this.scriptJarFileName = scriptJarFileName;
+    public void setScriptJarFile(Path scriptJarFile) {
+        this.scriptJarFile = scriptJarFile;
     }
 
     public void setTableCreatedSuccessfully(boolean tableCreatedSuccessfully) {
