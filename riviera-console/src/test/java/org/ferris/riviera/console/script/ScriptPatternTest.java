@@ -182,6 +182,74 @@ public class ScriptPatternTest {
         }
     }
 
+
+    @Test
+    public void pattern4_1() {
+        //setup
+        String s = "1.0.0 -/1.0.0.1.sql";
+
+        // action
+        Matcher m = pattern.matcher(s);
+
+        // assert
+        Assert.assertFalse(m.matches());
+    }
+
+
+    @Test
+    public void pattern4_2() {
+        //setup
+        String s = "1.0.0-/1.0.0.1.sql";
+
+        // action
+        Matcher m = pattern.matcher(s);
+
+        // assert
+        Assert.assertFalse(m.matches());
+    }
+
+
+    @Test
+    public void pattern4_3() {
+        //setup
+        String s = "1.0.0- /1.0.0.1.sql";
+
+        // action
+        Matcher m = pattern.matcher(s);
+
+        // assert
+        Assert.assertTrue(m.matches());
+        Assert.assertEquals(8, m.groupCount());
+        {
+            String directoryName = m.group(1);
+            Assert.assertEquals("1.0.0- ", directoryName);
+
+            String directoryVersion = m.group(2);
+            Assert.assertEquals("1.0.0", directoryVersion);
+
+            String dashDirectoryDescription = m.group(3);
+            Assert.assertEquals("- ", dashDirectoryDescription);
+
+            String directoryDescription = m.group(4);
+            Assert.assertEquals(" ", directoryDescription);
+        }
+        {
+            String fileName = m.group(5);
+            Assert.assertEquals("1.0.0.1.sql", fileName);
+
+            String fileVersion = m.group(6);
+            Assert.assertEquals("1.0.0.1", fileVersion);
+
+            String dashFileDescription = m.group(7);
+            Assert.assertEquals(null, dashFileDescription);
+
+            String fileDescription = m.group(8);
+            Assert.assertEquals(null, fileDescription);
+        }
+    }
+
+
+
     @Test
     public void pattern5() {
         //setup
