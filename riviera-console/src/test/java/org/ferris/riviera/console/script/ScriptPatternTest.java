@@ -212,7 +212,7 @@ public class ScriptPatternTest {
     @Test
     public void pattern4_3() {
         //setup
-        String s = "1.0.0- /1.0.0.1.sql";
+        String s = "1.0.0 -/1.0.0.1.sql";
 
         // action
         Matcher m = pattern.matcher(s);
@@ -222,13 +222,13 @@ public class ScriptPatternTest {
         Assert.assertEquals(8, m.groupCount());
         {
             String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0- ", directoryName);
+            Assert.assertEquals("1.0.0 - ", directoryName);
 
             String directoryVersion = m.group(2);
             Assert.assertEquals("1.0.0", directoryVersion);
 
             String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals("- ", dashDirectoryDescription);
+            Assert.assertEquals(" - ", dashDirectoryDescription);
 
             String directoryDescription = m.group(4);
             Assert.assertEquals(" ", directoryDescription);
