@@ -13,10 +13,11 @@ public class ScriptPattern {
 
     public ScriptPattern() {
         String dirRegex
-            = "((\\d+.{1}\\d+.{1}\\d+)(\\s*-\\s*(.+))?)";
+            = "^((\\d+\\.\\d+\\.\\d+)(?:\\s*-\\s*(\\S{1}.*))?)";
         String fileRegex
-            = "((\\d+.{1}\\d+.{1}\\d+.{1}\\d+)(\\s*-\\s*(.+))?\\.sql)";
-        pattern = Pattern.compile(dirRegex + "/" + fileRegex);
+            = "((\\d+\\.\\d+\\.\\d+\\.\\d+)(?:\\s*-\\s*(\\S{1}.*))?.sql)$";
+
+        pattern = Pattern.compile(dirRegex + "\\/" + fileRegex);
     }
 
     public Matcher matcher(CharSequence input) {
