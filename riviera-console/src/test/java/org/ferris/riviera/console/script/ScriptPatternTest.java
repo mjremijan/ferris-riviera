@@ -22,467 +22,113 @@ public class ScriptPatternTest {
     }
 
 
-
     @Test
-    public void pattern1() {
-        //setup
-        String s = "1.0.0/1.0.0.1.sql";
-
+    public void matches() {
+        // true matches
+        List<String> strings = new LinkedList<>();
+        Collections.addAll(strings
+            , "1.0.0/1.0.0.1.sql"
+            , "1.0.0 - description/1.0.0.1.sql"
+            , "1.0.0- description/1.0.0.1.sql"
+            , "1.0.0-description/1.0.0.1.sql"   
+            , "1.0.0 - abc_zyz 123.789 - cool/1.0.0.1.sql"
+            , "1.0.0 - abc_zyz 123.789 - cool/1.0.0.1 - description.sql"
+            , "1.0.0 - abc_zyz 123.789 - cool/1.0.0.1- description.sql"
+            , "1.0.0/1.0.0.1-description.sql"
+            , "1.0.0/1.0.0.1-abc_zyz 123.789-   cool.sql"
+            , "111.2222.333- some_really bad descripTion/11111.222222.33333.44444-abc_zyz 123.789 - cool.sql"
+        );
+        
+        // action & assert
+        strings.forEach(s -> {
+            Matcher m = pattern.matcher(s);
+            Assert.assertTrue(String.format("Pattern doesn't match \"%s\"",s), m.matches());
+        });
+        
+        // false matches
+        strings = new LinkedList<>();
+        Collections.addAll(strings
+            , "1.0.0 - /1.0.0.1.sql"
+            , "1.0.0-/1.0.0.1.sql"
+            , "1.0.0 -/1.0.0.1.sql"
+            , "1.0.0- /1.0.0.1.sql"   
+        );
+        // action & assert
+        strings.forEach(s -> {
+            Matcher m = pattern.matcher(s);
+            Assert.assertFalse(String.format("Pattern matches \"%s\" but shouldn't",s), m.matches());
+        });
+    }
+    
+    @Test
+    public void allGroups() {
+        // setup
+        String s =
+            "111.2222.333- some_really bad descripTion/11111.222222.33333.44444-abc_zyz 123.789 - cool.sql";
+        
         // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals(null, dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals(null, directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals(null, dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals(null, fileDescription);
-        }
+        Matcher m
+            = pattern.matcher(s);
+        
+        // validate
+        Assert.assertEquals(6, m.groupCount());
+                
+        // [0] Entire string        111.2222.333- some_really bad descripTion/11111.222222.33333.44444-abc_zyz 123.789 - cool.sql
+        Assert.assertEquals("111.2222.333- some_really bad descripTion/11111.222222.33333.44444-abc_zyz 123.789 - cool.sql", m.group(0));
+        
+        // [1] Directory name       111.2222.333- some_really bad descripTion  
+        Assert.assertEquals("111.2222.333- some_really bad descripTion", m.group(1));
+        
+        // [2] Directory version    111.2222.333
+        Assert.assertEquals("111.2222.333", m.group(2));
+        
+        // [3] Directory title      some_really bad descripTion
+        Assert.assertEquals("some_really bad descripTion", m.group(3));
+        
+        // [4] File name            11111.222222.33333.44444-abc_zyz 123.789 - cool.sql
+        Assert.assertEquals("11111.222222.33333.44444-abc_zyz 123.789 - cool.sql", m.group(4));
+        
+        // [5] File version         11111.222222.33333.44444
+        Assert.assertEquals("11111.222222.33333.44444", m.group(5));
+        
+        // [6] File title           abc_zyz 123.789 - cool
+        Assert.assertEquals("abc_zyz 123.789 - cool", m.group(6));    
+        
+    }
+    
+    @Test
+    public void minimalGroups() {
+        // setup
+        String s =
+            "1.0.0/1.0.0.10.sql";
+        
+        // action
+        Matcher m
+            = pattern.matcher(s);
+        
+        // validate
+        Assert.assertEquals(6, m.groupCount());
+                
+        // [0] Entire string        1.0.0/1.0.0.10.sql
+        Assert.assertEquals("1.0.0/1.0.0.10.sql", m.group(0));
+        
+        // [1] Directory name       1.0.0  
+        Assert.assertEquals("1.0.0", m.group(1));
+        
+        // [2] Directory version    1.0.0
+        Assert.assertEquals("1.0.0", m.group(2));
+        
+        // [3] Directory title      null
+        Assert.assertNull(m.group(3));
+        
+        // [4] File name            1.0.0.10.sql
+        Assert.assertEquals("1.0.0.10.sql", m.group(4));
+        
+        // [5] File version         1.0.0.10
+        Assert.assertEquals("1.0.0.10", m.group(5));
+        
+        // [6] File title           null
+        Assert.assertNull( m.group(6));
     }
 
-
-    @Test
-    public void pattern2() {
-        //setup
-        String s = "1.0.0 - description/1.0.0.1.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0 - description", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals(" - description", dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals("description", directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals(null, dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals(null, fileDescription);
-        }
-    }
-
-
-    @Test
-    public void pattern3() {
-        //setup
-        String s = "1.0.0- description/1.0.0.1.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0- description", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals("- description", dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals("description", directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals(null, dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals(null, fileDescription);
-        }
-    }
-
-
-    @Test
-    public void pattern4() {
-        //setup
-        String s = "1.0.0-description/1.0.0.1.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0-description", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals("-description", dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals("description", directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals(null, dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals(null, fileDescription);
-        }
-    }
-
-
-    @Test
-    public void pattern4_1() {
-        //setup
-        String s = "1.0.0 -/1.0.0.1.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertFalse(m.matches());
-    }
-
-
-    @Test
-    public void pattern4_2() {
-        //setup
-        String s = "1.0.0-/1.0.0.1.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertFalse(m.matches());
-    }
-
-
-    @Test
-    public void pattern4_3() {
-        //setup
-        String s = "1.0.0 -/1.0.0.1.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0 - ", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals(" - ", dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals(" ", directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals(null, dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals(null, fileDescription);
-        }
-    }
-
-
-
-    @Test
-    public void pattern5() {
-        //setup
-        String s = "1.0.0 - abc_zyz 123.789 - cool/1.0.0.1.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0 - abc_zyz 123.789 - cool", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals(" - abc_zyz 123.789 - cool", dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals("abc_zyz 123.789 - cool", directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals(null, dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals(null, fileDescription);
-        }
-    }
-
-
-    @Test
-    public void pattern6() {
-        //setup
-        String s = "1.0.0 - abc_zyz 123.789 - cool/1.0.0.1 - description.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0 - abc_zyz 123.789 - cool", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals(" - abc_zyz 123.789 - cool", dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals("abc_zyz 123.789 - cool", directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1 - description.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals(" - description", dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals("description", fileDescription);
-        }
-    }
-
-    @Test
-    public void pattern7() {
-        //setup
-        String s = "1.0.0 - abc_zyz 123.789 - cool/1.0.0.1- description.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0 - abc_zyz 123.789 - cool", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals(" - abc_zyz 123.789 - cool", dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals("abc_zyz 123.789 - cool", directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1- description.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals("- description", dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals("description", fileDescription);
-        }
-    }
-
-    @Test
-    public void pattern8() {
-        //setup
-        String s = "1.0.0/1.0.0.1-description.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals(null, dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals(null, directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1-description.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals("-description", dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals("description", fileDescription);
-        }
-    }
-
-    @Test
-    public void pattern9() {
-        //setup
-        String s = "1.0.0/1.0.0.1-abc_zyz 123.789 - cool.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("1.0.0", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("1.0.0", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals(null, dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals(null, directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("1.0.0.1-abc_zyz 123.789 - cool.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("1.0.0.1", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals("-abc_zyz 123.789 - cool", dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals("abc_zyz 123.789 - cool", fileDescription);
-        }
-    }
-
-
-    @Test
-    public void pattern10() {
-        //setup
-        String s = "111.2222.333- some_really bad descripTion/11111.222222.33333.44444-abc_zyz 123.789 - cool.sql";
-
-        // action
-        Matcher m = pattern.matcher(s);
-
-        // assert
-        Assert.assertTrue(m.matches());
-        Assert.assertEquals(8, m.groupCount());
-        {
-            String directoryName = m.group(1);
-            Assert.assertEquals("111.2222.333- some_really bad descripTion", directoryName);
-
-            String directoryVersion = m.group(2);
-            Assert.assertEquals("111.2222.333", directoryVersion);
-
-            String dashDirectoryDescription = m.group(3);
-            Assert.assertEquals("- some_really bad descripTion", dashDirectoryDescription);
-
-            String directoryDescription = m.group(4);
-            Assert.assertEquals("some_really bad descripTion", directoryDescription);
-        }
-        {
-            String fileName = m.group(5);
-            Assert.assertEquals("11111.222222.33333.44444-abc_zyz 123.789 - cool.sql", fileName);
-
-            String fileVersion = m.group(6);
-            Assert.assertEquals("11111.222222.33333.44444", fileVersion);
-
-            String dashFileDescription = m.group(7);
-            Assert.assertEquals("-abc_zyz 123.789 - cool", dashFileDescription);
-
-            String fileDescription = m.group(8);
-            Assert.assertEquals("abc_zyz 123.789 - cool", fileDescription);
-        }
-    }
 }
