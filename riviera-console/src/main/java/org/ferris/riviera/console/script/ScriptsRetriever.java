@@ -86,19 +86,7 @@ public class ScriptsRetriever {
                 .sorted()
                 .collect(Collectors.toList());
 
-//            Enumeration<JarEntry> jarEntries
-//                = jar.entries();
-//
-//            List<Script> scripts
-//                = new LinkedList<>();
-//
-//            while (jarEntries.hasMoreElements()) {
-//                JarEntry je = jarEntries.nextElement();
-//                Script sc = builder.setJarEntry(je).build();
-//                if (sc != null) {
-//                    scripts.add(sc);
-//                }
-//            }
+
             log.info(String.format(
                 "Found %d scripts in JAR", scripts.size())
             );

@@ -67,11 +67,14 @@ public class ScriptBuilder {
         Script retval = null;
         try {
             retval = new Script(
-                  rs.getInt("MAJOR")
+                  rs.getString("RELEASE_VERSION")
+                , rs.getString("RELEASE_TITLE")
+                , rs.getInt("MAJOR")
                 , rs.getInt("FEATURE")
                 , rs.getInt("BUG")
                 , rs.getInt("BUILD")
-                , rs.getString("NAME")
+                , rs.getString("FILE_NAME")
+                , rs.getString("FILE_DESCRIPTION")
                 , rs.getDate("APPLIED_ON")
             );
         } catch (Exception e) {
@@ -83,28 +86,27 @@ public class ScriptBuilder {
     private Script buildFromMatcher() {
         Matcher m = matcher;
 
-        String directoryVersion = m.group(2);
-        String fileName = m.group(5);
-        String fileVersion = m.group(6);
-
-        if (!fileVersion.startsWith(directoryVersion)) {
-            throw new IllegalArgumentException(
-                String.format(
-                    "The JarEntry \"%s\" is invalid because its file name \"%s\" starts with the version \"%s\" but the directory is \"%s\"", m.group(0), fileName, fileVersion, directoryVersion
-                )
-            );
-        }
+        String entireString = m.group(0);
+        String directoryName = m.group(1);
+        String releaseVersion = m.group(2);
+        String releaseTitle = m.group(3);
+        String fileName = m.group(4);
+        String fileVersion = m.group(5);
+        String fileDescription = m.group(6);
 
         String[] fileVersionTokens
             = fileVersion.split("\\.");
 
         Script s = new Script(
-              Integer.parseInt(fileVersionTokens[0]) //int major
+              releaseVersion
+            , releaseTitle
+            , Integer.parseInt(fileVersionTokens[0]) //int major
             , Integer.parseInt(fileVersionTokens[1]) //int feature
             , Integer.parseInt(fileVersionTokens[2]) //int bug
             , Integer.parseInt(fileVersionTokens[3]) //int build
             , fileName
-            , null
+            , fileDescription
+            , null // appliedOn
         );
 
         return s;

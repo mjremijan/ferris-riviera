@@ -9,19 +9,36 @@ import java.util.Objects;
  */
 public class Script implements Comparable<Script> {
 
+    private String releaseVersion;
+    private String releaseTitle;
     private int major;
     private int feature;
     private int bug;
     private int build;
-    private String name;
+    private String fileName;
+    private String fileDescription;
     private Date appliedOn;
 
-    public Script(int major, int feature, int bug, int build, String name, Date appliedOn) {
+    public Script(
+          String releaseVersion
+        , String releaseTitle
+        , int major
+        , int feature
+        , int bug
+        , int build
+        , String fileName
+        , String fileDescription
+        , Date appliedOn
+    ) {
+        this.releaseVersion = releaseVersion;
+        this.releaseTitle = releaseTitle;
         this.major = major;
         this.feature = feature;
         this.bug = bug;
         this.build = build;
-        this.name = name;
+        this.fileName = fileName;
+        this.fileDescription = fileDescription;
+        this.appliedOn = appliedOn;
         this.appliedOn = appliedOn;
     }
 
@@ -37,7 +54,7 @@ public class Script implements Comparable<Script> {
 
     @Override
     public String toString() {
-        return this.name;
+        return this.fileName;
     }
 
     @Override
@@ -63,12 +80,20 @@ public class Script implements Comparable<Script> {
         }
 
         Script other
-                = (Script) obj;
+            = (Script) obj;
 
         return (this.major == other.major
-                && this.feature == other.feature
-                && this.bug == other.bug
-                && this.build == other.build);
+            && this.feature == other.feature
+            && this.bug == other.bug
+            && this.build == other.build);
+    }
+
+    public String getReleaseVersion() {
+        return releaseVersion;
+    }
+
+    public String getReleaseTitle() {
+        return releaseTitle;
     }
 
     public int getMajor() {
@@ -87,8 +112,12 @@ public class Script implements Comparable<Script> {
         return build;
     }
 
-    public String getName() {
-        return name;
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getFileDescription() {
+        return fileDescription;
     }
 
     public Date getAppliedOn() {

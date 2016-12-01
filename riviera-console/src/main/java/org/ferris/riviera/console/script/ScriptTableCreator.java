@@ -33,11 +33,14 @@ public class ScriptTableCreator {
                 = handler.getConnection();
 
         String sql = new StringJoiner(",", "CREATE TABLE SCRIPT_HISTORY (", ")")
+                .add("RELEASE_VERSION VARCHAR(8) NOT NULL")
+                .add("RELEASE_TITLE VARCHAR(50)")
                 .add("MAJOR INT NOT NULL")
                 .add("FEATURE INT NOT NULL")
                 .add("BUG INT NOT NULL")
                 .add("BUILD INT NOT NULL")
-                .add("NAME VARCHAR(100) NOT NULL")
+                .add("FILE_DESCRIPTION VARCHAR(50)")
+                .add("FILE_NAME VARCHAR(100) NOT NULL")
                 .add("APPLIED_ON TIMESTAMP NOT NULL")
                 .add(
                         new StringJoiner(",", "PRIMARY KEY (", ")")

@@ -19,7 +19,7 @@ public class ScriptFormat {
             = (s.getAppliedOn() == null) ? null : new SimpleDateFormat("E, dd MMM yyyy, hh:mm a").format(s.getAppliedOn());
 
         String fileName
-            = s.getName();
+            = s.getFileName();
 
         StringBuilder sp = new StringBuilder();
         {
