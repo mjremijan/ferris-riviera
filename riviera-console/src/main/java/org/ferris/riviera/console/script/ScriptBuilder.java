@@ -50,16 +50,16 @@ public class ScriptBuilder {
 
         if (matcher != null) {
             retval = buildFromMatcher();
-            matcher = null;
+        }
+        else
+        if (rs != null) {
+            retval = buildFromRs();
         } else {
-            if (rs != null) {
-                retval = buildFromRs();
-                rs = null;
-            } else {
-                throw new IllegalArgumentException("No way to build a Script object");
-            }
+            throw new IllegalArgumentException("No way to build a Script object");
         }
 
+        rs = null;
+        matcher = null;
         return retval;
     }
 
@@ -82,14 +82,10 @@ public class ScriptBuilder {
 
     private Script buildFromMatcher() {
         Matcher m = matcher;
-        
-        //String directoryName = m.group(1);
-        String directoryVersion = m.group(2);
-        //String directoryDescription = m.group(4);
 
+        String directoryVersion = m.group(2);
         String fileName = m.group(5);
         String fileVersion = m.group(6);
-        //String fileDescription = m.group(8);
 
         if (!fileVersion.startsWith(directoryVersion)) {
             throw new IllegalArgumentException(
@@ -103,11 +99,12 @@ public class ScriptBuilder {
             = fileVersion.split("\\.");
 
         Script s = new Script(
-            Integer.parseInt(fileVersionTokens[0]) //int major
+              Integer.parseInt(fileVersionTokens[0]) //int major
             , Integer.parseInt(fileVersionTokens[1]) //int feature
             , Integer.parseInt(fileVersionTokens[2]) //int bug
             , Integer.parseInt(fileVersionTokens[3]) //int build
-            , fileName, null
+            , fileName
+            , null
         );
 
         return s;

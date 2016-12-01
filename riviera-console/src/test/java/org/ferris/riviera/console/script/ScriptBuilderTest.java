@@ -3,6 +3,7 @@ package org.ferris.riviera.console.script;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,6 +33,17 @@ public class ScriptBuilderTest {
     public void before() {
         builder = new ScriptBuilder();
         builder.log = logMock;
+    }
+
+
+    @Test
+    public void none_IllegalArgumentException() {
+        // setup
+        expectedEx.expect(IllegalArgumentException.class);
+        expectedEx.expectMessage("No way to build a");
+
+        // action
+        Script s = builder.build();
     }
 
     @Test
@@ -72,6 +84,37 @@ public class ScriptBuilderTest {
 
         // action
         builder.setResultSet(rsMock);
+        Script s = builder.build();
+    }
+
+    @Test
+    public void matcher_ok() {
+        // setup
+        Matcher m = new ScriptPattern().matcher("1.0.2/1.0.2.4 - oops.sql");
+
+        // action
+        builder.setMatcher(m);
+        Script s = builder.build();
+
+        // verify
+        Assert.assertEquals(1, s.getMajor());
+        Assert.assertEquals(0, s.getFeature());
+        Assert.assertEquals(2, s.getBug());
+        Assert.assertEquals(4, s.getBuild());
+        Assert.assertEquals("1.0.2.4 - oops.sql", s.getName());
+        Assert.assertEquals(null, s.getAppliedOn());
+    }
+
+
+    @Test
+    public void matcher_IllegalArgumentException() {
+        // setup
+        Matcher m = new ScriptPattern().matcher("1.0.0/1.2.0.0.sql");
+        expectedEx.expect(IllegalArgumentException.class);
+        expectedEx.expectMessage("The JarEntry \"1.0.0/1.2.0.0.sql\" is invalid");
+
+        // action
+        builder.setMatcher(m);
         Script s = builder.build();
     }
 

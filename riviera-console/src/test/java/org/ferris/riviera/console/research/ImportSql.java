@@ -9,15 +9,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
-import org.ferris.riviera.console.script.Script;
 import org.ferris.riviera.console.script.ScriptBuilder;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,24 +41,7 @@ public class ImportSql {
         Enumeration<JarEntry> jarEntries
             = jarFile.entries();
 
-        Map<Script,JarEntry> scripts
-            = new HashMap<>();
-
-        while (jarEntries.hasMoreElements()) {
-            JarEntry je = jarEntries.nextElement();
-            System.out.printf("%s%n", je.toString());
-            Script sc = builder.setJarEntry(je).build();
-            if (sc != null) {
-                scripts.put(sc, je);
-            }
-        }
-
-        scripts.forEach(
-            (k,v)->System.out.printf("Script: %s, JarEntry: %s%n",k.toString(), v.getName())
-        );
-
-        scripts.forEach(
-            (k,v)-> {
+        jarFile.stream().forEach(v -> {
                 try {
                     InputStream is = jarFile.getInputStream(v);
                     String result = new BufferedReader(new InputStreamReader(is)).lines()

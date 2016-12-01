@@ -6,9 +6,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.jar.JarFile;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,16 +28,8 @@ public class ScriptsRetriever {
     @Inject
     protected ConnectionHandler handler;
 
-    private Pattern p;
-
-    @PostConstruct
-    protected void postConstruct() {
-        String dirRegex
-            = "((\\d+.{1}\\d+.{1}\\d+)(\\s+-\\s+(.+))?)";
-        String fileRegex
-            = "((\\d+.{1}\\d+.{1}\\d+.{1}\\d+)(\\s+-\\s+(.+))?\\.sql)";
-        p = Pattern.compile(dirRegex + "/" + fileRegex);
-    }
+    @Inject
+    protected ScriptPattern pattern;
 
     protected void retrieveScriptsFromDatabaseOrderedAscending(
         @Observes @Priority(RETRIEVE_SCRIPTS_FROM_DATABASE) ScriptRetrievalEvent event
@@ -90,7 +80,7 @@ public class ScriptsRetriever {
         try (JarFile jar = new JarFile(event.getScriptJarFile().toAbsolutePath().toString())) {
             List<Script> scripts = jar.stream()
                 .filter(j -> j.isDirectory() == false)
-                .map(j -> p.matcher(j.getName()))
+                .map(j -> pattern.matcher(j.getName()))
                 .filter(m -> m.matches())
                 .map(m -> builder.setMatcher(m).build())
                 .sorted()
