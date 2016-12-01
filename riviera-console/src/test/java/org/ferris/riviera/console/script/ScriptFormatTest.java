@@ -25,7 +25,7 @@ public class ScriptFormatTest {
         GregorianCalendar gc
             = new GregorianCalendar(2007, Calendar.DECEMBER, 12, 17, 5);
 
-        Script s = new Script(1,0,0,99,"1.0.0.99 - First.sql",gc.getTime());
+        Script s = new Script(null,null,1,0,0,99,"1.0.0.99 - First.sql",null,gc.getTime());
 
         // action
         String actual
@@ -44,7 +44,7 @@ public class ScriptFormatTest {
         GregorianCalendar gc
             = new GregorianCalendar(2007, Calendar.DECEMBER, 12, 17, 5);
 
-        Script s = new Script(1,0,0,1,"1.0.0.1 - First.sql",gc.getTime());
+        Script s = new Script(null,null,1,0,0,1,"1.0.0.1 - First.sql",null,gc.getTime());
 
         // action
         String actual
@@ -64,7 +64,7 @@ public class ScriptFormatTest {
         GregorianCalendar gc
             = new GregorianCalendar(2007, Calendar.DECEMBER, 12, 17, 5);
 
-        Script s = new Script(1,15,0,10,"1.15.0.10 - Wow.sql",gc.getTime());
+        Script s = new Script(null,null,1,15,0,10,"1.15.0.10 - Wow.sql",null,gc.getTime());
 
         // action
         String actual
@@ -81,7 +81,7 @@ public class ScriptFormatTest {
     @Test
     public void noTimestamp() {
         // setup
-        Script s = new Script(1,0,0,1,"1.0.0.1 - First.sql", null);
+        Script s = new Script(null,null,1,0,0,1,"1.0.0.1 - First.sql",null,null);
 
         // action
         String actual

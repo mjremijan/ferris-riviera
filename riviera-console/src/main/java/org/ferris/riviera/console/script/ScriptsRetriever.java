@@ -41,7 +41,14 @@ public class ScriptsRetriever {
 
         StringBuilder sp = new StringBuilder();
         sp.append(" SELECT ");
-        sp.append(" MAJOR, FEATURE, BUG, BUILD, NAME, APPLIED_ON ");
+        sp.append("   RELEASE_VERSION ");
+        sp.append(" , RELEASE_TITLE ");
+        sp.append(" , MAJOR ");
+        sp.append(" , FEATURE ");
+        sp.append(" , BUG ");
+        sp.append(" , BUILD ");
+        sp.append(" , FILE_NAME ");
+        sp.append(" , APPLIED_ON ");
         sp.append(" FROM ");
         sp.append(" SCRIPT_HISTORY ");
         sp.append(" ORDER BY ");
