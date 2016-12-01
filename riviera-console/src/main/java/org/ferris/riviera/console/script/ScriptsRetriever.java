@@ -48,6 +48,7 @@ public class ScriptsRetriever {
         sp.append(" , BUG ");
         sp.append(" , BUILD ");
         sp.append(" , FILE_NAME ");
+        sp.append(" , FILE_DESCRIPTION ");
         sp.append(" , APPLIED_ON ");
         sp.append(" FROM ");
         sp.append(" SCRIPT_HISTORY ");
@@ -56,7 +57,8 @@ public class ScriptsRetriever {
 
         try (
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sp.toString());) {
+            ResultSet rs = stmt.executeQuery(sp.toString());)
+        {
             log.info(String.format("Select script history%n%s", sp.toString()));
 
             List<Script> scripts
@@ -92,7 +94,6 @@ public class ScriptsRetriever {
                 .map(m -> builder.setMatcher(m).build())
                 .sorted()
                 .collect(Collectors.toList());
-
 
             log.info(String.format(
                 "Found %d scripts in JAR", scripts.size())
