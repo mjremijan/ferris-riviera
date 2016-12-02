@@ -19,25 +19,30 @@ public class ScriptsRetrieverTest {
     Logger logMock;
 
     @Mock
-    ScriptBuilder builder;
+    ScriptBuilder builderMock;
 
     @Mock
-    ConnectionHandler hander;
+    ConnectionHandler handlerMock;
 
     @Mock
-    ScriptPattern pattern;
+    ScriptPattern patternMock;
 
     protected ScriptsRetriever retriever;
 
     @Before
     public void before() {
         retriever = new ScriptsRetriever();
+        retriever.log = logMock;
+        retriever.builder = builderMock;
+        retriever.handler = handlerMock;
+        retriever.pattern = patternMock;
     }
 
 
     @Test
     public void retrieveFromDB() {
         // setup
+
 
         // action
 
