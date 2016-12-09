@@ -71,15 +71,25 @@
             <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>lib</outputDirectory>
             <excludes>
-                <exclude>${project.groupId}:riviera-scripts:jar</exclude>
+                <exclude>${project.groupId}:riviera-scripts:jar:release</exclude>
+                <exclude>${project.groupId}:riviera-scripts:jar:patch</exclude>
             </excludes>
         </dependencySet>  
         <dependencySet>
             <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>scriptapp</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-1.0.0${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
             <includes>
-                <include>${project.groupId}:riviera-scripts:jar</include>
+                <include>${project.groupId}:riviera-scripts:jar:release</include>                
             </includes>
-        </dependencySet>           
+        </dependencySet> 
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>scriptapp</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-1.0.1${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>${project.groupId}:riviera-scripts:jar:patch</include>                
+            </includes>
+        </dependencySet>          
     </dependencySets>
 </assembly>

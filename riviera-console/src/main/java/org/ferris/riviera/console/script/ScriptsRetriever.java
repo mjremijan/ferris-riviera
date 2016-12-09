@@ -60,7 +60,6 @@ public class ScriptsRetriever {
             ResultSet rs = stmt.executeQuery(sp.toString());)
         {
             log.info(String.format("Select script history%n%s", sp.toString()));
-
             List<Script> scripts
                 = new LinkedList<>();
 

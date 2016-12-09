@@ -242,6 +242,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>riviera-scripts</artifactId>
             <version>${project.version}</version>
+            <classifier>release</classifier>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>riviera-scripts</artifactId>
+            <version>${project.version}</version>
+            <classifier>patch</classifier>
         </dependency>
 
 

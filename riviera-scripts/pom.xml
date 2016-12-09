@@ -24,4 +24,49 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>                
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <!-- don't build default jar -->
+                        <id>default-jar</id>                        
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>release-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>                            
+                            <classifier>release</classifier>
+                            <finalName>riviera-scripts-1.0.0</finalName>
+                            <includes>
+                                <include>**/1.0.0 - First release/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>patch-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>patch</classifier>
+                            <finalName>riviera-scripts-1.0.1</finalName>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
