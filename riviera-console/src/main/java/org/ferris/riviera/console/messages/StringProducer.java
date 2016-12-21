@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
-import org.ferris.riviera.console.conf.ConfDirectory;
+import org.ferris.riviera.console.driver.DriverDirectory;
 
 /**
  * Uses a {@link ResourceBundle} to {@code /ApplicationMessages[__].properties}
@@ -21,7 +21,7 @@ public class StringProducer {
      * Creates the {@link ResourceBundle}
      */
     @Inject
-    public StringProducer(ConfDirectory confDirectory) {
+    public StringProducer(DriverDirectory driverDirectoy) {
         rb = ResourceBundle.getBundle("ApplicationMessages");
     }
 

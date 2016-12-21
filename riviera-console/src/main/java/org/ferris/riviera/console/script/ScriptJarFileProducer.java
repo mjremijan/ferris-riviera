@@ -12,36 +12,36 @@ public class ScriptJarFileProducer {
     private ScriptJarFile scriptJar;
 
     @Produces
-    public ScriptJarFile produceScriptJarFile(ScriptAppDirectory scriptAppDirectory) {
+    public ScriptJarFile produceScriptJarFile(ScriptsDirectory scriptsDirectory) {
         if (scriptJar == null)
         {
             File[] jars
-                = scriptAppDirectory.listFiles(
+                = scriptsDirectory.listFiles(
                     f -> f.isFile() && f.getName().toLowerCase().endsWith(".jar")
                 );
 
             if (jars == null || jars.length == 0) {
                 throw new RuntimeException(
                     String.format(
-                        "No JAR files in directory \"%s\"", scriptAppDirectory.getAbsolutePath())
+                        "No JAR files in directory \"%s\"", scriptsDirectory.getAbsolutePath())
                 );
             }
             else
             if (jars.length > 1) {
                 throw new RuntimeException(
                     String.format(
-                        "Multiple JAR files in directory \"%s\"", scriptAppDirectory.getAbsolutePath())
+                        "Multiple JAR files in directory \"%s\"", scriptsDirectory.getAbsolutePath())
                 );
             }
 
             try {
                 scriptJar
-                    = new ScriptJarFile(scriptAppDirectory, jars[0].getName());
+                    = new ScriptJarFile(scriptsDirectory, jars[0].getName());
             } catch (Exception e) {
                 throw new RuntimeException(
                     String.format(
                         "ERROR creating new ScriptJar object with parameters \"%s\", \"%s\""
-                        , String.valueOf(scriptAppDirectory)
+                        , String.valueOf(scriptsDirectory)
                         , String.valueOf(jars[0].getName())
                     )
                     , e

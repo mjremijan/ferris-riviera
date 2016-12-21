@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.apache.log4j.Logger;
-import org.ferris.riviera.console.conf.ConfDirectory;
+import org.ferris.riviera.console.driver.DriverDirectory;
 import org.ferris.riviera.console.lang.StringTool;
 
 /**
@@ -28,7 +28,7 @@ public class ConnectionPropertiesProducer {
     protected Logger log;
 
     @Inject
-    protected ConfDirectory confDirectory;
+    protected DriverDirectory driverDirectory;
 
     @Inject
     protected StringTool strt;
@@ -38,7 +38,7 @@ public class ConnectionPropertiesProducer {
         if (connectionProperties == null)
         {
             File propertiesFile
-                    = new File(confDirectory, "connection.properties");
+                    = new File(driverDirectory, "connection.properties");
 
             if (!propertiesFile.exists()) {
                 throw new RuntimeException(

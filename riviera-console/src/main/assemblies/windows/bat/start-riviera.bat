@@ -20,4 +20,4 @@ REM Echo "%JAVA_BIN%"
 REM Echo.  
 
 REM START RIVIERA
-%JAVA_BIN% -jar %PD%\lib\${project.build.finalName}-windows.jar
+%JAVA_BIN% -jar %PD%\lib\${project.build.finalName}.jar

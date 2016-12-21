@@ -149,7 +149,6 @@
             </plugin>
             <!--
              | Configure how the JAR file(s) are build
-             | - Need a Linux-specific JAR
             -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -157,57 +156,17 @@
                 <version>2.6</version>                
                 <executions>
                     <!--
-                     | Don't create the default JAR for the project
-                     | since I need to create two other JAR files
-                     | which are specific to Windows and Linux
+                     | Configure some properties of the default JAR
                     -->
                     <execution>
                         <id>default-jar</id>
-                        <phase/>
-                    </execution>
-                    <!--
-                     | Windows specific JAR
-                     | - Path to ..\conf\
-                    -->
-                    <execution>
-                        <id>windows-jar-execution</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>windows</classifier>
-                            <useDefaultManifestFile>true</useDefaultManifestFile> 
-                            <archive>
-                                <manifestEntries>
-                                    <Class-Path>..\conf\</Class-Path>
-                                </manifestEntries>
-                                <addMavenDescriptor>false</addMavenDescriptor>
-                                <manifest>
-                                    <addClasspath>true</addClasspath>
-                                    <mainClass>org.ferris.riviera.console.main.Main</mainClass>
-                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                </manifest>
-                            </archive>
-                        </configuration>
-                    </execution>
-                    <!--
-                     | Linux specific JAR
-                     | - Path to ../conf/
-                    -->
-                    <execution>
-                        <id>linux-jar-execution</id>
                         <phase>package</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
                         <configuration>                            
-                            <classifier>linux</classifier>
                             <useDefaultManifestFile>true</useDefaultManifestFile>
                             <archive>
-                                <manifestEntries>
-                                    <Class-Path>../conf/</Class-Path>
-                                </manifestEntries>
                                 <addMavenDescriptor>false</addMavenDescriptor>
                                 <manifest>
                                     <addClasspath>true</addClasspath>

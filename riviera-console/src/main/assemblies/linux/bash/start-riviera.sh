@@ -20,4 +20,4 @@ JAVA_BIN=${PD}/jre/bin/java
 #echo $'\n'
 
 # START RIVIERA
-${JAVA_BIN} -jar ${PD}/lib/${project.build.finalName}-linux.jar "$@"
+${JAVA_BIN} -jar ${PD}/lib/${project.build.finalName}.jar "$@"
