@@ -1,7 +1,7 @@
 package org.ferris.riviera.console.script;
 
 import javax.enterprise.event.Observes;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.VALIDATE_SCRIPTS_FROM_JAR;
+import static org.ferris.riviera.console.script.ScriptRetrievalEvent.VALIDATE_NEW_SCRIPTS_TO_APPLY;
 import org.jboss.weld.experimental.Priority;
 
 /**
@@ -11,7 +11,7 @@ import org.jboss.weld.experimental.Priority;
 public class ScriptValidator {
 
     public void validate(
-    @Observes @Priority(VALIDATE_SCRIPTS_FROM_JAR) ScriptRetrievalEvent event
+    @Observes @Priority(VALIDATE_NEW_SCRIPTS_TO_APPLY) ScriptRetrievalEvent event
     ) {
 //        if (!fileVersion.startsWith(releaseVersion)) {
 //            throw new IllegalArgumentException(

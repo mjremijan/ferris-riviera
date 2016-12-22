@@ -102,178 +102,178 @@ public class ScriptTest {
 
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(0, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(0, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(2, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(2, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(3, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(3, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(4, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(4, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(5, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(5, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(5, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(5, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(1, s.getBug());
-            Assert.assertEquals(0, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(1, s.getBug().intValue());
+            Assert.assertEquals(0, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(1, s.getBug());
-            Assert.assertEquals(1, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(1, s.getBug().intValue());
+            Assert.assertEquals(1, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(1, s.getBug());
-            Assert.assertEquals(2, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(1, s.getBug().intValue());
+            Assert.assertEquals(2, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(1, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(1, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(1, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(1, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(1, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(2, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(1, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(2, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(1, s.getFeature());
-            Assert.assertEquals(1, s.getBug());
-            Assert.assertEquals(0, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(1, s.getFeature().intValue());
+            Assert.assertEquals(1, s.getBug().intValue());
+            Assert.assertEquals(0, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(2, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(0, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(2, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(0, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(3, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(0, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(3, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(0, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(4, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(0, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(4, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(0, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(4, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(1, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(4, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(1, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(4, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(2, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(4, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(2, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(4, s.getFeature());
-            Assert.assertEquals(1, s.getBug());
-            Assert.assertEquals(1, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(4, s.getFeature().intValue());
+            Assert.assertEquals(1, s.getBug().intValue());
+            Assert.assertEquals(1, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(4, s.getFeature());
-            Assert.assertEquals(1, s.getBug());
-            Assert.assertEquals(2, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(4, s.getFeature().intValue());
+            Assert.assertEquals(1, s.getBug().intValue());
+            Assert.assertEquals(2, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(4, s.getFeature());
-            Assert.assertEquals(1, s.getBug());
-            Assert.assertEquals(3, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(4, s.getFeature().intValue());
+            Assert.assertEquals(1, s.getBug().intValue());
+            Assert.assertEquals(3, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(1, s.getMajor());
-            Assert.assertEquals(4, s.getFeature());
-            Assert.assertEquals(1, s.getBug());
-            Assert.assertEquals(4, s.getBuild());
+            Assert.assertEquals(1, s.getMajor().intValue());
+            Assert.assertEquals(4, s.getFeature().intValue());
+            Assert.assertEquals(1, s.getBug().intValue());
+            Assert.assertEquals(4, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(2, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(0, s.getBuild());
+            Assert.assertEquals(2, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(0, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(2, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(1, s.getBuild());
+            Assert.assertEquals(2, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(1, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(2, s.getMajor());
-            Assert.assertEquals(1, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(0, s.getBuild());
+            Assert.assertEquals(2, s.getMajor().intValue());
+            Assert.assertEquals(1, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(0, s.getBuild().intValue());
         }
         s = list.get(i++);
         {
-            Assert.assertEquals(3, s.getMajor());
-            Assert.assertEquals(0, s.getFeature());
-            Assert.assertEquals(0, s.getBug());
-            Assert.assertEquals(0, s.getBuild());
+            Assert.assertEquals(3, s.getMajor().intValue());
+            Assert.assertEquals(0, s.getFeature().intValue());
+            Assert.assertEquals(0, s.getBug().intValue());
+            Assert.assertEquals(0, s.getBuild().intValue());
         }
     }
 }

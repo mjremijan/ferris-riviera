@@ -67,10 +67,10 @@ public class ScriptBuilderTest {
         // verify
         Assert.assertEquals("1.2.3", s.getReleaseVersion());
         Assert.assertEquals("release title", s.getReleaseTitle());
-        Assert.assertEquals(1, s.getMajor());
-        Assert.assertEquals(2, s.getFeature());
-        Assert.assertEquals(3, s.getBug());
-        Assert.assertEquals(4, s.getBuild());
+        Assert.assertEquals(1, s.getMajor().intValue());
+        Assert.assertEquals(2, s.getFeature().intValue());
+        Assert.assertEquals(3, s.getBug().intValue());
+        Assert.assertEquals(4, s.getBuild().intValue());
         Assert.assertEquals("rs_mock_file - cool.sql", s.getFileName());
         Assert.assertEquals("cool", s.getFileDescription());
         Assert.assertEquals(123123123, s.getAppliedOn().getTime());
@@ -104,10 +104,10 @@ public class ScriptBuilderTest {
         // verify
         Assert.assertEquals("1.0.2", s.getReleaseVersion());
         Assert.assertEquals("shrubbery", s.getReleaseTitle());
-        Assert.assertEquals(1, s.getMajor());
-        Assert.assertEquals(0, s.getFeature());
-        Assert.assertEquals(2, s.getBug());
-        Assert.assertEquals(4, s.getBuild());
+        Assert.assertEquals(1, s.getMajor().intValue());
+        Assert.assertEquals(0, s.getFeature().intValue());
+        Assert.assertEquals(2, s.getBug().intValue());
+        Assert.assertEquals(4, s.getBuild().intValue());
         Assert.assertEquals("1.0.2.4 - herring.sql", s.getFileName());
         Assert.assertEquals("herring", s.getFileDescription());
         Assert.assertEquals(null, s.getAppliedOn());

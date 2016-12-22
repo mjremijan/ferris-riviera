@@ -2,6 +2,8 @@ package org.ferris.riviera.console.script;
 
 import java.util.Date;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -9,23 +11,42 @@ import java.util.Objects;
  */
 public class Script implements Comparable<Script> {
 
+    @NotNull
+    @Size(min=1, max=8)
     private String releaseVersion;
+
+    @Size(min=0, max=50)
     private String releaseTitle;
-    private int major;
-    private int feature;
-    private int bug;
-    private int build;
+
+    @NotNull
+    private Integer major;
+
+    @NotNull
+    private Integer feature;
+
+    @NotNull
+    private Integer bug;
+
+    @NotNull
+    private Integer build;
+
+    @NotNull
+    @Size(min=1, max=100)
     private String fileName;
+
+    @Size(min=1, max=50)
     private String fileDescription;
+
+    @NotNull
     private Date appliedOn;
 
     public Script(
           String releaseVersion
         , String releaseTitle
-        , int major
-        , int feature
-        , int bug
-        , int build
+        , Integer major
+        , Integer feature
+        , Integer bug
+        , Integer build
         , String fileName
         , String fileDescription
         , Date appliedOn
@@ -96,19 +117,19 @@ public class Script implements Comparable<Script> {
         return releaseTitle;
     }
 
-    public int getMajor() {
+    public Integer getMajor() {
         return major;
     }
 
-    public int getFeature() {
+    public Integer getFeature() {
         return feature;
     }
 
-    public int getBug() {
+    public Integer getBug() {
         return bug;
     }
 
-    public int getBuild() {
+    public Integer getBuild() {
         return build;
     }
 
@@ -129,35 +150,35 @@ public class Script implements Comparable<Script> {
 
         int retval = 9999;
 
-        if (this.major < other.major) {
+        if (this.major.compareTo(other.major) < 0) {
             retval = -1;
         }
         else
-        if (this.major > other.major) {
+        if (this.major.compareTo(other.major) > 0) {
             retval = 1;
         }
         else {
-            if (this.feature < other.feature) {
+            if (this.feature.compareTo(other.feature) < 0) {
                 retval = -1;
             }
             else
-            if (this.feature > other.feature) {
+            if (this.feature.compareTo(other.feature) > 0) {
                 retval = 1;
             }
             else {
-                if (this.bug < other.bug) {
+                if (this.bug.compareTo(other.bug) < 0) {
                     retval = -1;
                 }
                 else
-                if (this.bug > other.bug) {
+                if (this.bug.compareTo(other.bug) > 0) {
                     retval = 1;
                 }
                 else {
-                    if (this.build < other.build) {
+                    if (this.build.compareTo(other.build) < 0) {
                         retval = -1;
                     }
                     else
-                    if (this.build > other.build) {
+                    if (this.build.compareTo(other.build) > 0) {
                         retval = 1;
                     }
                     else {

@@ -21,9 +21,9 @@ public class ScriptRetrievalEvent {
 
     public static final int RETRIEVE_SCRIPTS_FROM_JAR = 50;
 
-    public static final int VALIDATE_SCRIPTS_FROM_JAR = 55;
-
     public static final int FILTER_FOR_NEW_SCRIPTS_TO_APPLY = 60;
+
+    public static final int VALIDATE_NEW_SCRIPTS_TO_APPLY = 65;
 
     public static final int SHOW_NEW_SCRIPTS_TO_APPLY = 70;
 
