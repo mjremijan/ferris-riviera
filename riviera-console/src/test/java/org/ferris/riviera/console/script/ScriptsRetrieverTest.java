@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.script;
 
+import org.ferris.riviera.console.script.jar.ScriptJarPattern;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class ScriptsRetrieverTest {
     ConnectionHandler handlerMock;
 
     @Mock
-    ScriptPattern patternMock;
+    ScriptJarPattern patternMock;
 
     protected ScriptsRetriever retriever;
 

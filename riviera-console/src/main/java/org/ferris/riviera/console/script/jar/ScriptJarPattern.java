@@ -1,4 +1,4 @@
-package org.ferris.riviera.console.script;
+package org.ferris.riviera.console.script.jar;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,11 +7,11 @@ import java.util.regex.Pattern;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class ScriptPattern {
+public class ScriptJarPattern {
 
     protected Pattern pattern;
 
-    public ScriptPattern() {
+    public ScriptJarPattern() {
         String dirRegex
             = "^((\\d+\\.\\d+\\.\\d+)(?:\\s*-\\s*(\\S{1}.*))?)";
         String fileRegex

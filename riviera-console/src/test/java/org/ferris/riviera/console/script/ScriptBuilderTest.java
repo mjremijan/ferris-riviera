@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.script;
 
+import org.ferris.riviera.console.script.jar.ScriptJarPattern;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -95,7 +96,7 @@ public class ScriptBuilderTest {
     @Test
     public void matcher_ok() {
         // setup
-        Matcher m = new ScriptPattern().matcher("1.0.2 - shrubbery/1.0.2.4 - herring.sql");
+        Matcher m = new ScriptJarPattern().matcher("1.0.2 - shrubbery/1.0.2.4 - herring.sql");
 
         // action
         builder.setMatcher(m);

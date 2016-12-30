@@ -1,4 +1,4 @@
-package org.ferris.riviera.console.script;
+package org.ferris.riviera.console.script.view;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -6,8 +6,11 @@ import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.SHOW_NEW_SCRIPTS_TO_APPLY;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.SHOW_SCRIPTS_FROM_DATABASE;
+import org.ferris.riviera.console.script.Script;
+import org.ferris.riviera.console.script.ScriptProcessingEvent;
+import static org.ferris.riviera.console.script.ScriptProcessingEvent.SHOW_NEW_SCRIPTS_TO_APPLY;
+import static org.ferris.riviera.console.script.ScriptProcessingEvent.SHOW_SCRIPTS_FROM_DATABASE;
+import org.ferris.riviera.console.script.Scripts;
 import org.jboss.weld.experimental.Priority;
 
 @Singleton
@@ -23,7 +26,7 @@ public class ScriptPage {
     protected ScriptFormat scriptFormat;
 
     public void viewFromDatabase(
-          @Observes @Priority(SHOW_SCRIPTS_FROM_DATABASE) ScriptRetrievalEvent event
+          @Observes @Priority(SHOW_SCRIPTS_FROM_DATABASE) ScriptProcessingEvent event
         , @Key("ScriptPage.db.Heading") String heading
         , @Key("ScriptPage.db.Created") String created
         , @Key("ScriptPage.db.Found") String found
@@ -45,7 +48,6 @@ public class ScriptPage {
             = event.getScriptsFromDatabase();
 
         fromDatabase
-            .list()
             .forEach(s -> console.p(scriptFormat.format(s)));
         console.br();
 
@@ -79,50 +81,50 @@ public class ScriptPage {
         }
     }
 
-    /*
-        Future version: UP TO DATE
-
-    Exit
-    ----
-
-    */
 
     public void viewFromJar(
-          @Observes @Priority(SHOW_NEW_SCRIPTS_TO_APPLY) ScriptRetrievalEvent event
+          @Observes @Priority(SHOW_NEW_SCRIPTS_TO_APPLY) ScriptProcessingEvent event
         , @Key("ScriptPage.jar.Heading") String heading
         , @Key("ScriptPage.jar.ScriptFileFormat") String scriptFileFormat
         , @Key("ScriptPage.jar.ScriptCountFormat") String scriptCountFormat
         , @Key("ScriptPage.jar.FutureVersionFormat") String futureVersionFormat
         , @Key("ScriptPage.jar.FutureVersionUpToDate") String futureVersionUpToDate
     ) {
-        // Available Updates
-        // -----------------
-        console.h1(heading);
 
-        // Found script file 'email-ddl.zip'
-        console.p(scriptFileFormat, String.valueOf(event.getScriptJarFile().getFileName()));
-        console.br();
-
-        // 1.0.0.1    1.0.0.1[ - Optional].sql
-        // 1.0.0.2    1.0.0.2.sql
-        // 1.0.0.3    1.0.0.3.sql
-        // 1.1.0.0    1.1.0.0[ - New features].sql
-        if (!event.getScriptsFromJar().isEmpty()) {
-            event.getScriptsFromJar()
-                .list()
-                .forEach(s -> console.p(scriptFormat.format(s)));
-            console.br();
+        if (!event.getProblems().isEmpty()) {
+            event.getProblems().forEach(cv -> console.p("%s", cv.getMessage()));
         }
+        else {
+            // Available Updates
+            // -----------------
+            console.h1(heading);
 
-        // Script count: 4
-        console.p(scriptCountFormat, String.valueOf(event.getScriptsFromJar().size()));
-        console.br();
+            // Found script file 'email-scripts.jar'
+            console.p(scriptFileFormat, String.valueOf(event.getScriptJarFile().getName()));
+            console.br();
 
-        // Future version: 1.1.0.0
-        if (!event.getScriptsFromJar().isEmpty()) {
-            console.p(futureVersionFormat, event.getScriptsFromJar().getLatestVersion().toVersionString());
-        } else {
-            console.p(futureVersionUpToDate);
+            Scripts scriptsFromJarToApply
+                = event.getScriptsToApply();
+
+            // 1.0.0.1    1.0.0.1[ - Optional].sql
+            // 1.0.0.2    1.0.0.2.sql
+            // 1.0.0.3    1.0.0.3.sql
+            // 1.1.0.0    1.1.0.0[ - New features].sql
+            if (!scriptsFromJarToApply.isEmpty()) {
+                scriptsFromJarToApply.forEach(s -> console.p(scriptFormat.format(s)));
+                console.br();
+            }
+
+            // Script count: 4
+            console.p(scriptCountFormat, String.valueOf(scriptsFromJarToApply.size()));
+            console.br();
+
+            // Future version: 1.1.0.0
+            if (!scriptsFromJarToApply.isEmpty()) {
+                console.p(futureVersionFormat, scriptsFromJarToApply.getLatestVersion().toVersionString());
+            } else {
+                console.p(futureVersionUpToDate);
+            }
         }
     }
 }

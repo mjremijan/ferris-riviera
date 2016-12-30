@@ -1,4 +1,4 @@
-package org.ferris.riviera.console.script;
+package org.ferris.riviera.console.script.jar;
 
 import java.io.File;
 import static java.lang.String.format;

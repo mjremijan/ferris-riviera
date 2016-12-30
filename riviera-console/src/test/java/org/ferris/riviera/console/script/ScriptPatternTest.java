@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.script;
 
+import org.ferris.riviera.console.script.jar.ScriptJarPattern;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,11 +18,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class ScriptPatternTest {
 
-    protected ScriptPattern pattern;
+    protected ScriptJarPattern pattern;
 
     @Before
     public void before() {
-        pattern = new ScriptPattern();
+        pattern = new ScriptJarPattern();
     }
 
 

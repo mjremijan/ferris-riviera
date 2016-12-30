@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.script;
 
+import org.ferris.riviera.console.script.view.ScriptFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.junit.Assert;

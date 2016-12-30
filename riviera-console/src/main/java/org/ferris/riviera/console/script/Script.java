@@ -1,55 +1,58 @@
 package org.ferris.riviera.console.script;
 
 import java.util.Date;
-import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.ferris.riviera.console.script.constraints.ReleaseVersion;
 
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
+@ReleaseVersion
 public class Script implements Comparable<Script> {
 
     @NotNull
-    @Size(min=1, max=8)
-    private String releaseVersion;
+    @Size(min = 1, max = 8)
+    final private String releaseVersion;
 
-    @Size(min=0, max=50)
-    private String releaseTitle;
-
-    @NotNull
-    private Integer major;
+    @Size(min = 0, max = 50)
+    final private String releaseTitle;
 
     @NotNull
-    private Integer feature;
+    final private Integer major;
 
     @NotNull
-    private Integer bug;
+    final private Integer feature;
 
     @NotNull
-    private Integer build;
+    final private Integer bug;
 
     @NotNull
-    @Size(min=1, max=100)
-    private String fileName;
-
-    @Size(min=1, max=50)
-    private String fileDescription;
+    final private Integer build;
 
     @NotNull
-    private Date appliedOn;
+    @Size(min = 1, max = 100)
+    final private String fileName;
+
+    @Size(min = 1, max = 50)
+    final private String fileDescription;
+
+    @NotNull
+    final private Date appliedOn;
 
     public Script(
-          String releaseVersion
-        , String releaseTitle
-        , Integer major
-        , Integer feature
-        , Integer bug
-        , Integer build
-        , String fileName
-        , String fileDescription
-        , Date appliedOn
+        String releaseVersion,
+        String releaseTitle,
+        Integer major,
+        Integer feature,
+        Integer bug,
+        Integer build,
+        String fileName,
+        String fileDescription,
+        Date appliedOn
     ) {
         this.releaseVersion = releaseVersion;
         this.releaseTitle = releaseTitle;
@@ -60,16 +63,14 @@ public class Script implements Comparable<Script> {
         this.fileName = fileName;
         this.fileDescription = fileDescription;
         this.appliedOn = appliedOn;
-        this.appliedOn = appliedOn;
     }
 
     public String toVersionString() {
-        return
-        String.format("%d.%d.%d.%d"
-            , major
-            , feature
-            , bug
-            , build
+        return String.format("%d.%d.%d.%d",
+            major,
+            feature,
+            bug,
+            build
         );
     }
 
@@ -80,33 +81,32 @@ public class Script implements Comparable<Script> {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.major);
-        hash = 89 * hash + Objects.hashCode(this.feature);
-        hash = 89 * hash + Objects.hashCode(this.bug);
-        hash = 89 * hash + Objects.hashCode(this.build);
-        return hash;
+        return new HashCodeBuilder()
+            .append(major)
+            .append(feature)
+            .append(bug)
+            .append(build)
+            .toHashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
             return false;
         }
-
-        Script other
-            = (Script) obj;
-
-        return (this.major == other.major
-            && this.feature == other.feature
-            && this.bug == other.bug
-            && this.build == other.build);
+        Script rhs = (Script) obj;
+        return new EqualsBuilder()
+            .append(major, rhs.major)
+            .append(feature, rhs.feature)
+            .append(bug, rhs.bug)
+            .append(build, rhs.build)
+            .isEquals();
     }
 
     public String getReleaseVersion() {
@@ -152,36 +152,24 @@ public class Script implements Comparable<Script> {
 
         if (this.major.compareTo(other.major) < 0) {
             retval = -1;
-        }
-        else
-        if (this.major.compareTo(other.major) > 0) {
+        } else if (this.major.compareTo(other.major) > 0) {
             retval = 1;
-        }
-        else {
+        } else {
             if (this.feature.compareTo(other.feature) < 0) {
                 retval = -1;
-            }
-            else
-            if (this.feature.compareTo(other.feature) > 0) {
+            } else if (this.feature.compareTo(other.feature) > 0) {
                 retval = 1;
-            }
-            else {
+            } else {
                 if (this.bug.compareTo(other.bug) < 0) {
                     retval = -1;
-                }
-                else
-                if (this.bug.compareTo(other.bug) > 0) {
+                } else if (this.bug.compareTo(other.bug) > 0) {
                     retval = 1;
-                }
-                else {
+                } else {
                     if (this.build.compareTo(other.build) < 0) {
                         retval = -1;
-                    }
-                    else
-                    if (this.build.compareTo(other.build) > 0) {
+                    } else if (this.build.compareTo(other.build) > 0) {
                         retval = 1;
-                    }
-                    else {
+                    } else {
                         retval = 0;
                     }
                 }

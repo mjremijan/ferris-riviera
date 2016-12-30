@@ -1,7 +1,8 @@
-package org.ferris.riviera.console.script;
+package org.ferris.riviera.console.script.view;
 
 import java.text.SimpleDateFormat;
 import javax.inject.Singleton;
+import org.ferris.riviera.console.script.Script;
 
 /**
  *

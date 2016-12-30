@@ -12,8 +12,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.RETRIEVE_SCRIPTS_FROM_DATABASE;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.RETRIEVE_SCRIPTS_FROM_JAR;
+import static org.ferris.riviera.console.script.ScriptProcessingEvent.RETRIEVE_SCRIPTS_FROM_DATABASE;
+import static org.ferris.riviera.console.script.ScriptProcessingEvent.RETRIEVE_SCRIPTS_FROM_JAR;
+import org.ferris.riviera.console.script.jar.ScriptJarPattern;
 import org.jboss.weld.experimental.Priority;
 
 @Singleton
@@ -29,10 +30,10 @@ public class ScriptsRetriever {
     protected ConnectionHandler handler;
 
     @Inject
-    protected ScriptPattern pattern;
+    protected ScriptJarPattern pattern;
 
     protected void retrieveScriptsFromDatabaseOrderedAscending(
-        @Observes @Priority(RETRIEVE_SCRIPTS_FROM_DATABASE) ScriptRetrievalEvent event
+        @Observes @Priority(RETRIEVE_SCRIPTS_FROM_DATABASE) ScriptProcessingEvent event
     ) {
         log.info("Retrieving scripts from database");
 
@@ -82,10 +83,10 @@ public class ScriptsRetriever {
     }
 
     protected void retrieveScriptsFromJarOrderedAscending(
-        @Observes @Priority(RETRIEVE_SCRIPTS_FROM_JAR) ScriptRetrievalEvent event
+        @Observes @Priority(RETRIEVE_SCRIPTS_FROM_JAR) ScriptProcessingEvent event
     ) {
         log.info("Retrieving scripts from jar");
-        try (JarFile jar = new JarFile(event.getScriptJarFile().toAbsolutePath().toString())) {
+        try (JarFile jar = event.getScriptJarFile()) {
             List<Script> scripts = jar.stream()
                 .filter(j -> j.isDirectory() == false)
                 .map(j -> pattern.matcher(j.getName()))

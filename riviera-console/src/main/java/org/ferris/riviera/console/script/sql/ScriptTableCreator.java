@@ -1,4 +1,4 @@
-package org.ferris.riviera.console.script;
+package org.ferris.riviera.console.script.sql;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -7,7 +7,8 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
-import static org.ferris.riviera.console.script.ScriptRetrievalEvent.CREATE_SCRIPT_TABLE;
+import org.ferris.riviera.console.script.ScriptProcessingEvent;
+import static org.ferris.riviera.console.script.ScriptProcessingEvent.CREATE_SCRIPT_TABLE;
 import org.jboss.weld.experimental.Priority;
 
 /**
@@ -23,7 +24,7 @@ public class ScriptTableCreator {
     protected ConnectionHandler handler;
 
     protected void createScriptTable(
-            @Observes @Priority(CREATE_SCRIPT_TABLE) ScriptRetrievalEvent event
+            @Observes @Priority(CREATE_SCRIPT_TABLE) ScriptProcessingEvent event
     ) {
         if (event.isTableThere()) {
             return;

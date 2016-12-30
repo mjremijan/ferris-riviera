@@ -3,6 +3,7 @@ package org.ferris.riviera.console.script;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  *
@@ -18,10 +19,6 @@ public class Scripts {
 
     public Scripts(Scripts copyMe) {
         this(copyMe.scripts);
-    }
-
-    public List<Script> list() {
-        return scripts;
     }
 
     public int size() {
@@ -55,4 +52,7 @@ public class Scripts {
         return scripts.isEmpty();
     }
 
+    public void forEach(Consumer<? super Script> action) {
+        scripts.forEach(action);
+    }
 }
