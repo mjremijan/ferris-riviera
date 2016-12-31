@@ -37,7 +37,7 @@ public class AssertAnnotations {
         );
     }
 
-    public static void assertType(Class c, Class... annotationClasses) {
+    public static void forType(Class c, Class... annotationClasses) {
         assertAnnotations(
             Arrays.asList(annotationClasses),
              Arrays.asList(c.getAnnotations())
@@ -51,9 +51,7 @@ public class AssertAnnotations {
         );
     }
 
-    
-
-    public static void assertMethod(
+    public static void forMethod(
         Class c, String getterName, Class... annotationClasses) {
         try {
             assertAnnotations(

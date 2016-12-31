@@ -11,6 +11,7 @@ import java.util.Properties;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.ferris.riviera.console.script.constraints.ReleaseVersion;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -289,6 +290,21 @@ public class ScriptTest {
             Assert.assertEquals(0, s.getBug().intValue());
             Assert.assertEquals(0, s.getBuild().intValue());
         }
+    }
+
+
+    @Test
+    public void class_annotation_list() {
+        // assert
+        AssertAnnotations.forType(Script.class, ReleaseVersion.class);
+
+        // action
+        ReleaseVersion releaseVersion = Script.class.getAnnotation(ReleaseVersion.class);
+        // assert releaseVersion
+        Assert.assertEquals(
+            "@org.ferris.riviera.console.script.constraints.ReleaseVersion(message=The version number of the file does not match the release version of the directory it's in, groups=[], payload=[])"
+            , releaseVersion.toString());
+
     }
 
 
