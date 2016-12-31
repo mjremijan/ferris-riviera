@@ -302,9 +302,9 @@ public class ScriptTest {
         ReleaseVersion releaseVersion = Script.class.getAnnotation(ReleaseVersion.class);
         // assert releaseVersion
         Assert.assertEquals(
-            "@org.ferris.riviera.console.script.constraints.ReleaseVersion(message=The version number of the file does not match the release version of the directory it's in, groups=[], payload=[])"
+            "@org.ferris.riviera.console.script.constraints.ReleaseVersion(message={Script.ReleaseVersion.message}, groups=[], payload=[])"
             , releaseVersion.toString());
-
+        Assert.assertTrue(validationMessages.containsKey("Script.ReleaseVersion.message"));
     }
 
 

@@ -19,7 +19,7 @@ import org.ferris.riviera.console.script.validation.ReleaseVersionValidator;
 @Documented
 public @interface ReleaseVersion {
 
-    String message() default "The version number of the file does not match the release version of the directory it's in";
+    String message() default "{Script.ReleaseVersion.message}";
 
     Class<?>[] groups() default {};
 
