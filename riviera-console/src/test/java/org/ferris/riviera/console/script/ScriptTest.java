@@ -1,13 +1,18 @@
 
 package org.ferris.riviera.console.script;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Properties;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -15,6 +20,14 @@ import org.junit.Test;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class ScriptTest {
+
+    static Properties validationMessages;
+
+    @BeforeClass
+    public static void before() throws FileNotFoundException, IOException {
+        validationMessages = new Properties();
+        validationMessages.load(new FileInputStream("src/main/resources/ValidationMessages.properties"));
+    }
 
     @Test
     public void testHashCode() {
@@ -298,15 +311,19 @@ public class ScriptTest {
         Size size = field.getAnnotation(Size.class);
         NotNull notNull = field.getAnnotation(NotNull.class);
 
-        // assert
+        // assert size
         Assert.assertNotNull(size);
         Assert.assertEquals(
-            "@javax.validation.constraints.Size(groups=[], min=1, message={javax.validation.constraints.Size.message}, max=8, payload=[])"
+            "@javax.validation.constraints.Size(groups=[], min=1, message={Script.releaseVersion.Size.message}, max=8, payload=[])"
             , size.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.releaseVersion.Size.message"));
+
+        // assert notnull
         Assert.assertNotNull(notNull);
         Assert.assertEquals(
-            "@javax.validation.constraints.NotNull(message={javax.validation.constraints.NotNull.message}, groups=[], payload=[])"
+            "@javax.validation.constraints.NotNull(message={Script.releaseVersion.NotNull.message}, groups=[], payload=[])"
             , notNull.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.releaseVersion.NotNull.message"));
     }
 
     @Test
@@ -330,8 +347,9 @@ public class ScriptTest {
         // assert
         Assert.assertNotNull(size);
         Assert.assertEquals(
-            "@javax.validation.constraints.Size(groups=[], min=0, message={javax.validation.constraints.Size.message}, max=50, payload=[])"
+            "@javax.validation.constraints.Size(groups=[], min=0, message={Script.releaseTitle.Size.message}, max=50, payload=[])"
             , size.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.releaseTitle.Size.message"));
     }
 
     @Test

@@ -14,11 +14,11 @@ import org.ferris.riviera.console.script.constraints.ReleaseVersion;
 @ReleaseVersion
 public class Script implements Comparable<Script> {
 
-    @NotNull
-    @Size(min = 1, max = 8)
+    @NotNull(message = "{Script.releaseVersion.NotNull.message}")
+    @Size(min = 1, max = 8, message = "{Script.releaseVersion.Size.message}")
     final private String releaseVersion;
 
-    @Size(min = 0, max = 50)
+    @Size(min = 0, max = 50, message = "{Script.releaseTitle.Size.message}")
     final private String releaseTitle;
 
     @NotNull
