@@ -21,26 +21,26 @@ public class Script implements Comparable<Script> {
     @Size(min = 0, max = 50, message = "{Script.releaseTitle.Size.message}")
     final private String releaseTitle;
 
-    @NotNull
+    @NotNull(message = "{Script.major.NotNull.message}")
     final private Integer major;
 
-    @NotNull
+    @NotNull(message = "{Script.feature.NotNull.message}")
     final private Integer feature;
 
-    @NotNull
+    @NotNull(message = "{Script.bug.NotNull.message}")
     final private Integer bug;
 
-    @NotNull
+    @NotNull(message = "{Script.build.NotNull.message}")
     final private Integer build;
 
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotNull(message = "{Script.fileName.NotNull.message}")
+    @Size(min = 1, max = 100, message = "{Script.fileName.Size.message}")
     final private String fileName;
 
-    @Size(min = 1, max = 50)
+    @Size(min = 0, max = 50, message = "{Script.fileDescription.Size.message}")
     final private String fileDescription;
 
-    @NotNull
+    @NotNull(message = "{Script.appliedOn.NotNull.message}")
     final private Date appliedOn;
 
     public Script(

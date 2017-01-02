@@ -313,47 +313,29 @@ public class ScriptTest {
         // setup
         Field field = FieldUtils.getField(Script.class, "releaseVersion", true);
 
-        // assert
-        Assert.assertNotNull(field);
-        AssertAnnotations.forField(field, NotNull.class, Size.class);
-    }
-
-    @Test
-    public void field_annotation_values_for_releaseVersion() {
-        // setup
-        Field field = FieldUtils.getField(Script.class, "releaseVersion", true);
-
         // action
         Size size = field.getAnnotation(Size.class);
         NotNull notNull = field.getAnnotation(NotNull.class);
 
+        // assert
+        AssertAnnotations.forField(field, NotNull.class, Size.class);
+
         // assert size
-        Assert.assertNotNull(size);
         Assert.assertEquals(
             "@javax.validation.constraints.Size(groups=[], min=1, message={Script.releaseVersion.Size.message}, max=8, payload=[])"
             , size.toString());
         Assert.assertTrue(validationMessages.containsKey("Script.releaseVersion.Size.message"));
 
         // assert notnull
-        Assert.assertNotNull(notNull);
         Assert.assertEquals(
             "@javax.validation.constraints.NotNull(message={Script.releaseVersion.NotNull.message}, groups=[], payload=[])"
             , notNull.toString());
         Assert.assertTrue(validationMessages.containsKey("Script.releaseVersion.NotNull.message"));
     }
 
+
     @Test
     public void field_annotation_list_for_releaseTitle() {
-        // setup
-        Field field = FieldUtils.getField(Script.class, "releaseTitle", true);
-
-        // assert
-        Assert.assertNotNull(field);
-        AssertAnnotations.forField(field, Size.class);
-    }
-
-    @Test
-    public void field_annotation_values_for_releaseTitle() {
         // setup
         Field field = FieldUtils.getField(Script.class, "releaseTitle", true);
 
@@ -361,7 +343,7 @@ public class ScriptTest {
         Size size = field.getAnnotation(Size.class);
 
         // assert
-        Assert.assertNotNull(size);
+        AssertAnnotations.forField(field, Size.class);
         Assert.assertEquals(
             "@javax.validation.constraints.Size(groups=[], min=0, message={Script.releaseTitle.Size.message}, max=50, payload=[])"
             , size.toString());
@@ -372,101 +354,56 @@ public class ScriptTest {
     public void field_annotation_list_for_major() {
         // setup
         Field field = FieldUtils.getField(Script.class, "major", true);
-
-        // assert
-        Assert.assertNotNull(field);
-        AssertAnnotations.forField(field, NotNull.class);
-    }
-
-    @Test
-    public void field_annotation_values_for_major() {
-        // setup
-        Field field = FieldUtils.getField(Script.class, "major", true);
-
-        // action
         NotNull notNull = field.getAnnotation(NotNull.class);
 
-        // assert
-        Assert.assertNotNull(notNull);
+        // assert notnull
+        AssertAnnotations.forField(field, NotNull.class);
         Assert.assertEquals(
-            "@javax.validation.constraints.NotNull(message={javax.validation.constraints.NotNull.message}, groups=[], payload=[])"
+            "@javax.validation.constraints.NotNull(message={Script.major.NotNull.message}, groups=[], payload=[])"
             , notNull.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.major.NotNull.message"));
     }
 
     @Test
     public void field_annotation_list_for_feature() {
         // setup
         Field field = FieldUtils.getField(Script.class, "feature", true);
-
-        // assert
-        Assert.assertNotNull(field);
-        AssertAnnotations.forField(field, NotNull.class);
-    }
-
-    @Test
-    public void field_annotation_values_for_feature() {
-        // setup
-        Field field = FieldUtils.getField(Script.class, "feature", true);
-
-        // action
         NotNull notNull = field.getAnnotation(NotNull.class);
 
-        // assert
-        Assert.assertNotNull(notNull);
+        // assert notnull
+        AssertAnnotations.forField(field, NotNull.class);
         Assert.assertEquals(
-            "@javax.validation.constraints.NotNull(message={javax.validation.constraints.NotNull.message}, groups=[], payload=[])"
+            "@javax.validation.constraints.NotNull(message={Script.feature.NotNull.message}, groups=[], payload=[])"
             , notNull.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.feature.NotNull.message"));
     }
 
     @Test
     public void field_annotation_list_for_bug() {
         // setup
         Field field = FieldUtils.getField(Script.class, "bug", true);
-
-        // assert
-        Assert.assertNotNull(field);
-        AssertAnnotations.forField(field, NotNull.class);
-    }
-
-    @Test
-    public void field_annotation_values_for_bug() {
-        // setup
-        Field field = FieldUtils.getField(Script.class, "bug", true);
-
-        // action
         NotNull notNull = field.getAnnotation(NotNull.class);
 
-        // assert
-        Assert.assertNotNull(notNull);
+        // assert notnull
+        AssertAnnotations.forField(field, NotNull.class);
         Assert.assertEquals(
-            "@javax.validation.constraints.NotNull(message={javax.validation.constraints.NotNull.message}, groups=[], payload=[])"
+            "@javax.validation.constraints.NotNull(message={Script.bug.NotNull.message}, groups=[], payload=[])"
             , notNull.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.bug.NotNull.message"));
     }
-
 
     @Test
     public void field_annotation_list_for_build() {
         // setup
         Field field = FieldUtils.getField(Script.class, "build", true);
-
-        // assert
-        Assert.assertNotNull(field);
-        AssertAnnotations.forField(field, NotNull.class);
-    }
-
-    @Test
-    public void field_annotation_values_for_build() {
-        // setup
-        Field field = FieldUtils.getField(Script.class, "build", true);
-
-        // action
         NotNull notNull = field.getAnnotation(NotNull.class);
 
-        // assert
-        Assert.assertNotNull(notNull);
+        // assert notnull
+        AssertAnnotations.forField(field, NotNull.class);
         Assert.assertEquals(
-            "@javax.validation.constraints.NotNull(message={javax.validation.constraints.NotNull.message}, groups=[], payload=[])"
+            "@javax.validation.constraints.NotNull(message={Script.build.NotNull.message}, groups=[], payload=[])"
             , notNull.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.build.NotNull.message"));
     }
 
     @Test
@@ -474,29 +411,26 @@ public class ScriptTest {
         // setup
         Field field = FieldUtils.getField(Script.class, "fileName", true);
 
-        // assert
-        Assert.assertNotNull(field);
-        AssertAnnotations.forField(field, Size.class, NotNull.class);
-    }
-
-    @Test
-    public void field_annotation_values_for_fileName() {
-        // setup
-        Field field = FieldUtils.getField(Script.class, "fileName", true);
-
         // action
         Size size = field.getAnnotation(Size.class);
         NotNull notNull = field.getAnnotation(NotNull.class);
 
         // assert
+        AssertAnnotations.forField(field, Size.class, NotNull.class);
+
+        // assert size
         Assert.assertNotNull(size);
         Assert.assertEquals(
-            "@javax.validation.constraints.Size(groups=[], min=1, message={javax.validation.constraints.Size.message}, max=100, payload=[])"
+            "@javax.validation.constraints.Size(groups=[], min=1, message={Script.fileName.Size.message}, max=100, payload=[])"
             , size.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.fileName.Size.message"));
+
+        // assert notnull
         Assert.assertNotNull(notNull);
         Assert.assertEquals(
-            "@javax.validation.constraints.NotNull(message={javax.validation.constraints.NotNull.message}, groups=[], payload=[])"
+            "@javax.validation.constraints.NotNull(message={Script.fileName.NotNull.message}, groups=[], payload=[])"
             , notNull.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.fileName.NotNull.message"));
     }
 
     @Test
@@ -504,24 +438,17 @@ public class ScriptTest {
         // setup
         Field field = FieldUtils.getField(Script.class, "fileDescription", true);
 
-        // assert
-        Assert.assertNotNull(field);
-        AssertAnnotations.forField(field, Size.class);
-    }
-
-    @Test
-    public void field_annotation_values_for_fileDescription() {
-        // setup
-        Field field = FieldUtils.getField(Script.class, "fileDescription", true);
-
         // action
         Size size = field.getAnnotation(Size.class);
 
         // assert
-        Assert.assertNotNull(size);
+        AssertAnnotations.forField(field, Size.class);
+
+        // assert size
         Assert.assertEquals(
-            "@javax.validation.constraints.Size(groups=[], min=1, message={javax.validation.constraints.Size.message}, max=50, payload=[])"
+            "@javax.validation.constraints.Size(groups=[], min=0, message={Script.fileDescription.Size.message}, max=50, payload=[])"
             , size.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.fileDescription.Size.message"));
     }
 
     @Test
@@ -529,24 +456,18 @@ public class ScriptTest {
         // setup
         Field field = FieldUtils.getField(Script.class, "appliedOn", true);
 
-        // assert
-        Assert.assertNotNull(field);
-        AssertAnnotations.forField(field, NotNull.class);
-    }
-
-    @Test
-    public void field_annotation_values_for_appliedOn() {
-        // setup
-        Field field = FieldUtils.getField(Script.class, "appliedOn", true);
-
         // action
         NotNull notNull = field.getAnnotation(NotNull.class);
 
         // assert
+        AssertAnnotations.forField(field, NotNull.class);
+
+        // assert notnull
         Assert.assertNotNull(notNull);
         Assert.assertEquals(
-            "@javax.validation.constraints.NotNull(message={javax.validation.constraints.NotNull.message}, groups=[], payload=[])"
+            "@javax.validation.constraints.NotNull(message={Script.appliedOn.NotNull.message}, groups=[], payload=[])"
             , notNull.toString());
+        Assert.assertTrue(validationMessages.containsKey("Script.appliedOn.NotNull.message"));
     }
 }
 
