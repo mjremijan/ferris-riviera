@@ -33,6 +33,9 @@ public class ConnectionPropertiesProducer {
 
     @Produces
     protected ConnectionProperties produceConnectionProperties() {
+
+        log.info("ENTER");
+        
         if (connectionProperties == null) {
             File propertiesFile
                 = new File(driverDirectory, "connection.properties");
