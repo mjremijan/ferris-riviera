@@ -6,8 +6,6 @@ import org.apache.log4j.Logger;
 import org.ferris.riviera.console.application.Application;
 import org.ferris.riviera.console.application.ApplicationDirectory;
 import org.ferris.riviera.console.application.ApplicationHandler;
-import org.ferris.riviera.console.connection.ConnectionProperties;
-import org.ferris.riviera.console.driver.DriverFile;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
 
@@ -73,32 +71,10 @@ public class WelcomePage {
     protected String timestampFormat;
 
     @Inject
-    @Key("WelcomePage.ConnectionHeading")
-    protected String connectionHeading;
-
-    @Inject
-    @Key("WelcomePage.ConnectionUrlFormat")
-    protected String connectionUrlFormat;
-
-    @Inject
-    @Key("WelcomePage.ConnectionCredentialsFormat")
-    protected String connectionCredentialsFormat;
-
-    @Inject
-    @Key("WelcomePage.ConnectionDriverFormat")
-    protected String connectionDriverFormat;
-
-    @Inject
     protected ApplicationDirectory applicationDirectory;
 
     @Inject
     protected ApplicationHandler applicationHandler;
-
-    @Inject
-    protected ConnectionProperties connectionProperties;
-
-    @Inject
-    protected DriverFile driverFile;
 
     /**
      * Show the user the welcome page
@@ -121,11 +97,6 @@ public class WelcomePage {
         console.p(timestampFormat, application.getCreatedOn());
         console.p(jdkVersionFormat, application.getBuildJdk());
         console.p(directoryFormat, applicationDirectory.getAbsolutePath());
-
-        console.h1(connectionHeading);
-        console.p(connectionUrlFormat, connectionProperties.getUrl());
-        console.p(connectionCredentialsFormat, connectionProperties.getUsername(), connectionProperties.getPassword());
-        console.p(connectionDriverFormat, driverFile.getAbsolutePath());
     }
 
 }
