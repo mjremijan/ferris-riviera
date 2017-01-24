@@ -60,14 +60,14 @@ public class ConnectionHandlerProducer {
                     new ConnectionProxy(connection)
             );
 
-            if (connectionProperties.getSetSchema() != null) {
+            if (connectionProperties.getSchemaSql() != null) {
                 log.info(
                         String.format(
-                                "Attempting to change the database schema: '%s'", String.valueOf(connectionProperties.getSetSchema())
+                                "Attempting to change the database schema: '%s'", String.valueOf(connectionProperties.getSchemaSql())
                         )
                 );
                 try (Statement stmt = connectionProxy.createStatement();) {
-                    stmt.execute(connectionProperties.getSetSchema());
+                    stmt.execute(connectionProperties.getSchemaSql());
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
