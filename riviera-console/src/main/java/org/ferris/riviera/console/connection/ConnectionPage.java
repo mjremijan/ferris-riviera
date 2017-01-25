@@ -46,17 +46,13 @@ public class ConnectionPage {
     @Key("ConnectionPage.ValidationResultFormat")
     protected String validationResultFormat;
 
-    @Inject
-    protected DriverFile driverFile;
-
-    @Inject
-    protected ConnectionProperties connectionProperties;
-
     /**
      * Show the user the welcome page
      */
     public void view(
         @Observes @Priority(VIEW) ConnectionValidationEvent event
+        , DriverFile driverFile
+        , ConnectionProperties connectionProperties
     ) {
         console.h1(heading);
         console.p(urlFormat
@@ -70,5 +66,4 @@ public class ConnectionPage {
         console.p(validationResultFormat
             , event.getValidationResult());
     }
-
 }
