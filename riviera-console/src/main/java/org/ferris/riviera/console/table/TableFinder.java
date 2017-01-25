@@ -1,5 +1,6 @@
-package org.ferris.riviera.console.script.sql;
+package org.ferris.riviera.console.table;
 
+import static java.lang.String.format;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import javax.enterprise.event.Observes;
@@ -7,15 +8,14 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import org.ferris.riviera.console.connection.ConnectionProperties;
-import org.ferris.riviera.console.script.ScriptProcessingEvent;
-import static org.ferris.riviera.console.script.ScriptProcessingEvent.FIND_SCRIPT_TABLE;
+import static org.ferris.riviera.console.table.TableValidationEvent.FIND;
 import org.jboss.weld.experimental.Priority;
 
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class ScriptTableFinder {
+public class TableFinder {
 
     @Inject
     protected Logger log;
@@ -27,30 +27,31 @@ public class ScriptTableFinder {
     protected ConnectionProperties connectionProperties;
 
     protected void findScriptTable(
-            @Observes @Priority(FIND_SCRIPT_TABLE) ScriptProcessingEvent event
+        @Observes @Priority(FIND) TableValidationEvent event
     ) {
+        log.info("ENTER");
         try (
-                Connection conn = handler.getConnection();) {
+            Connection conn = handler.getConnection();) {
             // http://apache-database.10148.n7.nabble.com/DatabaseMetaData-getTables-resultset-empty-td105623.html
             String catalog
-                    = connectionProperties.getCatalog();
+                = connectionProperties.getCatalog();
 
             String schemaPattern
-                    = connectionProperties.getSchemaPattern();
+                = connectionProperties.getSchemaPattern();
 
             String tableNamePattern
-                    = connectionProperties.getNamePattern();
+                = connectionProperties.getNamePattern();
 
             String[] types
-                    = connectionProperties.getTypes();
+                = connectionProperties.getTypes();
 
             try (
-                    ResultSet rs = conn.getMetaData().getTables(catalog, schemaPattern, tableNamePattern, types);) {
-                event.setTableThere(rs.next());
+                ResultSet rs = conn.getMetaData().getTables(catalog, schemaPattern, tableNamePattern, types);
+            ) {
+                event.setWasFound(rs.next());
             }
 
-            log.info(
-                    String.format("The script table was%sfound!", (event.isTableThere() ? " " : " *NOT* "))
+            log.info(format("The script table was%sfound!", (event.wasFound() ? " " : " *NOT* "))
             );
         } catch (Exception e) {
             throw new RuntimeException(e);

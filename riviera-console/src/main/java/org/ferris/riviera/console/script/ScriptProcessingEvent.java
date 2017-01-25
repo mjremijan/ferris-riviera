@@ -11,9 +11,7 @@ import org.ferris.riviera.console.script.jar.ScriptJarFile;
  */
 public class ScriptProcessingEvent {
 
-    // Database
-    public static final int FIND_SCRIPT_TABLE = 100;
-    public static final int CREATE_SCRIPT_TABLE = 120;
+    // Scripts
     public static final int RETRIEVE_SCRIPTS_FROM_DATABASE = 130;
     public static final int SHOW_SCRIPTS_FROM_DATABASE = 140;
 

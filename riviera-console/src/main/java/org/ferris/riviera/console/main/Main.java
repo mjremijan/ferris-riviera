@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionValidationEvent;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
+import org.ferris.riviera.console.table.TableValidationEvent;
 import org.ferris.riviera.console.welcome.WelcomeEvent;
 
 /**
@@ -38,6 +39,9 @@ public class Main {
     protected Event<ConnectionValidationEvent> connectionValidationEvent;
 
     @Inject
+    protected Event<TableValidationEvent> tableValidationEvent;
+
+    @Inject
     @Normal
     protected Event<ExitEvent> exitEvent;
 
@@ -52,6 +56,9 @@ public class Main {
 
         log.debug("Firing ConnectionValidationEvent");
         connectionValidationEvent.fire(new ConnectionValidationEvent());
+
+        log.debug("Firing TableValidationEvent");
+        tableValidationEvent.fire(new TableValidationEvent());
 
         log.debug("Firing normal ExitEvent");
         exitEvent.fire(new ExitEvent());
