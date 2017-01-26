@@ -4,8 +4,6 @@ import static java.lang.String.format;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.StringJoiner;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -13,7 +11,6 @@ import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import static org.ferris.riviera.console.history.HistoryFinderEvent.FIND;
-import org.ferris.riviera.console.script.*;
 import org.jboss.weld.experimental.Priority;
 
 @Singleton
@@ -21,9 +18,6 @@ public class HistoryFinder {
 
     @Inject
     protected Logger log;
-
-    @Inject
-    protected ScriptBuilder builder;
 
     @Inject
     protected ConnectionHandler handler;
@@ -55,43 +49,36 @@ public class HistoryFinder {
         ;
         log.debug(sql);
 
-//        StringBuilder sp = new StringBuilder();
-//        sp.append(" SELECT ");
-//        sp.append("   RELEASE_VERSION ");
-//        sp.append(" , RELEASE_TITLE ");
-//        sp.append(" , MAJOR ");
-//        sp.append(" , FEATURE ");
-//        sp.append(" , BUG ");
-//        sp.append(" , BUILD ");
-//        sp.append(" , FILE_NAME ");
-//        sp.append(" , FILE_DESCRIPTION ");
-//        sp.append(" , APPLIED_ON ");
-//        sp.append(" FROM ");
-//        sp.append(" SCRIPT_HISTORY ");
-//        sp.append(" ORDER BY ");
-//        sp.append(" MAJOR, FEATURE, BUG, BUILD ASC ");
-
         try (
             Connection conn = handler.getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
         ){
-            List<Script> scripts
-                = new LinkedList<>();
+            HistoryList list
+                = new HistoryList();
 
             while (rs.next()) {
-                scripts.add(
-                    builder.setResultSet(rs).build()
+                list.add(
+                    new History(
+                        rs.getString("RELEASE_VERSION")
+                      , rs.getString("RELEASE_TITLE")
+                      , rs.getInt("MAJOR")
+                      , rs.getInt("FEATURE")
+                      , rs.getInt("BUG")
+                      , rs.getInt("BUILD")
+                      , rs.getString("FILE_NAME")
+                      , rs.getString("FILE_DESCRIPTION")
+                      , rs.getDate("APPLIED_ON")
+                  )
                 );
             }
 
             log.info(format(
-                "Found %d scripts in database", scripts.size())
+                "Found %d scripts in database", list.size())
             );
 
-            event.setScriptsFromDatabase(
-                new Scripts(scripts)
-            );
+            event.setHistory(list);
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
