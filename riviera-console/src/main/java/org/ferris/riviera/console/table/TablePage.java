@@ -19,9 +19,9 @@ public class TablePage {
 
     public void viewFromDatabase(
           @Observes @Priority(TableValidationEvent.VIEW) TableValidationEvent event
-        , @Key("TablePage.db.Heading") String heading
-        , @Key("TablePage.db.Created") String created
-        , @Key("TablePage.db.Found") String found
+        , @Key("TablePage.Heading") String heading
+        , @Key("TablePage.Created") String created
+        , @Key("TablePage.Found") String found
     ) {
         log.info("ENTER");
 
