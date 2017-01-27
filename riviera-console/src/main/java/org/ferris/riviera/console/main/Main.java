@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionValidationEvent;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
+import org.ferris.riviera.console.history.HistoryFinderEvent;
 import org.ferris.riviera.console.table.TableValidationEvent;
 import org.ferris.riviera.console.welcome.WelcomeEvent;
 
@@ -42,25 +43,31 @@ public class Main {
     protected Event<TableValidationEvent> tableValidationEvent;
 
     @Inject
+    protected Event<HistoryFinderEvent> historyFinderEvent;
+
+    @Inject
     @Normal
     protected Event<ExitEvent> exitEvent;
 
     protected void main(List<String> args) {
         log.info("Riviera application has started");
 
-        log.debug("Firing MainEvent");
+        log.info("Firing MainEvent");
         mainEvent.fire(new MainEvent());
 
-        log.debug("Firing WelcomeEvent");
+        log.info("Firing WelcomeEvent");
         welcomeEvent.fire(new WelcomeEvent());
 
-        log.debug("Firing ConnectionValidationEvent");
+        log.info("Firing ConnectionValidationEvent");
         connectionValidationEvent.fire(new ConnectionValidationEvent());
 
-        log.debug("Firing TableValidationEvent");
+        log.info("Firing TableValidationEvent");
         tableValidationEvent.fire(new TableValidationEvent());
 
-        log.debug("Firing normal ExitEvent");
+        log.info("Firing HistoryFinderEvent");
+        historyFinderEvent.fire(new HistoryFinderEvent());
+
+        log.info("Firing normal ExitEvent");
         exitEvent.fire(new ExitEvent());
     }
 }
