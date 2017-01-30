@@ -10,6 +10,7 @@ import org.ferris.riviera.console.connection.ConnectionValidationEvent;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
 import org.ferris.riviera.console.history.HistoryFinderEvent;
+import org.ferris.riviera.console.jar.JarFinderEvent;
 import org.ferris.riviera.console.table.TableValidationEvent;
 import org.ferris.riviera.console.welcome.WelcomeEvent;
 
@@ -46,6 +47,9 @@ public class Main {
     protected Event<HistoryFinderEvent> historyFinderEvent;
 
     @Inject
+    protected Event<JarFinderEvent> jarFinderEvent;
+
+    @Inject
     @Normal
     protected Event<ExitEvent> exitEvent;
 
@@ -66,6 +70,9 @@ public class Main {
 
         log.info("Firing HistoryFinderEvent");
         historyFinderEvent.fire(new HistoryFinderEvent());
+
+        log.info("Firing JarValidationEvent");
+        jarFinderEvent.fire(new JarFinderEvent());
 
         log.info("Firing normal ExitEvent");
         exitEvent.fire(new ExitEvent());
