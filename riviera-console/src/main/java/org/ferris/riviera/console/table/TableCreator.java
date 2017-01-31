@@ -8,7 +8,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
-import static org.ferris.riviera.console.table.TableValidationEvent.CREATE;
+import static org.ferris.riviera.console.table.TableFinderEvent.CREATE;
 import org.jboss.weld.experimental.Priority;
 
 /**
@@ -24,7 +24,7 @@ public class TableCreator {
     protected ConnectionHandler handler;
 
     protected void createScriptTable(
-        @Observes @Priority(CREATE) TableValidationEvent event
+        @Observes @Priority(CREATE) TableFinderEvent event
     ) {
         log.info("ENTER");
 

@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
+import static org.ferris.riviera.console.table.TableFinderEvent.VIEW;
 import org.jboss.weld.experimental.Priority;
 
 @Singleton
@@ -18,7 +19,7 @@ public class TablePage {
     protected Console console;
 
     public void viewFromDatabase(
-          @Observes @Priority(TableValidationEvent.VIEW) TableValidationEvent event
+          @Observes @Priority(VIEW) TableFinderEvent event
         , @Key("TablePage.Heading") String heading
         , @Key("TablePage.Created") String created
         , @Key("TablePage.Found") String found

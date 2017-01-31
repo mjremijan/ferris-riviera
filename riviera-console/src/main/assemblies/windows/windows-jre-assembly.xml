@@ -78,7 +78,7 @@
         <dependencySet>
             <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>scripts</outputDirectory>
-            <outputFileNameMapping>${artifact.artifactId}-1.0.1${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+            <outputFileNameMapping>${artifact.artifactId}-1.0.1${dashClassifier?}.${artifact.extension}.ignore</outputFileNameMapping>
             <includes>
                 <include>${project.groupId}:riviera-scripts:jar:patch</include>                
             </includes>

@@ -3,9 +3,7 @@ package org.ferris.riviera.console.jar;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.String.format;
-import java.util.Objects;
 import static java.util.Objects.isNull;
-import java.util.jar.JarFile;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
@@ -56,6 +54,6 @@ public class JarFinder {
         }
 
         // Otherwise, get the JAR file
-        event.setJarFile(new JarFile(jars[0], false));
+        event.setJarFile(new JarFile(jars[0]));
     }
 }

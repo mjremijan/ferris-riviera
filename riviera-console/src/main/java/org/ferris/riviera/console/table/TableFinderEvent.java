@@ -4,7 +4,7 @@ package org.ferris.riviera.console.table;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class TableValidationEvent {
+public class TableFinderEvent {
     public static final int FIND = 100;
     public static final int CREATE = 120;
     public static final int VIEW = 130;

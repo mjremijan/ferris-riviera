@@ -1,7 +1,5 @@
 package org.ferris.riviera.console.jar;
 
-import java.util.jar.JarFile;
-
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
@@ -9,12 +7,14 @@ import java.util.jar.JarFile;
 public class JarFinderEvent {
 
     public static final int FIND = 100;
-    public static final int VIEW = 110;
+    public static final int VIEW = 120;
 
-    protected JarFile jarFile;
+    private JarFile jarFile;
 
     void setJarFile(JarFile jarFile) {
         this.jarFile = jarFile;
     }
-
+    JarFile getJarFile() {
+        return this.jarFile;
+    }
 }

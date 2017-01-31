@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import org.ferris.riviera.console.connection.ConnectionProperties;
-import static org.ferris.riviera.console.table.TableValidationEvent.FIND;
+import static org.ferris.riviera.console.table.TableFinderEvent.FIND;
 import org.jboss.weld.experimental.Priority;
 
 /**
@@ -27,7 +27,7 @@ public class TableFinder {
     protected ConnectionProperties connectionProperties;
 
     protected void findScriptTable(
-        @Observes @Priority(FIND) TableValidationEvent event
+        @Observes @Priority(FIND) TableFinderEvent event
     ) {
         log.info("ENTER");
         try (
