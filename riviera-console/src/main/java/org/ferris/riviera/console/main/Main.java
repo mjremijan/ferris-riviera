@@ -2,6 +2,7 @@ package org.ferris.riviera.console.main;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.enterprise.event.Event;
 import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
@@ -10,6 +11,7 @@ import org.ferris.riviera.console.connection.ConnectionValidationEvent;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
 import org.ferris.riviera.console.history.HistoryFinderEvent;
+import org.ferris.riviera.console.jar.JarEntryFinderEvent;
 import org.ferris.riviera.console.jar.JarFinderEvent;
 import org.ferris.riviera.console.table.TableFinderEvent;
 import org.ferris.riviera.console.welcome.WelcomeEvent;
@@ -50,6 +52,9 @@ public class Main {
     protected Event<JarFinderEvent> jarFinderEvent;
 
     @Inject
+    protected Event<JarEntryFinderEvent> jarEntryFinderEvent;
+
+    @Inject
     @Normal
     protected Event<ExitEvent> exitEvent;
 
@@ -69,10 +74,18 @@ public class Main {
         tableFinderEvent.fire(new TableFinderEvent());
 
         log.info("Firing JarFinderEvent");
-        jarFinderEvent.fire(new JarFinderEvent());
+        JarFinderEvent jfe = new JarFinderEvent();
+        jarFinderEvent.fire(jfe);
 
         log.info("Firing HistoryFinderEvent");
-        historyFinderEvent.fire(new HistoryFinderEvent());
+        HistoryFinderEvent hfe = new HistoryFinderEvent();
+        historyFinderEvent.fire(hfe);
+
+        log.info("Firing JarEntryFinderEvent");
+        jarEntryFinderEvent.fire(new JarEntryFinderEvent(
+              jfe.getJarFile()
+            , hfe.getHistory().stream().map(h -> h.toVersionString()).collect(Collectors.toList())
+        ));
 
         log.info("Firing normal ExitEvent");
         exitEvent.fire(new ExitEvent());

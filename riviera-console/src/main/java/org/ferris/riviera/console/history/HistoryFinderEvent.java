@@ -14,7 +14,7 @@ public class HistoryFinderEvent {
         history = list;
     }
 
-    protected HistoryList getHistory() {
+    public HistoryList getHistory() {
         return history;
     }
 }

@@ -11,10 +11,10 @@ public class JarFinderEvent {
 
     private JarFile jarFile;
 
-    void setJarFile(JarFile jarFile) {
+    protected void setJarFile(JarFile jarFile) {
         this.jarFile = jarFile;
     }
-    JarFile getJarFile() {
+    public JarFile getJarFile() {
         return this.jarFile;
     }
 }
