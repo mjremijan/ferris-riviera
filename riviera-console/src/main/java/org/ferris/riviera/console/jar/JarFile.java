@@ -2,7 +2,9 @@ package org.ferris.riviera.console.jar;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -33,5 +35,16 @@ public class JarFile extends java.util.jar.JarFile {
             .map(j -> pattern.matcher(j.getName()))
             .filter(m -> m.matches())
             .count();
+    }
+
+    public List<JarEntry> getComplement(List<String> removeTheseVersions) {
+        List<JarEntry> entries = this.stream()
+            .filter(j -> !j.isDirectory())
+            .map(j -> pattern.matcher(j.getName()))
+            .filter( m -> m.matches())
+            .map(m -> new JarEntry(m))
+            .filter(j -> !removeTheseVersions.contains(j.toVersionString()))
+            .collect(Collectors.toList());
+        return entries;
     }
 }

@@ -25,4 +25,9 @@ public class ScriptJarPattern {
         m.matches();
         return m;
     }
+
+    public Matcher matcher2(CharSequence input) {
+        Matcher m = pattern.matcher(input);
+        return m;
+    }
 }

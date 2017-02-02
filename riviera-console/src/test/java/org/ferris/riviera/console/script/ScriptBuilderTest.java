@@ -1,11 +1,11 @@
 package org.ferris.riviera.console.script;
 
-import org.ferris.riviera.console.script.jar.ScriptJarPattern;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import org.apache.log4j.Logger;
+import org.ferris.riviera.console.script.jar.ScriptJarPattern;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -112,5 +112,14 @@ public class ScriptBuilderTest {
         Assert.assertEquals("1.0.2.4 - herring.sql", s.getFileName());
         Assert.assertEquals("herring", s.getFileDescription());
         Assert.assertEquals(null, s.getAppliedOn());
+    }
+
+    @Test
+    public void matcher_try() {
+        // setup
+        Matcher m = new ScriptJarPattern().matcher2("1.0.2 - shrubbery/1.0.2.4 - herring.sql");
+        m.matches();
+        Assert.assertEquals("1.0.2 - shrubbery/1.0.2.4 - herring.sql", m.group());
+        Assert.assertEquals("1.0.2.4", m.group(5));
     }
 }
