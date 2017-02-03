@@ -1,6 +1,8 @@
 package org.ferris.riviera.console.jar;
 
 import java.util.regex.Matcher;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -9,14 +11,33 @@ import java.util.regex.Matcher;
 public class JarEntry extends java.util.jar.JarEntry {
 
     protected String directoryName;
+
+    @NotNull(message = "{JarEntry.releaseVersion.NotNull.message}")
+    @Size(min = 1, max = 8, message = "{JarEntry.releaseVersion.Size.message}")
     protected String releaseVersion;
+
+    @Size(min = 0, max = 50, message = "{JarEntry.releaseTitle.Size.message}")
     protected String releaseTitle;
+
+    @NotNull(message = "{JarEntry.fileName.NotNull.message}")
+    @Size(min = 1, max = 100, message = "{JarEntry.fileName.Size.message}")
     protected String fileName;
+
     protected String fileVersion;
+
+    @Size(min = 0, max = 50, message = "{JarEntry.fileDescription.Size.message}")
     protected String fileDescription;
+
+    @NotNull(message = "{JarEntry.major.NotNull.message}")
     protected int major;
+
+    @NotNull(message = "{JarEntry.feature.NotNull.message}")
     protected int feature;
+
+    @NotNull(message = "{JarEntry.bug.NotNull.message}")
     protected int bug;
+
+    @NotNull(message = "{JarEntry.build.NotNull.message}")
     protected int build;
 
     public JarEntry(Matcher m) {
