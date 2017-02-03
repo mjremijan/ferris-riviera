@@ -16,8 +16,9 @@ public class JarEntryFilter {
     protected void filterJarEntries(
         @Observes @Priority(JarEntryFinderEvent.FILTER) JarEntryFinderEvent event
     ) {
-
+        log.info("ENTER");
+        event.setJarEntries(
+            event.getJarFile().getComplement(event.getVersionsInTheDatabase())
+        );
     }
-
-
 }
