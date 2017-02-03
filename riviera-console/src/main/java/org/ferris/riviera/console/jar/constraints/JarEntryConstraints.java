@@ -17,9 +17,9 @@ import org.ferris.riviera.console.script.validation.ReleaseVersionValidator;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {ReleaseVersionValidator.class})
 @Documented
-public @interface ReleaseVersion {
+public @interface JarEntryConstraints {
 
-    String message() default "{Script.ReleaseVersion.message}";
+    String message() default "{JarEntry.JarEntryConstraints.message}";
 
     Class<?>[] groups() default {};
 

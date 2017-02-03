@@ -3,11 +3,13 @@ package org.ferris.riviera.console.jar;
 import java.util.regex.Matcher;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.ferris.riviera.console.jar.constraints.JarEntryConstraints;
 
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
+@JarEntryConstraints
 public class JarEntry extends java.util.jar.JarEntry {
 
     protected String directoryName;
@@ -66,5 +68,13 @@ public class JarEntry extends java.util.jar.JarEntry {
             bug,
             build
         );
+    }
+
+    public String getReleaseVersion() {
+        return releaseVersion;
+    }
+    
+    public String getFileVersion() {
+        return fileVersion;
     }
 }
