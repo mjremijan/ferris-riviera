@@ -11,13 +11,14 @@ import javax.validation.ConstraintViolation;
  */
 public class JarEntryFinderEvent {
     public static final int FILTER = 100;
-    public static final int VALIDATE = 100;
-    public static final int VIEW = 100;
+    public static final int VALIDATE = 110;
+    public static final int VIEW_CONSTRAINT_VIOLATIONS = 120;
+    public static final int VIEW_UPDATES = 130;
 
     protected JarFile jarFile;
     protected List<String> versionsInTheDatabase;
     protected List<JarEntry> jarEntries;
-    protected Map<JarEntry, Set<ConstraintViolation<JarEntry>>> jarEntryProblems;
+    protected Map<JarEntry, Set<ConstraintViolation<JarEntry>>> jarEntryConstraintViolations;
 
     public JarEntryFinderEvent(JarFile jarFile, List<String> versionsInTheDatabase) {
         this.jarFile = jarFile;
@@ -40,11 +41,11 @@ public class JarEntryFinderEvent {
         return this.jarEntries;
     }
 
-    void setJarEntryProblems(Map<JarEntry, Set<ConstraintViolation<JarEntry>>> jarEntryProblems) {
-        this.jarEntryProblems = jarEntryProblems;
+    void setJarEntryConstraintViolations(Map<JarEntry, Set<ConstraintViolation<JarEntry>>> jarEntryConstraintViolations) {
+        this.jarEntryConstraintViolations = jarEntryConstraintViolations;
     }
 
-    Map<JarEntry, Set<ConstraintViolation<JarEntry>>> getJarEntryProblems() {
-        return jarEntryProblems;
+    Map<JarEntry, Set<ConstraintViolation<JarEntry>>> getJarEntryConstraintViolations() {
+        return jarEntryConstraintViolations;
     }
 }

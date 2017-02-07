@@ -1,11 +1,14 @@
 package org.ferris.riviera.console.jar;
 
+import java.util.Map;
+import java.util.Set;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.validation.ConstraintViolation;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.io.Console;
-import static org.ferris.riviera.console.jar.JarEntryFinderEvent.VIEW;
+import static org.ferris.riviera.console.jar.JarEntryFinderEvent.VIEW_CONSTRAINT_VIOLATIONS;
 import org.ferris.riviera.console.messages.Key;
 import org.jboss.weld.experimental.Priority;
 
@@ -18,19 +21,42 @@ public class JarEntryPage {
     @Inject
     protected Console console;
 
-    public void viewOfJarEntryProblems(
-          @Observes @Priority(VIEW) JarEntryFinderEvent event
-        , @Key("JarPage.Heading") String heading
-        , @Key("JarPage.FileNameFormat") String fileNameFormat
-        , @Key("JarPage.ScriptCountFormat") String scriptCountFormat
+    public void viewJarEntryErrors(
+          @Observes @Priority(VIEW_CONSTRAINT_VIOLATIONS) JarEntryFinderEvent event
+        , @Key("JarEntry.ConstraintViolations.Heading") String heading
+        , @Key("JarEntry.ConstraintViolations.Message.singular") String singular
+        , @Key("JarEntry.ConstraintViolations.Message.pluralFormat") String pluralFormat
     ) {
         log.info("ENTER");
-        if (event.getJarEntryProblems().isEmpty()) {
+
+        // If no constraint violations, do nothing.
+        if (event.getJarEntryConstraintViolations().isEmpty()) {
             return;
         }
-        
+
+        // Output the heading
         console.h1(heading);
-        console.p(fileNameFormat, event.getJarFile().getFileName());
-        console.p(scriptCountFormat, String.valueOf(event.getJarFile().getScriptCount()));
+
+        // Get the constraint violations for easy access
+        Map<JarEntry, Set<ConstraintViolation<JarEntry>>> constraintViolations
+            = event.getJarEntryConstraintViolations();
+
+        // If there is only 1 violation, use singular message
+        if (constraintViolations.size() == 1) {
+            console.p(singular);
+        }
+        // Otherwise use the plural message
+        else {
+            console.p(pluralFormat, String.valueOf(constraintViolations.size()));
+        }
+
+        // Loop over all the JarEntries
+        constraintViolations.entrySet().stream().forEach(es -> {
+            // Display JarEntry
+            console.p(es.getKey().getName());
+
+            // Loop over constraint violations
+            es.getValue().forEach(cv -> console.li(cv.getMessage()));
+        });
     }
 }

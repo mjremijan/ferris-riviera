@@ -45,6 +45,6 @@ public class JarEntryValidator {
                 .collect(Collectors.toMap(es -> es.getKey(), es -> es.getValue()))
         ;
 
-        event.setJarEntryProblems(problems);
+        event.setJarEntryConstraintViolations(problems);
     }
 }

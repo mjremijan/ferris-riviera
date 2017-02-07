@@ -73,13 +73,13 @@ public class Main {
         log.info("Firing TableFinderEvent");
         tableFinderEvent.fire(new TableFinderEvent());
 
-        log.info("Firing JarFinderEvent");
-        JarFinderEvent jfe = new JarFinderEvent();
-        jarFinderEvent.fire(jfe);
-
         log.info("Firing HistoryFinderEvent");
         HistoryFinderEvent hfe = new HistoryFinderEvent();
         historyFinderEvent.fire(hfe);
+
+        log.info("Firing JarFinderEvent");
+        JarFinderEvent jfe = new JarFinderEvent();
+        jarFinderEvent.fire(jfe);
 
         log.info("Firing JarEntryFinderEvent");
         jarEntryFinderEvent.fire(new JarEntryFinderEvent(
