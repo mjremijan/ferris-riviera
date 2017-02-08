@@ -82,6 +82,31 @@
             <includes>
                 <include>${project.groupId}:riviera-scripts:jar:patch</include>                
             </includes>
-        </dependencySet>          
+        </dependencySet>  
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>scripts</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-1.2.0${dashClassifier?}.${artifact.extension}.ignore</outputFileNameMapping>
+            <includes>
+                <include>${project.groupId}:riviera-scripts:jar:validation-releasetitle</include>                
+            </includes>
+        </dependencySet>  
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>scripts</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-1.2.12345${dashClassifier?}.${artifact.extension}.ignore</outputFileNameMapping>
+            <includes>
+                <include>${project.groupId}:riviera-scripts:jar:validation-releaseversion</include>                
+            </includes>
+        </dependencySet>    
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>scripts</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-1.3.0${dashClassifier?}.${artifact.extension}.ignore</outputFileNameMapping>
+            <includes>
+                <include>${project.groupId}:riviera-scripts:jar:validation-files</include>                
+            </includes>
+        </dependencySet>
+            
     </dependencySets>
 </assembly>

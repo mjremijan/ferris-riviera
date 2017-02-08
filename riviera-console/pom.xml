@@ -204,7 +204,24 @@
             <version>${project.version}</version>
             <classifier>patch</classifier>
         </dependency>
-        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>riviera-scripts</artifactId>
+            <version>${project.version}</version>
+            <classifier>validation-releasetitle</classifier>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>riviera-scripts</artifactId>
+            <version>${project.version}</version>
+            <classifier>validation-releaseversion</classifier>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>riviera-scripts</artifactId>
+            <version>${project.version}</version>
+            <classifier>validation-files</classifier>
+        </dependency>
         
         <!-- MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC -->
         <dependency>

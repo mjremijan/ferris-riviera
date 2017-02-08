@@ -61,7 +61,50 @@
                             <classifier>patch</classifier>
                             <finalName>riviera-scripts-1.0.1</finalName>
                             <includes>
-                                <include>**/*</include>
+                                <include>**/1.0.0 - First release/*</include>
+                                <include>**/1.0.1/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>validation-releasetitle-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>validation-releasetitle</classifier>
+                            <finalName>riviera-scripts-1.2.0</finalName>
+                            <includes>
+                                <include>**/1.2.0 - 123456789_123456789_123456789_123456789_123456789_1/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>validation-releaseversion-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>validation-releaseversion</classifier>
+                            <finalName>riviera-scripts-1.2.12345</finalName>
+                            <includes>
+                                <include>**/1.2.12345/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>validation-files-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>validation-files</classifier>
+                            <finalName>riviera-scripts-1.3.0</finalName>
+                            <includes>
+                                <include>**/1.3.0/*</include>
                             </includes>
                         </configuration>
                     </execution>

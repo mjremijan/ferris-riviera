@@ -31,16 +31,16 @@ public class JarEntry extends java.util.jar.JarEntry {
     protected String fileDescription;
 
     @NotNull(message = "{JarEntry.major.NotNull.message}")
-    protected int major;
+    protected Integer major;
 
     @NotNull(message = "{JarEntry.feature.NotNull.message}")
-    protected int feature;
+    protected Integer feature;
 
     @NotNull(message = "{JarEntry.bug.NotNull.message}")
-    protected int bug;
+    protected Integer bug;
 
     @NotNull(message = "{JarEntry.build.NotNull.message}")
-    protected int build;
+    protected Integer build;
 
     public JarEntry(Matcher m) {
         super(m.group(0));
@@ -55,10 +55,10 @@ public class JarEntry extends java.util.jar.JarEntry {
         String[] fileVersionTokens
             = fileVersion.split("\\.");
 
-        major = Integer.parseInt(fileVersionTokens[0]);
-        feature = Integer.parseInt(fileVersionTokens[1]);
-        bug = Integer.parseInt(fileVersionTokens[2]);
-        build = Integer.parseInt(fileVersionTokens[3]);
+        major = Integer.valueOf(fileVersionTokens[0]);
+        feature = Integer.valueOf(fileVersionTokens[1]);
+        bug = Integer.valueOf(fileVersionTokens[2]);
+        build = Integer.valueOf(fileVersionTokens[3]);
     }
 
     public String toVersionString() {
@@ -73,7 +73,7 @@ public class JarEntry extends java.util.jar.JarEntry {
     public String getReleaseVersion() {
         return releaseVersion;
     }
-    
+
     public String getFileVersion() {
         return fileVersion;
     }

@@ -14,12 +14,14 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.ferris.riviera.console.script.constraints.ReleaseVersion;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
+@Ignore
 public class ScriptTest {
 
     static Properties validationMessages;
