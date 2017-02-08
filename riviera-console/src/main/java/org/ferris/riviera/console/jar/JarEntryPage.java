@@ -26,6 +26,7 @@ public class JarEntryPage {
         , @Key("JarEntry.ConstraintViolations.Heading") String heading
         , @Key("JarEntry.ConstraintViolations.Message.singular") String singular
         , @Key("JarEntry.ConstraintViolations.Message.pluralFormat") String pluralFormat
+        , @Key("JarEntry.ConstraintViolations.fileFormat") String fileFormat
     ) {
         log.info("ENTER");
 
@@ -37,6 +38,7 @@ public class JarEntryPage {
         // Output the heading
         console.h1(heading);
 
+
         // Get the constraint violations for easy access
         Map<JarEntry, Set<ConstraintViolation<JarEntry>>> constraintViolations
             = event.getJarEntryConstraintViolations();
@@ -44,19 +46,24 @@ public class JarEntryPage {
         // If there is only 1 violation, use singular message
         if (constraintViolations.size() == 1) {
             console.p(singular);
+            console.br();
         }
         // Otherwise use the plural message
         else {
             console.p(pluralFormat, String.valueOf(constraintViolations.size()));
+            console.br();
         }
 
         // Loop over all the JarEntries
         constraintViolations.entrySet().stream().forEach(es -> {
             // Display JarEntry
-            console.p(es.getKey().getName());
+            console.p(fileFormat, es.getKey().getName());
 
             // Loop over constraint violations
             es.getValue().forEach(cv -> console.li(cv.getMessage()));
+
+            // Display newline
+            console.br();
         });
     }
 }

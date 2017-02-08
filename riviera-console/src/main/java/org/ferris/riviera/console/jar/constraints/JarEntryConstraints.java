@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import org.ferris.riviera.console.script.validation.ReleaseVersionValidator;
+import org.ferris.riviera.console.jar.validation.JarEntryConstraintsValidator;
 
 /**
  *
@@ -15,7 +15,7 @@ import org.ferris.riviera.console.script.validation.ReleaseVersionValidator;
  */
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {ReleaseVersionValidator.class})
+@Constraint(validatedBy = {JarEntryConstraintsValidator.class})
 @Documented
 public @interface JarEntryConstraints {
 

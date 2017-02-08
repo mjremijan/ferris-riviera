@@ -56,7 +56,7 @@ public class Console {
     }
 
     public void li(String str, String... args) {
-        indentf(6, str, args);
+        indentf(6, "* " + str, args);
     }
 
     /**
