@@ -1,27 +1,28 @@
 package org.ferris.riviera.console.jar;
 
 import java.util.regex.Matcher;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
-import org.ferris.riviera.console.jar.constraints.JarEntryConstraints;
 
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-@JarEntryConstraints
-public class JarEntry extends java.util.jar.JarEntry {
+public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEntry> {
 
-    protected String directoryName;
+    @Max(value=99, message = "{JarEntry.major.Max.message}")
+    protected Integer major;
+    @Max(value=99, message = "{JarEntry.feature.Max.message}")
+    protected Integer feature;
+    @Max(value=99, message = "{JarEntry.bug.Max.message}")
+    protected Integer bug;
+    @Max(value=999, message = "{JarEntry.build.Max.message}")
+    protected Integer build;
 
-    @NotNull(message = "{JarEntry.releaseVersion.NotNull.message}")
-    @Size(min = 1, max = 8, message = "{JarEntry.releaseVersion.Size.message}")
-    protected String releaseVersion;
 
     @Size(min = 0, max = 50, message = "{JarEntry.releaseTitle.Size.message}")
     protected String releaseTitle;
 
-    @NotNull(message = "{JarEntry.fileName.NotNull.message}")
     @Size(min = 1, max = 100, message = "{JarEntry.fileName.Size.message}")
     protected String fileName;
 
@@ -30,23 +31,21 @@ public class JarEntry extends java.util.jar.JarEntry {
     @Size(min = 0, max = 50, message = "{JarEntry.fileDescription.Size.message}")
     protected String fileDescription;
 
-    @NotNull(message = "{JarEntry.major.NotNull.message}")
-    protected Integer major;
 
-    @NotNull(message = "{JarEntry.feature.NotNull.message}")
-    protected Integer feature;
-
-    @NotNull(message = "{JarEntry.bug.NotNull.message}")
-    protected Integer bug;
-
-    @NotNull(message = "{JarEntry.build.NotNull.message}")
-    protected Integer build;
 
     public JarEntry(Matcher m) {
+
+        // "1.0.0 - abc_zyz 123.789 - cool/1.0.0.1 - description.sql"
         super(m.group(0));
 
-        directoryName = m.group(1);
-        releaseVersion = m.group(2);
+        //"1.0.0"
+        String[] releaseVersionTokens
+            = m.group(2).split("\\.");
+        Integer releaseMajor = Integer.valueOf(releaseVersionTokens[0]);
+        Integer releaseFeature = Integer.valueOf(releaseVersionTokens[1]);
+        Integer releaseBug = Integer.valueOf(releaseVersionTokens[2]);
+
+
         releaseTitle = m.group(3);
         fileName = m.group(4);
         fileVersion = m.group(5);
@@ -59,6 +58,21 @@ public class JarEntry extends java.util.jar.JarEntry {
         feature = Integer.valueOf(fileVersionTokens[1]);
         bug = Integer.valueOf(fileVersionTokens[2]);
         build = Integer.valueOf(fileVersionTokens[3]);
+
+        if (
+            major != releaseMajor
+            ||
+            feature != releaseFeature
+            ||
+            bug != releaseBug
+        ) {
+            throw new RuntimeException(
+                String.format(
+                    "SQL file version does not match directory version \"%s\""
+                    , m.group(0)
+                )
+            );
+        }
     }
 
     public String toVersionString() {
@@ -70,11 +84,41 @@ public class JarEntry extends java.util.jar.JarEntry {
         );
     }
 
-    public String getReleaseVersion() {
-        return releaseVersion;
-    }
-
     public String getFileVersion() {
         return fileVersion;
+    }
+
+    @Override
+    public int compareTo(JarEntry other) {
+
+        int retval = 9999;
+
+        if (this.major.compareTo(other.major) < 0) {
+            retval = -1;
+        } else if (this.major.compareTo(other.major) > 0) {
+            retval = 1;
+        } else {
+            if (this.feature.compareTo(other.feature) < 0) {
+                retval = -1;
+            } else if (this.feature.compareTo(other.feature) > 0) {
+                retval = 1;
+            } else {
+                if (this.bug.compareTo(other.bug) < 0) {
+                    retval = -1;
+                } else if (this.bug.compareTo(other.bug) > 0) {
+                    retval = 1;
+                } else {
+                    if (this.build.compareTo(other.build) < 0) {
+                        retval = -1;
+                    } else if (this.build.compareTo(other.build) > 0) {
+                        retval = 1;
+                    } else {
+                        retval = 0;
+                    }
+                }
+            }
+        }
+
+        return retval;
     }
 }
