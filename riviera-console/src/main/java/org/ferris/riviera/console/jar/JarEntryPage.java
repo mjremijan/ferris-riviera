@@ -58,8 +58,9 @@ public class JarEntryPage {
         constraintViolations.entrySet().stream().forEach(es -> {
             // Display JarEntry
             console.p(fileFormat, es.getKey().getName());
+            console.br();
 
-            // Loop over constraint violations
+            // Loop over and display constraint violations
             es.getValue().forEach(cv -> console.li(cv.getMessage()));
 
             // Display newline

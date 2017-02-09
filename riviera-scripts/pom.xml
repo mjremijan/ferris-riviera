@@ -80,6 +80,20 @@
                             </includes>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>bad-build-number</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>bad-build-number</classifier>
+                            <finalName>riviera-scripts-2.0.0</finalName>
+                            <includes>
+                                <include>**/2.0.0/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
