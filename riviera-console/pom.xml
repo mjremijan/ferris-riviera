@@ -216,7 +216,18 @@
             <version>${project.version}</version>
             <classifier>bad-build-number</classifier>
         </dependency>
-        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>riviera-scripts</artifactId>
+            <version>${project.version}</version>
+            <classifier>bad-release-title</classifier>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>riviera-scripts</artifactId>
+            <version>${project.version}</version>
+            <classifier>bad-filename</classifier>
+        </dependency>
         
         <!-- MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC -->
         <dependency>

@@ -94,6 +94,34 @@
                             </includes>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>bad-release-title</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>bad-release-title</classifier>
+                            <finalName>riviera-scripts-3.0.0</finalName>
+                            <includes>
+                                <include>**/3.0.0 - xxxxxxxxx1xxxxxxxxx1xxxxxxxxx1xxxxxxxxx1xxxxxxxxx1x/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bad-filename</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>bad-filename</classifier>
+                            <finalName>riviera-scripts-4.0.0</finalName>
+                            <includes>
+                                <include>**/4.0.0/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

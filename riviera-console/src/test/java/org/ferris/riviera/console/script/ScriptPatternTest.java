@@ -1,10 +1,10 @@
 package org.ferris.riviera.console.script;
 
-import org.ferris.riviera.console.script.jar.ScriptJarPattern;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
+import org.ferris.riviera.console.script.jar.ScriptJarPattern;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +41,7 @@ public class ScriptPatternTest {
             , "1.0.0/1.0.0.1-description.sql"
             , "1.0.0/1.0.0.1-abc_zyz 123.789-   cool.sql"
             , "111.2222.333- some_really bad descripTion/11111.222222.33333.44444-abc_zyz 123.789 - cool.sql"
+            , "200.0.0     -       spaces/200.0.0.1-            spaces.sql"
         );
 
         // action & assert
@@ -68,7 +69,7 @@ public class ScriptPatternTest {
     public void allGroups() {
         // setup
         String s =
-            "111.2222.333- some_really bad descripTion/11111.222222.33333.44444-abc_zyz 123.789 - cool.sql";
+            "111.2222.333-          some_really bad descripTion/11111.222222.33333.44444  -          abc_zyz 123.789 - cool.sql";
 
         // action
         Matcher m
@@ -77,11 +78,11 @@ public class ScriptPatternTest {
         // validate
         Assert.assertEquals(6, m.groupCount());
 
-        // [0] Entire string        111.2222.333- some_really bad descripTion/11111.222222.33333.44444-abc_zyz 123.789 - cool.sql
-        Assert.assertEquals("111.2222.333- some_really bad descripTion/11111.222222.33333.44444-abc_zyz 123.789 - cool.sql", m.group(0));
+        // [0] Entire string        111.2222.333-          some_really bad descripTion/11111.222222.33333.44444  -          abc_zyz 123.789 - cool.sql
+        Assert.assertEquals("111.2222.333-          some_really bad descripTion/11111.222222.33333.44444  -          abc_zyz 123.789 - cool.sql", m.group(0));
 
         // [1] Directory name       111.2222.333- some_really bad descripTion
-        Assert.assertEquals("111.2222.333- some_really bad descripTion", m.group(1));
+        Assert.assertEquals("111.2222.333-          some_really bad descripTion", m.group(1));
 
         // [2] Directory version    111.2222.333
         Assert.assertEquals("111.2222.333", m.group(2));
@@ -89,8 +90,8 @@ public class ScriptPatternTest {
         // [3] Directory title      some_really bad descripTion
         Assert.assertEquals("some_really bad descripTion", m.group(3));
 
-        // [4] File name            11111.222222.33333.44444-abc_zyz 123.789 - cool.sql
-        Assert.assertEquals("11111.222222.33333.44444-abc_zyz 123.789 - cool.sql", m.group(4));
+        // [4] File name            11111.222222.33333.44444  -          abc_zyz 123.789 - cool.sql
+        Assert.assertEquals("11111.222222.33333.44444  -          abc_zyz 123.789 - cool.sql", m.group(4));
 
         // [5] File version         11111.222222.33333.44444
         Assert.assertEquals("11111.222222.33333.44444", m.group(5));

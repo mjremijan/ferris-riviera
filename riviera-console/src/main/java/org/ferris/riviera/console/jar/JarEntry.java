@@ -18,11 +18,8 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
     protected Integer bug;
     @Max(value=999, message = "{JarEntry.build.Max.message}")
     protected Integer build;
-
-
-    @Size(min = 0, max = 50, message = "{JarEntry.releaseTitle.Size.message}")
-    protected String releaseTitle;
-
+    @Size(min = 0, max = 50, message = "{JarEntry.title.Size.message}")
+    protected String title;
     @Size(min = 1, max = 100, message = "{JarEntry.fileName.Size.message}")
     protected String fileName;
 
@@ -46,7 +43,7 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
         Integer releaseBug = Integer.valueOf(releaseVersionTokens[2]);
 
 
-        releaseTitle = m.group(3);
+        title = m.group(3);
         fileName = m.group(4);
         fileVersion = m.group(5);
         fileDescription = m.group(6);

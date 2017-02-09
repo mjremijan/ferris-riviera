@@ -94,10 +94,26 @@
         <dependencySet>
             <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>scripts</outputDirectory>
-            <outputFileNameMapping>${artifact.artifactId}-2.0.0${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+            <outputFileNameMapping>${artifact.artifactId}-2.0.0${dashClassifier?}.${artifact.extension}.ignore</outputFileNameMapping>
             <includes>
                 <include>${project.groupId}:riviera-scripts:jar:bad-build-number</include>                
             </includes>
-        </dependencySet>    
+        </dependencySet> 
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>scripts</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-3.0.0${dashClassifier?}.${artifact.extension}.ignore</outputFileNameMapping>
+            <includes>
+                <include>${project.groupId}:riviera-scripts:jar:bad-release-title</include>                
+            </includes>
+        </dependencySet>   
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>scripts</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-4.0.0${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>${project.groupId}:riviera-scripts:jar:bad-filename</include>                
+            </includes>
+        </dependencySet>
     </dependencySets>
 </assembly>
