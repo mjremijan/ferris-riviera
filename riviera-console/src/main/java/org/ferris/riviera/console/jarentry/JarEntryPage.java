@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.jarentry;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.enterprise.event.Event;
@@ -72,8 +73,12 @@ public class JarEntryPage {
         // Output the heading
         console.h1(readyHeading);
 
+        // Get list for easy access
+        List<JarEntry> entries
+            = event.getJarEntries();
+
         // Loop over all the JarEntries
-        event.getJarEntries().stream().forEach(j -> {
+        entries.stream().forEach(j -> {
             // Display JarEntry
             console.p(readyFileFormat, j.getName());
         });
@@ -82,15 +87,13 @@ public class JarEntryPage {
         console.br();
 
         // Display script count
-        console.p(readyScriptCountFormat, String.valueOf(event.getJarEntries().size()));
+        console.p(readyScriptCountFormat, String.valueOf(entries.size()));
 
         // Display newline
         console.br();
 
         // Display future version
-        console.p(readyFutureVersionFormat, );
-
-
+        console.p(readyFutureVersionFormat, entries.get(entries.size()-1).getVersion());
     }
 
     protected void violations(JarEntryValidationEvent event) {
