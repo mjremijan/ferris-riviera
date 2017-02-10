@@ -36,7 +36,7 @@ public class JarFileTest {
 
         // assert
         Assert.assertEquals(2, entries.size());
-        Assert.assertEquals("1.0.0.3", entries.get(0).toVersionString());
-        Assert.assertEquals("1.0.1.1", entries.get(1).toVersionString());
+        Assert.assertEquals("1.0.0.3", entries.get(0).getVersion());
+        Assert.assertEquals("1.0.1.1", entries.get(1).getVersion());
     }
 }

@@ -228,6 +228,12 @@
             <version>${project.version}</version>
             <classifier>bad-filename</classifier>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>riviera-scripts</artifactId>
+            <version>${project.version}</version>
+            <classifier>bad-file-description</classifier>
+        </dependency>
         
         <!-- MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC MISC -->
         <dependency>

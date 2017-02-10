@@ -122,6 +122,20 @@
                             </includes>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>bad-file-description</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>bad-file-description</classifier>
+                            <finalName>riviera-scripts-5.0.0</finalName>
+                            <includes>
+                                <include>**/5.0.0/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

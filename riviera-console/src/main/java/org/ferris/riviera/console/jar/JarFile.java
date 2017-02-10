@@ -43,7 +43,7 @@ public class JarFile extends java.util.jar.JarFile {
             .map(j -> pattern.matcher(j.getName()))
             .filter( m -> m.matches())
             .map(m -> new JarEntry(m))
-            .filter(j -> !removeTheseVersions.contains(j.toVersionString()))
+            .filter(j -> !removeTheseVersions.contains(j.getVersion()))
             .collect(Collectors.toList());
         return entries;
     }

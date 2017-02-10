@@ -22,9 +22,6 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
     protected String title;
     @Size(min = 1, max = 100, message = "{JarEntry.fileName.Size.message}")
     protected String fileName;
-
-    protected String fileVersion;
-
     @Size(min = 0, max = 50, message = "{JarEntry.fileDescription.Size.message}")
     protected String fileDescription;
 
@@ -42,14 +39,12 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
         Integer releaseFeature = Integer.valueOf(releaseVersionTokens[1]);
         Integer releaseBug = Integer.valueOf(releaseVersionTokens[2]);
 
-
         title = m.group(3);
         fileName = m.group(4);
-        fileVersion = m.group(5);
         fileDescription = m.group(6);
 
         String[] fileVersionTokens
-            = fileVersion.split("\\.");
+            = m.group(5).split("\\.");
 
         major = Integer.valueOf(fileVersionTokens[0]);
         feature = Integer.valueOf(fileVersionTokens[1]);
@@ -72,17 +67,13 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
         }
     }
 
-    public String toVersionString() {
+    public String getVersion() {
         return String.format("%d.%d.%d.%d",
             major,
             feature,
             bug,
             build
         );
-    }
-
-    public String getFileVersion() {
-        return fileVersion;
     }
 
     @Override
