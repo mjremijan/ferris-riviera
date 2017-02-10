@@ -1,9 +1,7 @@
-package org.ferris.riviera.console.jar;
+package org.ferris.riviera.console.jarentry;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.validation.ConstraintViolation;
+import org.ferris.riviera.console.jar.JarFile;
 
 /**
  *
@@ -12,14 +10,10 @@ import javax.validation.ConstraintViolation;
 public class JarEntryFinderEvent {
     public static final int FILTER = 100;
     public static final int SORT = 110;
-    public static final int VALIDATE = 120;
-    public static final int VIEW_CONSTRAINT_VIOLATIONS = 130;
-    public static final int VIEW_UPDATES = 140;
 
     protected JarFile jarFile;
     protected List<String> versionsInTheDatabase;
     protected List<JarEntry> jarEntries;
-    protected Map<JarEntry, Set<ConstraintViolation<JarEntry>>> jarEntryConstraintViolations;
 
     public JarEntryFinderEvent(JarFile jarFile, List<String> versionsInTheDatabase) {
         this.jarFile = jarFile;
@@ -40,13 +34,5 @@ public class JarEntryFinderEvent {
 
     public List<JarEntry> getJarEntries() {
         return this.jarEntries;
-    }
-
-    void setJarEntryConstraintViolations(Map<JarEntry, Set<ConstraintViolation<JarEntry>>> jarEntryConstraintViolations) {
-        this.jarEntryConstraintViolations = jarEntryConstraintViolations;
-    }
-
-    Map<JarEntry, Set<ConstraintViolation<JarEntry>>> getJarEntryConstraintViolations() {
-        return jarEntryConstraintViolations;
     }
 }

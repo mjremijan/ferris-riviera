@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.jar;
 
+import org.ferris.riviera.console.jarentry.JarEntry;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;

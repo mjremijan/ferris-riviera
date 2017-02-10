@@ -1,4 +1,4 @@
-package org.ferris.riviera.console.jar;
+package org.ferris.riviera.console.jarentry;
 
 import java.util.regex.Matcher;
 import javax.validation.constraints.Max;

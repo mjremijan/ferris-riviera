@@ -1,9 +1,9 @@
-package org.ferris.riviera.console.jar;
+package org.ferris.riviera.console.jarentry;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
-import static org.ferris.riviera.console.jar.JarEntryFinderEvent.FILTER;
+import static org.ferris.riviera.console.jarentry.JarEntryFinderEvent.FILTER;
 import org.jboss.weld.experimental.Priority;
 
 /**

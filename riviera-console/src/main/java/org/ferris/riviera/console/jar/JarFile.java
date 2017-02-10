@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.jar;
 
+import org.ferris.riviera.console.jarentry.JarEntry;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
