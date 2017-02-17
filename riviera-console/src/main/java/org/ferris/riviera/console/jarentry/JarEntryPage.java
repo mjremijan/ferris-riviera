@@ -28,36 +28,35 @@ public class JarEntryPage {
     @Abnormal
     protected Event<ExitEvent> exitEvent;
 
-    @Key("JarEntryPage.ConstraintViolations.Heading")
+    @Inject @Key("JarEntryPage.ConstraintViolations.Heading")
     protected String violationHeading;
 
-    @Key("JarEntryPage.ConstraintViolations.Message.singular")
+    @Inject @Key("JarEntryPage.ConstraintViolations.Message.singular")
     protected String violationSingularMessage;
 
-    @Key("JarEntryPage.ConstraintViolations.Message.pluralFormat")
+    @Inject @Key("JarEntryPage.ConstraintViolations.Message.pluralFormat")
     protected String violationPluralMessageFormat;
 
-    @Key("JarEntryPage.ConstraintViolations.FileFormat")
+    @Inject @Key("JarEntryPage.ConstraintViolations.FileFormat")
     protected String violationFileFormat;
 
-    @Key("JarEntryPage.Ready.Heading")
+    @Inject @Key("JarEntryPage.Ready.Heading")
     protected String readyHeading;
 
-    @Key("JarEntryPage.Ready.FileFormat")
+    @Inject @Key("JarEntryPage.Ready.FileFormat")
     protected String readyFileFormat;
 
-    @Key("JarEntryPage.Ready.ScriptCountFormat")
+    @Inject @Key("JarEntryPage.Ready.ScriptCountFormat")
     protected String readyScriptCountFormat;
 
-    @Key("JarEntryPage.Ready.FutureVersionFormat")
+    @Inject @Key("JarEntryPage.Ready.FutureVersionFormat")
     protected String readyFutureVersionFormat;
 
-    @Key("JarEntryPage.Ready.FutureVersionUpToDate")
+    @Inject @Key("JarEntryPage.Ready.FutureVersionUpToDate")
     protected String readyFutureVersionUpToDate;
 
-
     public void viewJarEntries(
-          @Observes @Priority(JarEntryValidationEvent.VIEW) JarEntryValidationEvent event
+        @Observes @Priority(JarEntryValidationEvent.VIEW) JarEntryValidationEvent event
     ) {
         log.info("ENTER");
 
@@ -93,7 +92,7 @@ public class JarEntryPage {
         console.br();
 
         // Display future version
-        console.p(readyFutureVersionFormat, entries.get(entries.size()-1).getVersion());
+        console.p(readyFutureVersionFormat, entries.get(entries.size() - 1).getVersion());
     }
 
     protected void violations(JarEntryValidationEvent event) {
@@ -109,8 +108,7 @@ public class JarEntryPage {
         if (constraintViolations.size() == 1) {
             console.p(violationSingularMessage);
             console.br();
-        }
-        // Otherwise use the plural message
+        } // Otherwise use the plural message
         else {
             console.p(violationPluralMessageFormat, String.valueOf(constraintViolations.size()));
             console.br();
