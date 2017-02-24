@@ -76,23 +76,36 @@ public class JarEntryPage {
         List<JarEntry> entries
             = event.getJarEntries();
 
-        // Loop over all the JarEntries
-        entries.stream().forEach(j -> {
-            // Display JarEntry
-            console.p(readyFileFormat, j.getName());
-        });
+        if (entries.isEmpty()) {
 
-        // Display newline
-        console.br();
+            // Display script count
+            console.p(readyScriptCountFormat, "0");
 
-        // Display script count
-        console.p(readyScriptCountFormat, String.valueOf(entries.size()));
+            // Display newline
+            console.br();
 
-        // Display newline
-        console.br();
+            // Display future version up to date
+            console.p(readyFutureVersionUpToDate);
+        }
+        else {
+            // Loop over and display all JarEntry
+            entries.stream().forEach(j -> {
+                // Display JarEntry
+                console.p(readyFileFormat, j.getName());
+            });
 
-        // Display future version
-        console.p(readyFutureVersionFormat, entries.get(entries.size() - 1).getVersion());
+            // Display newline
+            console.br();
+
+            // Display script count
+            console.p(readyScriptCountFormat, String.valueOf(entries.size()));
+
+            // Display newline
+            console.br();
+
+            // Display future version
+            console.p(readyFutureVersionFormat, entries.get(entries.size() - 1).getVersion());
+        }
     }
 
     protected void violations(JarEntryValidationEvent event) {
