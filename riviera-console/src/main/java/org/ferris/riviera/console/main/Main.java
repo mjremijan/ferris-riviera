@@ -92,11 +92,14 @@ public class Main {
         );
         jarEntryFinderEvent.fire(jefe);
 
-        log.info("");
+        log.info("Firing JarEntryValidationEvent");
         JarEntryValidationEvent jeve = new JarEntryValidationEvent(
             jefe.getJarEntries()
         );
         jarEntryValidationEvent.fire(jeve);
+
+
+
 
         log.info("Firing normal ExitEvent");
         exitEvent.fire(new ExitEvent());
