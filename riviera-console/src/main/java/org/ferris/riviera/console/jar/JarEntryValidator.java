@@ -1,4 +1,4 @@
-package org.ferris.riviera.console.jarentry;
+package org.ferris.riviera.console.jar;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import org.apache.log4j.Logger;
-import static org.ferris.riviera.console.jarentry.JarEntryValidationEvent.VALIDATE;
+import static org.ferris.riviera.console.jar.JarEntryValidationEvent.VALIDATE;
 import org.jboss.weld.experimental.Priority;
 
 /**

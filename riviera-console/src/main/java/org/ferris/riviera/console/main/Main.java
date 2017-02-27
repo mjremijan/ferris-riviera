@@ -12,8 +12,8 @@ import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
 import org.ferris.riviera.console.history.HistoryFinderEvent;
 import org.ferris.riviera.console.jar.JarFinderEvent;
-import org.ferris.riviera.console.jarentry.JarEntryFinderEvent;
-import org.ferris.riviera.console.jarentry.JarEntryValidationEvent;
+import org.ferris.riviera.console.jar.JarEntryFinderEvent;
+import org.ferris.riviera.console.jar.JarEntryValidationEvent;
 import org.ferris.riviera.console.table.TableFinderEvent;
 import org.ferris.riviera.console.welcome.WelcomeEvent;
 

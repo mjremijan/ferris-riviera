@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import org.junit.Assert;
@@ -15,9 +16,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 /**
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan  
@@ -45,9 +44,11 @@ public class HistoryFinderTest {
 
 
     HistoryFinder finder;
+    HistoryFinderEvent event;
 
     @Before
     public void before() throws Exception {
+        event = new HistoryFinderEvent();
         finder = new HistoryFinder();
         finder.log = logMock;
         finder.handler = handlerMock;
@@ -60,18 +61,18 @@ public class HistoryFinderTest {
     @Test
     public void ResultSet_builds_object_with_no_errors() throws SQLException {
         // setup
-        Mockito.when(rsMock.next()).thenAnswer(new Answer<Boolean>(){
-            private Boolean called = Boolean.FALSE;
-            @Override
-            public Boolean answer(InvocationOnMock invocation) throws Throwable {
-                if (called) {
-                    return Boolean.FALSE;
-                } else {
-                    called = Boolean.TRUE;
-                    return Boolean.TRUE;
-                }
+        AtomicBoolean called = new AtomicBoolean();
+        called.set(false);
+
+        Mockito.when(rsMock.next()).then(i -> {
+            if (!called.get()) {
+                called.set(true);
+                return true;
+            } else {
+                return false;
             }
         });
+
         Mockito.when(rsMock.getString("RELEASE_VERSION")).thenReturn("1.2.3");
         Mockito.when(rsMock.getString("RELEASE_TITLE")).thenReturn("release title");
         Mockito.when(rsMock.getInt("MAJOR")).thenReturn(1);
@@ -81,9 +82,6 @@ public class HistoryFinderTest {
         Mockito.when(rsMock.getString("FILE_NAME")).thenReturn("rs_mock_file - cool.sql");
         Mockito.when(rsMock.getString("FILE_DESCRIPTION")).thenReturn("cool");
         Mockito.when(rsMock.getDate("APPLIED_ON")).thenReturn(new Date(123123123));
-
-        HistoryFinderEvent event
-            = new HistoryFinderEvent();
 
         // action
         finder.retrieveScriptsFromDatabaseOrderedAscending(event);
@@ -109,49 +107,14 @@ public class HistoryFinderTest {
         }
     }
 
-//    @Test
-//    public void result_set_sqlexception() {
-//        // setup
-//        ResultSet rsMock = Mockito.mock(ResultSet.class);
-//        try {
-//            Mockito.when(rsMock.getInt("MAJOR")).thenThrow(new SQLException("junit test"));
-//        } catch (SQLException ignore) {
-//        }
-//        expectedEx.expect(RuntimeException.class);
-//        expectedEx.expectMessage("junit test");
-//
-//        // action
-//        builder.setResultSet(rsMock);
-//        Script s = builder.build();
-//    }
-//
-//    @Test
-//    public void matcher_ok() {
-//        // setup
-//        Matcher m = new ScriptJarPattern().matcher("1.0.2 - shrubbery/1.0.2.4 - herring.sql");
-//
-//        // action
-//        builder.setMatcher(m);
-//        Script s = builder.build();
-//
-//        // verify
-//        Assert.assertEquals("1.0.2", s.getReleaseVersion());
-//        Assert.assertEquals("shrubbery", s.getReleaseTitle());
-//        Assert.assertEquals(1, s.getMajor().intValue());
-//        Assert.assertEquals(0, s.getFeature().intValue());
-//        Assert.assertEquals(2, s.getBug().intValue());
-//        Assert.assertEquals(4, s.getBuild().intValue());
-//        Assert.assertEquals("1.0.2.4 - herring.sql", s.getFileName());
-//        Assert.assertEquals("herring", s.getFileDescription());
-//        Assert.assertEquals(null, s.getAppliedOn());
-//    }
-//
-//    @Test
-//    public void matcher_try() {
-//        // setup
-//        Matcher m = new ScriptJarPattern().matcher2("1.0.2 - shrubbery/1.0.2.4 - herring.sql");
-//        m.matches();
-//        Assert.assertEquals("1.0.2 - shrubbery/1.0.2.4 - herring.sql", m.group());
-//        Assert.assertEquals("1.0.2.4", m.group(5));
-//    }
+    @Test
+    public void RuntimeException_rethrown_if_SQLException() throws SQLException {
+        // setup
+        Mockito.when(rsMock.next()).thenThrow(new SQLException("junit test"));
+        expectedEx.expect(RuntimeException.class);
+        expectedEx.expectMessage("junit test");
+
+        // action
+        finder.retrieveScriptsFromDatabaseOrderedAscending(event);
+    }
 }

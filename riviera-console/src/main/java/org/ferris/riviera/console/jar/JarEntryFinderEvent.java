@@ -1,6 +1,7 @@
-package org.ferris.riviera.console.jarentry;
+package org.ferris.riviera.console.jar;
 
 import java.util.List;
+import org.ferris.riviera.console.jar.JarFile;
 import org.ferris.riviera.console.jar.JarFile;
 
 /**
