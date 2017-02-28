@@ -1,6 +1,5 @@
-package org.ferris.riviera.console.script;
+package org.ferris.riviera.console.history;
 
-import org.ferris.riviera.console.script.view.ScriptFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.junit.Assert;
@@ -11,13 +10,13 @@ import org.junit.Test;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class ScriptFormatTest {
+public class HistoryFormatTest {
 
-    ScriptFormat format;
+    HistoryFormat format;
 
     @Before
     public void before() {
-        format = new ScriptFormat();
+        format = new HistoryFormat();
     }
 
     @Test
@@ -26,7 +25,7 @@ public class ScriptFormatTest {
         GregorianCalendar gc
             = new GregorianCalendar(2007, Calendar.DECEMBER, 12, 17, 5);
 
-        Script s = new Script(null,null,1,0,0,99,"1.0.0.99 - First.sql",null,gc.getTime());
+        History s = new History(null,null,1,0,0,99,"1.0.0.99 - First.sql",null,gc.getTime());
 
         // action
         String actual
@@ -45,7 +44,7 @@ public class ScriptFormatTest {
         GregorianCalendar gc
             = new GregorianCalendar(2007, Calendar.DECEMBER, 12, 17, 5);
 
-        Script s = new Script(null,null,1,0,0,1,"1.0.0.1 - First.sql",null,gc.getTime());
+        History s = new History(null,null,1,0,0,1,"1.0.0.1 - First.sql",null,gc.getTime());
 
         // action
         String actual
@@ -65,7 +64,7 @@ public class ScriptFormatTest {
         GregorianCalendar gc
             = new GregorianCalendar(2007, Calendar.DECEMBER, 12, 17, 5);
 
-        Script s = new Script(null,null,1,15,0,10,"1.15.0.10 - Wow.sql",null,gc.getTime());
+        History s = new History(null,null,1,15,0,10,"1.15.0.10 - Wow.sql",null,gc.getTime());
 
         // action
         String actual
@@ -74,23 +73,6 @@ public class ScriptFormatTest {
         // verify
         Assert.assertEquals(
             "1.15.0.10    (Wed, 12 Dec 2007, 05:05 PM)    1.15.0.10 - Wow.sql"
-            , actual
-        );
-    }
-
-
-    @Test
-    public void noTimestamp() {
-        // setup
-        Script s = new Script(null,null,1,0,0,1,"1.0.0.1 - First.sql",null,null);
-
-        // action
-        String actual
-            = format.format(s);
-
-        // verify
-        Assert.assertEquals(
-            "1.0.0.1      1.0.0.1 - First.sql"
             , actual
         );
     }
