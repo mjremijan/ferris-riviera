@@ -1,4 +1,4 @@
-package org.ferris.riviera.console.script;
+package org.ferris.riviera.console.junit;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

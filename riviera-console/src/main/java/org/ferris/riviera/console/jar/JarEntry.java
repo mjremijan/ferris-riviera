@@ -22,6 +22,7 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
         );
 
     protected boolean matches;
+
     @Max(value=99, message = "{JarEntry.major.Max.message}")
     protected Integer major;
     @Max(value=99, message = "{JarEntry.feature.Max.message}")
@@ -139,7 +140,7 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
     @Override
     public int compareTo(JarEntry other) {
 
-        int retval = 9999;
+        int retval;
 
         if (this.major.compareTo(other.major) < 0) {
             retval = -1;
