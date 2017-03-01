@@ -15,8 +15,6 @@ import java.util.Scanner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
-import org.ferris.riviera.console.script.ScriptBuilder;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -25,12 +23,6 @@ import org.junit.Test;
  */
 public class ImportSql {
 
-    ScriptBuilder builder;
-
-    @Before
-    public void before() {
-        builder = new ScriptBuilder();
-    }
 
     @Test
     public void readFromJar() throws Exception
