@@ -25,9 +25,18 @@ public class ApplyChangesPage {
     ) {
         log.info("ENTER");
 
-        // Display the prompt
-        console.p(yesNo);
+        String line = null;
+        while (line == null)
+        {
+            // Display the prompt
+            console.p(yesNo);
 
-        // Get user input
+            // Get user input
+            line = console.readLine();
+
+            // trim, etc
+            if (line == null) { line = ""; }
+            line = line.trim();
+        }
     }
 }

@@ -10,6 +10,7 @@ import javax.enterprise.inject.Produces;
  */
 public class PrintWriterProducer {
 
+    protected PrintWriter writer;
     /**
      * Produces a {@link PrintWriter} wrapping {@code System.out}
      *
@@ -17,6 +18,9 @@ public class PrintWriterProducer {
      */
     @Produces
     public PrintWriter producePrintWriter() {
-        return new PrintWriter(System.out);
+        if (writer == null) {
+            writer = new PrintWriter(System.out);
+        }
+        return writer;
     }
 }

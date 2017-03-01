@@ -1,5 +1,7 @@
 package org.ferris.riviera.console.io;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
 import javax.inject.Inject;
@@ -20,6 +22,9 @@ public class Console {
 
     @Inject
     protected PrintWriter writer;
+
+    @Inject
+    protected BufferedReader reader;
 
     /**
      * Print the string as title
@@ -79,5 +84,13 @@ public class Console {
         writer.println();
         e.printStackTrace(writer);
         writer.flush();
+    }
+
+    public String readLine() {
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
