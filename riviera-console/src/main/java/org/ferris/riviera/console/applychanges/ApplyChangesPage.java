@@ -1,9 +1,12 @@
 package org.ferris.riviera.console.applychanges;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.apache.log4j.Logger;
+import static org.ferris.riviera.console.applychanges.ApplyChangesEvent.GET_APPROVAL;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
 import org.jboss.weld.experimental.Priority;
@@ -20,23 +23,33 @@ public class ApplyChangesPage {
     @Inject @Key("ApplyChangesPage.YesNo")
     protected String yesNo;
 
-    public void viewPromptUserForYesNo(
-        @Observes @Priority(ApplyChangesEvent.GO_NO_GO) ApplyChangesEvent event
+    public void viewPromptUserForApproval(
+        @Observes @Priority(GET_APPROVAL) ApplyChangesEvent event
     ) {
         log.info("ENTER");
 
-        String line = null;
-        while (line == null)
+        // Loop while trying to figure out if user approves or not
+        while (!event.isApproved().isPresent())
         {
             // Display the prompt
             console.p(yesNo);
 
             // Get user input
-            line = console.readLine();
+            String line = console.readLine();
 
             // trim, etc
             if (line == null) { line = ""; }
-            line = line.trim();
+            line = line.trim().toLowerCase();
+
+            // yes
+            if ("y".equals(line) || "yes".equals(line)) {
+                event.setApproved(TRUE);
+            }
+            // no
+            else
+            if ("n".equals(line) || "no".equals(line)) {
+                event.setApproved(FALSE);
+            }
         }
     }
 }
