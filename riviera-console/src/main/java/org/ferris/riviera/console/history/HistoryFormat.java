@@ -20,7 +20,7 @@ public class HistoryFormat {
             sp.append(String.format("%-9s    ", s.toVersionString()));
 
             // timestamp
-            sp.append(String.format("(%s)    ", new SimpleDateFormat("E, dd MMM yyyy, hh:mm a").format(s.getAppliedOn())));
+            sp.append(String.format("(%s)    ", new SimpleDateFormat("E, dd MMM yyyy, hh:mm:ss.SSS a").format(s.getAppliedOn())));
 
             // file name
             sp.append(s.getFileName());

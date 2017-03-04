@@ -68,7 +68,7 @@ public class HistoryFinder {
                       , rs.getInt("BUILD")
                       , rs.getString("FILE_NAME")
                       , rs.getString("FILE_DESCRIPTION")
-                      , rs.getDate("APPLIED_ON")
+                      , rs.getTimestamp("APPLIED_ON")
                   )
                 );
             }
@@ -78,7 +78,7 @@ public class HistoryFinder {
             );
 
             event.setHistory(list);
-            
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

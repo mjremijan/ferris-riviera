@@ -29,10 +29,11 @@ public class ApplyChangesPage {
         log.info("ENTER");
 
         // Loop while trying to figure out if user approves or not
+        console.br();
         while (!event.isApproved().isPresent())
         {
             // Display the prompt
-            console.p(yesNo);
+            console.prompt(yesNo);
 
             // Get user input
             String line = console.readLine();

@@ -1,6 +1,6 @@
 package org.ferris.riviera.console.history;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -17,7 +17,7 @@ public class History {
     final private Integer build;
     final private String fileName;
     final private String fileDescription;
-    final private Date appliedOn;
+    final private Timestamp appliedOn;
 
     public History(
         String releaseVersion,
@@ -28,7 +28,7 @@ public class History {
         Integer build,
         String fileName,
         String fileDescription,
-        Date appliedOn
+        Timestamp appliedOn
     ) {
         this.releaseVersion = releaseVersion;
         this.releaseTitle = releaseTitle;
@@ -117,7 +117,7 @@ public class History {
         return fileDescription;
     }
 
-    public Date getAppliedOn() {
+    public Timestamp getAppliedOn() {
         return appliedOn;
     }
 }

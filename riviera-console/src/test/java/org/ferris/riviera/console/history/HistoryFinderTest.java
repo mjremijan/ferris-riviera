@@ -1,10 +1,10 @@
 package org.ferris.riviera.console.history;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
@@ -81,7 +81,7 @@ public class HistoryFinderTest {
         Mockito.when(rsMock.getInt("BUILD")).thenReturn(4);
         Mockito.when(rsMock.getString("FILE_NAME")).thenReturn("rs_mock_file - cool.sql");
         Mockito.when(rsMock.getString("FILE_DESCRIPTION")).thenReturn("cool");
-        Mockito.when(rsMock.getDate("APPLIED_ON")).thenReturn(new Date(123123123));
+        Mockito.when(rsMock.getTimestamp("APPLIED_ON")).thenReturn(new Timestamp(123123123));
 
         // action
         finder.retrieveScriptsFromDatabaseOrderedAscending(event);

@@ -13,9 +13,9 @@ import javax.inject.Inject;
  */
 public class Console {
 
-    private void indentf(int indent, String format, String... args) {
+    private void indentf(int indent, String format, String newline, String... args) {
         writer.printf(
-                "%s%s%n", Collections.nCopies(indent, " ").stream().reduce((t, u) -> t + u).get(), String.format(format, args)
+                "%s%s%s", Collections.nCopies(indent, " ").stream().reduce((t, u) -> t + u).get(), String.format(format, args), newline
         );
         writer.flush();
     }
@@ -61,7 +61,7 @@ public class Console {
     }
 
     public void li(String str, String... args) {
-        indentf(6, "* " + str, args);
+        indentf(6, "* " + str, "\n", args);
     }
 
     /**
@@ -72,7 +72,11 @@ public class Console {
      * @param args The arguemnts for the format
      */
     public void p(String format, String... args) {
-        indentf(3, format, args);
+        indentf(3, format, "\n", args);
+    }
+
+    public void prompt(String format, String... args) {
+        indentf(3, format + " ", "", args);
     }
 
     /**

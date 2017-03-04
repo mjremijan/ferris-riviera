@@ -2,7 +2,11 @@ package org.ferris.riviera.console.history;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -16,8 +20,13 @@ public class HistoryList extends ArrayList<History> {
         if (isEmpty()) {
             return Optional.empty();
         } else {
+            Map<Date, List<History>> map =
+            stream()
+                .collect(Collectors.groupingBy(h -> h.getAppliedOn()));
+
+            map.keySet().stream().max((a,b)->a.compareTo(b));
+
             return Optional.of(stream()
-                .filter(s -> s.getAppliedOn() != null)
                 .max(Comparator.comparing(History::getAppliedOn)).get());
         }
     }
