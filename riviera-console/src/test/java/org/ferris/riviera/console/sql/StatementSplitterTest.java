@@ -50,6 +50,21 @@ class StatementSplitter extends LinkedList<String> {
 
 public class StatementSplitterTest {
 
+
+    @Test
+    public void two_statements_multi_line_and_with_first_statement_endswith_semicolon_and_terminated_with_semicolon_and_second_statement_endswith_semicolon() throws IOException {
+        //setup
+        String content = "  select    * \n from foo; \n;\n delete \n * \n from\n  bar;";
+
+        //action
+        StatementSplitter ss = new StatementSplitter(content);
+
+        //verify
+        Assert.assertEquals(2, ss.size());
+        Assert.assertEquals("select    *\nfrom foo", ss.get(0));
+        Assert.assertEquals("delete\n*\nfrom\nbar", ss.get(1));
+    }
+
     @Test
     public void one_statement_multi_line_endswith_semicolon_and_terminated_with_semicolon() throws IOException {
         //setup
