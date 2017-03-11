@@ -24,7 +24,7 @@ public class JarFileTest {
     public void test_getComplement() throws Exception {
         // setup
         JarFile jf
-            = new JarFile(new File("src/test/misc/ddl-1.0-SNAPSHOT.jar"));
+            = new JarFile(new File("src/test/misc/JarFileTest/ddl-1.0-SNAPSHOT.jar"));
         LinkedList<String> ll
             = new LinkedList<>();
         ll.add("1.0.0.1");
