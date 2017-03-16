@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.StringReader;
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,6 +61,57 @@ class StatementSplitter extends LinkedList<String> {
 }
 
 public class StatementSplitterTest {
+
+    @Test
+    public void remove_comments_if_they_exist() {
+        Pattern p = Pattern.compile("(?m)--(.+?)$");
+        Matcher m;
+        {
+            //          0123456789|123456789|123456789|123456789|
+            String s = "select * from foo; -- awesome comment!";
+            m = p.matcher(s);
+            Assert.assertTrue(m.find());
+            Assert.assertEquals(19, m.start());
+            Assert.assertEquals(38, m.end());
+
+            s = s.substring(0, 19).trim();
+            Assert.assertEquals("select * from foo;", s);
+        }
+        {
+            //          0123456789|123456789|123456789|123456789|
+            String s = "--Just a comment by itself";
+            m = p.matcher(s);
+            Assert.assertTrue(m.find());
+            Assert.assertEquals(0, m.start());
+            Assert.assertEquals(26, m.end());
+
+            s = s.substring(0, 0).trim();
+            Assert.assertEquals("", s);
+        }
+        {
+            //          0123456789 |123456789|123456789 |123456789|123456789|123456789|
+            String s = "select * \n -- inline comment \n from foo; --ending comment";
+            m = p.matcher(s);
+
+            // -- inline comment
+            Assert.assertTrue(m.find());
+            Assert.assertEquals(11, m.start());
+            Assert.assertEquals(29, m.end());
+
+            // --ending comment
+            Assert.assertTrue(m.find());
+            Assert.assertEquals(41, m.start());
+            Assert.assertEquals(57, m.end());
+        }
+        {
+            //          0123456789 |123456789|123456789 |123456789|123456789|123456789|
+            String s = "select * \n -- inline comment \n from foo; --ending comment";
+            s = s.replaceAll(p.pattern(), "").trim();
+            System.out.printf("Expected%n%s%n%n", "select * \n  \n from foo;");
+            System.out.printf("Actual%n%s%n%n", s);
+            Assert.assertEquals("select * \n \n from foo;", s);
+        }
+    }
 
     @Test
     public void two_statements_multi_line_and_with_first_statement_endswith_semicolon_and_not_terminated_with_semicolon_and_second_statement_endswith_semicolon() throws IOException {
