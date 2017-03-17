@@ -20,6 +20,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 class StatementSplitter extends LinkedList<String> {
 
+    private static final long serialVersionUID = 1989475038247087234L;
+
     public StatementSplitter(String fileContents) throws IOException {
         // http://stackoverflow.com/questions/1497569/how-to-execute-sql-script-file-using-jdbc
         //Scanner s = new Scanner(statements);
@@ -31,18 +33,31 @@ class StatementSplitter extends LinkedList<String> {
 
         StringBuilder sp = new StringBuilder();
         for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-            String trimmed = line.trim();
-            if (trimmed.isEmpty()) {
+            String lineTrimmed = line.trim();
+            if (lineTrimmed.isEmpty()) {
                 continue;
             } else {
+                String lineRemovedCommentsTrimmed
+                    = lineTrimmed.replaceAll(
+                        //"(?m)--(.*?)$"
+                        //[^,;]
+                        "(?m)--[^']*?$"
+                        , ""
+                    ).trim();
+                if (lineRemovedCommentsTrimmed.isEmpty()) {
+                    continue;
+                }
 
-                if (';' == trimmed.charAt(trimmed.length() - 1)) {
-                    String noSemicolon = trimmed.substring(0, trimmed.length() - 1).trim();
-                    if (!noSemicolon.isEmpty()) {
+                if (lineRemovedCommentsTrimmed.startsWith(", 'last")) {
+                    int i = 1;
+                }
+                if (';' == lineRemovedCommentsTrimmed.charAt(lineRemovedCommentsTrimmed.length() - 1)) {
+                    String lineNoSemicolon = lineRemovedCommentsTrimmed.substring(0, lineRemovedCommentsTrimmed.length() - 1).trim();
+                    if (!lineNoSemicolon.isEmpty()) {
                         if (sp.length() > 0) {
                             sp.append("\n");
                         }
-                        sp.append(noSemicolon);
+                        sp.append(lineNoSemicolon);
                     }
                     if (sp.length() > 0) {
                         super.add(sp.toString());
@@ -52,7 +67,7 @@ class StatementSplitter extends LinkedList<String> {
                     if (sp.length() > 0) {
                         sp.append("\n");
                     }
-                    sp.append(trimmed);
+                    sp.append(lineRemovedCommentsTrimmed);
                 }
             }
         }
@@ -63,8 +78,61 @@ class StatementSplitter extends LinkedList<String> {
 public class StatementSplitterTest {
 
     @Test
+    public void multi_statements_with_multi_comments_and_multi_semicolons() throws IOException {
+        //setup
+        StringBuilder sp = new StringBuilder();
+sp.append("-- select all the people data\n");
+sp.append("\n");
+sp.append("select \n");
+sp.append(" *  --get all columns of data\n");
+sp.append("from\n");
+sp.append("	people; \n");
+sp.append("	\n");
+sp.append("	\n");
+sp.append("--\n");
+sp.append("--[begin] insert new person\n");
+sp.append("--\n");
+sp.append("insert into people\n");
+sp.append("  (fname, lname, ssn, year_born)\n");
+sp.append("values\n");
+sp.append("  (\n");
+sp.append("	  'first name; string'\n");
+sp.append("	, 'last; name -- string'\n");
+sp.append("	, '123-44-5678'\n");
+sp.append("	, 1999\n");
+sp.append("  )\n");
+sp.append(";  --[end] insert new person\n");
+sp.append("\n");
+sp.append("\n");
+sp.append("--\n");
+sp.append("-- find only certain people\n");
+sp.append("--\n");
+sp.append("select\n");
+sp.append("  lname, year_born\n");
+sp.append("from\n");
+sp.append("  people\n");
+sp.append("where\n");
+sp.append("  ssn like '123%'\n");
+sp.append("  and\n");
+sp.append("  year_born > 1950;  --baby boomers\n");
+sp.append("          \n");
+sp.append("\n");
+
+        //action
+        StatementSplitter ss = new StatementSplitter(sp.toString());
+
+
+        //verify
+        Assert.assertEquals(3, ss.size());
+        Assert.assertEquals("select\n*\nfrom\npeople", ss.get(0));
+        Assert.assertEquals("insert into people\n(fname, lname, ssn, year_born)\nvalues\n(\n'first name; string'\n, 'last; name -- string'\n, '123-44-5678'\n, 1999\n)", ss.get(1));
+    }
+
+    @Test
     public void remove_comments_if_they_exist() {
-        Pattern p = Pattern.compile("(?m)--(.+?)$");
+        Pattern p
+            //= Pattern.compile("(?m)--(.*?)$");
+            = Pattern.compile("(?m)--[^']*?$");
         Matcher m;
         {
             //          0123456789|123456789|123456789|123456789|
@@ -107,9 +175,13 @@ public class StatementSplitterTest {
             //          0123456789 |123456789|123456789 |123456789|123456789|123456789|
             String s = "select * \n -- inline comment \n from foo; --ending comment";
             s = s.replaceAll(p.pattern(), "").trim();
-            System.out.printf("Expected%n%s%n%n", "select * \n  \n from foo;");
-            System.out.printf("Actual%n%s%n%n", s);
             Assert.assertEquals("select * \n \n from foo;", s);
+        }
+        {
+            //          0123456789 |123456789|123456789 |123456789|123456789|123456789|
+            String s = "--";
+            s = s.replaceAll(p.pattern(), "").trim();
+            Assert.assertEquals("", s);
         }
     }
 
