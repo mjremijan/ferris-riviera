@@ -34,9 +34,8 @@ class StatementSplitter extends LinkedList<String> {
         StringBuilder sp = new StringBuilder();
         for (String line = reader.readLine(); line != null; line = reader.readLine()) {
             String lineTrimmed = line.trim();
-            if (lineTrimmed.isEmpty()) {
-                continue;
-            } else {
+            if (!lineTrimmed.isEmpty())
+            {
                 String lineRemovedCommentsTrimmed
                     = lineTrimmed.replaceAll(
                         //"(?m)--(.*?)$"
@@ -48,9 +47,6 @@ class StatementSplitter extends LinkedList<String> {
                     continue;
                 }
 
-                if (lineRemovedCommentsTrimmed.startsWith(", 'last")) {
-                    int i = 1;
-                }
                 if (';' == lineRemovedCommentsTrimmed.charAt(lineRemovedCommentsTrimmed.length() - 1)) {
                     String lineNoSemicolon = lineRemovedCommentsTrimmed.substring(0, lineRemovedCommentsTrimmed.length() - 1).trim();
                     if (!lineNoSemicolon.isEmpty()) {
