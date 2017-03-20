@@ -1,4 +1,4 @@
-package org.ferris.riviera.console.applychanges;
+package org.ferris.riviera.console.execute;
 
 import java.util.Optional;
 
@@ -6,14 +6,14 @@ import java.util.Optional;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-public class ApplyChangesEvent {
-    public static final int GET_APPROVAL = 600;
+public class ExecuteEvent {
+    public static final int GET_PERMISSION_FROM_USER = 600;
 
     public static final int GO = 700;
 
     protected Optional<Boolean> approved;
 
-    public ApplyChangesEvent() {
+    public ExecuteEvent() {
         approved = Optional.empty();
     }
 

@@ -7,8 +7,8 @@ import javax.enterprise.event.Event;
 import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
-import org.ferris.riviera.console.applychanges.ApplyChangesEvent;
 import org.ferris.riviera.console.connection.ConnectionValidationEvent;
+import org.ferris.riviera.console.execute.ExecuteEvent;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
 import org.ferris.riviera.console.history.HistoryFinderEvent;
@@ -62,7 +62,7 @@ public class Main {
     protected Event<JarEntryValidationEvent> jarEntryValidationEvent;
 
     @Inject
-    protected Event<ApplyChangesEvent> applyChangesEvent;
+    protected Event<ExecuteEvent> applyChangesEvent;
 
     @Inject
     @Normal
@@ -105,7 +105,7 @@ public class Main {
         jarEntryValidationEvent.fire(jeve);
 
         log.info("Firing ApplyChangesEvent");
-        ApplyChangesEvent ace = new ApplyChangesEvent();
+        ExecuteEvent ace = new ExecuteEvent();
         applyChangesEvent.fire(ace);
         if (!ace.isApproved().get()) {
             exitEvent.fire(new ExitEvent());
@@ -113,7 +113,6 @@ public class Main {
 
         JarFile jarFile = jfe.getJarFile();
         List<JarEntry> jarEntries = jefe.getJarEntries();
-        
 
 
         log.info("Firing normal ExitEvent");

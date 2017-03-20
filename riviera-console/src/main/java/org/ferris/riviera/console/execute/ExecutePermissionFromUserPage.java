@@ -1,18 +1,15 @@
-package org.ferris.riviera.console.applychanges;
+package org.ferris.riviera.console.execute;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.apache.log4j.Logger;
-import static org.ferris.riviera.console.applychanges.ApplyChangesEvent.GET_APPROVAL;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
-import org.jboss.weld.experimental.Priority;
 
 @Singleton
-public class ApplyChangesPage {
+public class ExecutePermissionFromUserPage {
 
     @Inject
     protected Logger log;
@@ -20,11 +17,10 @@ public class ApplyChangesPage {
     @Inject
     protected Console console;
 
-    @Inject @Key("ApplyChangesPage.YesNo")
+    @Inject @Key("ExecutePermissionFromUserPage.YesNo")
     protected String yesNo;
 
-    public void viewPromptUserForApproval(
-        @Observes @Priority(GET_APPROVAL) ApplyChangesEvent event
+    void askPermissionFromUser(ExecuteEvent event
     ) {
         log.info("ENTER");
 
