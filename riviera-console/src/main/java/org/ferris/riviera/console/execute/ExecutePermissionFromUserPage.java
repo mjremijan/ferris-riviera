@@ -20,8 +20,7 @@ public class ExecutePermissionFromUserPage {
     @Inject @Key("ExecutePermissionFromUserPage.YesNo")
     protected String yesNo;
 
-    void askPermissionFromUser(ExecuteEvent event
-    ) {
+    void askPermissionFromUser(ExecuteEvent event) {
         log.info("ENTER");
 
         // Loop while trying to figure out if user approves or not

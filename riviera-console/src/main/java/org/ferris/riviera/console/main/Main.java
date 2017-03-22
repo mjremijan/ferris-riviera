@@ -62,7 +62,7 @@ public class Main {
     protected Event<JarEntryValidationEvent> jarEntryValidationEvent;
 
     @Inject
-    protected Event<ExecuteEvent> applyChangesEvent;
+    protected Event<ExecuteEvent> executeEvent;
 
     @Inject
     @Normal
@@ -104,12 +104,10 @@ public class Main {
         );
         jarEntryValidationEvent.fire(jeve);
 
-        log.info("Firing ApplyChangesEvent");
-        ExecuteEvent ace = new ExecuteEvent();
-        applyChangesEvent.fire(ace);
-        if (!ace.isApproved().get()) {
-            exitEvent.fire(new ExitEvent());
-        }
+        log.info("Firing ExecuteEvent");
+        ExecuteEvent ee = new ExecuteEvent();
+        executeEvent.fire(ee);
+        
 
         JarFile jarFile = jfe.getJarFile();
         List<JarEntry> jarEntries = jefe.getJarEntries();
