@@ -1,6 +1,9 @@
 package org.ferris.riviera.console.execute;
 
+import java.util.List;
 import java.util.Optional;
+import org.ferris.riviera.console.jar.JarEntry;
+import org.ferris.riviera.console.jar.JarFile;
 
 /**
  *
@@ -11,10 +14,18 @@ public class ExecuteEvent {
 
     public static final int START_TRANSACTION = 700;
 
-    protected Optional<Boolean> approved;
+    public static final int EXECUTE_SCRIPTS_IN_JAR_FILE = 800;
 
-    public ExecuteEvent() {
-        approved = Optional.empty();
+    protected Optional<Boolean> approved;
+    protected JarFile jarFile;
+    protected List<JarEntry> jarEntries;
+    protected Optional<RuntimeException> failed;
+
+    public ExecuteEvent(JarFile jarFile, List<JarEntry> jarEntries) {
+        this.approved = Optional.empty();
+        this.failed = Optional.empty();
+        this.jarFile = jarFile;
+        this.jarEntries = jarEntries;
     }
 
     public Optional<Boolean> isApproved() {
@@ -24,4 +35,22 @@ public class ExecuteEvent {
     public void setApproved(Boolean b) {
         approved = Optional.of(b);
     }
+
+    public void setFailed(RuntimeException failed) {
+        this.failed = Optional.of(failed);
+    }
+
+    public Optional<RuntimeException> getFailed() {
+        return failed;
+    }
+
+    public JarFile getJarFile() {
+        return jarFile;
+    }
+
+    public List<JarEntry> getJarEntries() {
+        return jarEntries;
+    }
+
+
 }

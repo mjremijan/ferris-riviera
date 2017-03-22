@@ -75,6 +75,11 @@ public class Console {
         indentf(3, format, "\n", args);
     }
 
+    public void s(String format, String... args) {
+        writer.printf(format, args);
+        writer.flush();
+    }
+
     public void prompt(String format, String... args) {
         indentf(3, format + " ", "", args);
     }

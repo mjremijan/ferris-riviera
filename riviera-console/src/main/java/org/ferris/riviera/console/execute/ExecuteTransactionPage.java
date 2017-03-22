@@ -18,7 +18,7 @@ public class ExecuteTransactionPage {
     @Inject @Key("ExecuteTransactionPage.TransactionStarted")
     protected String started;
 
-    void transactionStarted() {
+    void showThatTransactionHasStarted() {
         log.info("ENTER");
         console.br();
         console.p(started);

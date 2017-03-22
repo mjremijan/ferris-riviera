@@ -20,12 +20,12 @@ public class ExecutePermissionFromUserPage {
     @Inject @Key("ExecutePermissionFromUserPage.YesNo")
     protected String yesNo;
 
-    @Inject @Key("ExecutePermissionFromUserPage.Heading")
-    protected String heading;
+    @Inject @Key("ExecutePermissionFromUserPage.Title")
+    protected String title;
 
-    void showScriptExecutionProgressStarting() {
+    void showPermissionGrantedAndStartingScriptExecution() {
         console.br();
-        console.h1(heading);
+        console.title(title);
     }
 
     void askPermissionFromUser(ExecuteEvent event) {

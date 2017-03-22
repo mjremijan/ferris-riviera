@@ -38,6 +38,6 @@ public class ExecuteTransactionController {
             );
         }
 
-        page.transactionStarted();
+        page.showThatTransactionHasStarted();
     }
 }

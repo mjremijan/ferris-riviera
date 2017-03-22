@@ -1,7 +1,9 @@
 package org.ferris.riviera.console.jar;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,4 +38,26 @@ public class JarFile extends java.util.jar.JarFile {
             .collect(Collectors.toList());
         return entries;
     }
+
+    public JarEntryStatements getJarEntryStatements(JarEntry jarEntry) {
+        try {
+            return new JarEntryStatements(
+                new BufferedReader(
+                    new InputStreamReader(
+                        super.getInputStream(jarEntry)
+                    )
+                ).lines()
+                 .parallel().collect(Collectors.joining("\n"))
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(
+                String.format("Unable to get SQL statments from JAR_FILE=\"%s\" JAR_ENTRY=\"%s\"",
+                    super.getName()
+                    , jarEntry.getName()
+                )
+                , e
+            );
+        }
+    }
+
 }
