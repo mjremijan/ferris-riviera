@@ -20,10 +20,17 @@ public class ExecutePermissionFromUserPage {
     @Inject @Key("ExecutePermissionFromUserPage.YesNo")
     protected String yesNo;
 
+    @Inject @Key("ExecutePermissionFromUserPage.Heading")
+    protected String heading;
+
+    void startExecutingScripts() {
+        console.br();
+        console.h1(heading);
+    }
+
     void askPermissionFromUser(ExecuteEvent event) {
         log.info("ENTER");
 
-        // Loop while trying to figure out if user approves or not
         console.br();
         while (!event.isApproved().isPresent())
         {

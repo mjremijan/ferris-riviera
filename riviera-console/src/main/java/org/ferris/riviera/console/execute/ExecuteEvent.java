@@ -9,7 +9,7 @@ import java.util.Optional;
 public class ExecuteEvent {
     public static final int GET_PERMISSION_FROM_USER = 600;
 
-    public static final int GO = 700;
+    public static final int START_TRANSACTION = 700;
 
     protected Optional<Boolean> approved;
 
