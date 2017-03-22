@@ -23,7 +23,7 @@ public class ExecutePermissionFromUserPage {
     @Inject @Key("ExecutePermissionFromUserPage.Heading")
     protected String heading;
 
-    void startExecutingScripts() {
+    void showScriptExecutionProgressStarting() {
         console.br();
         console.h1(heading);
     }

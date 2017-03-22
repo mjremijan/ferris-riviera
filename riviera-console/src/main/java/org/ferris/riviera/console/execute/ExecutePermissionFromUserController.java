@@ -38,7 +38,7 @@ public class ExecutePermissionFromUserController {
             log.info("Permission not given...firing normal ExitEvent");
             exitEvent.fire(new ExitEvent());
         } else {
-            page.startExecutingScripts();
+            page.showScriptExecutionProgressStarting();
         }
     }
 }
