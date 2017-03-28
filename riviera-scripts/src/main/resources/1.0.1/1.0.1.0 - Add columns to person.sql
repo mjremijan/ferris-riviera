@@ -1,10 +1,11 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- * Author:  Michael Remijan mjremijan@yahoo.com @mjremijan
- * Created: Aug 5, 2016
- */
+
+-- person table needs more info.
+alter table person
+  add column ssn varchar(9) -- social security number
+;
+
+alter table person
+  -- year the person was born
+  add column born integer 
+;
 

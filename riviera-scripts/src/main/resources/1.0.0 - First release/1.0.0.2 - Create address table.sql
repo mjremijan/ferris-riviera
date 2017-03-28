@@ -1,10 +1,6 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- * Author:  Michael Remijan mjremijan@yahoo.com @mjremijan
- * Created: Aug 5, 2016
- */
-
+create table address (
+	  id int not null
+	, address1 varchar(100) not null
+	, address1 varchar(100) not null, city varchar(100),
+state varchar(2), zip varchar(10)
+);
