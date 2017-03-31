@@ -28,6 +28,9 @@ public class ExecuteScriptsInJarFileController {
     @Inject
     protected ExecuteScriptsInJarFilePage page;
 
+    @Inject
+    protected ExecuteProperties executeProperties;
+
     public void observeExecuteScriptsInJarFile(
         @Observes @Priority(EXECUTE_SCRIPTS_IN_JAR_FILE) ExecuteEvent event
     ) {
@@ -55,7 +58,9 @@ public class ExecuteScriptsInJarFileController {
                 statements.stream().forEach(sql -> {
                     page.showSQLStatementThatsBeingExecuted(sql);
                     try {
-                        if (1 == 2) stmt.execute(sql);
+                        if (executeProperties.getExecuteSql()) {
+                            stmt.execute(sql);
+                        }
                     } catch (SQLException e) {
                         throw new RuntimeException("Exception executing statement", e);
                     }
