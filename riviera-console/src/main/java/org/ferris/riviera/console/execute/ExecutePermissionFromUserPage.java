@@ -20,8 +20,14 @@ public class ExecutePermissionFromUserPage {
     @Inject @Key("ExecutePermissionFromUserPage.YesNo")
     protected String yesNo;
 
+    @Inject @Key("ExecutePermissionFromUserPage.View")
+    protected String view;
+
     @Inject @Key("ExecutePermissionFromUserPage.Title")
     protected String title;
+
+    @Inject
+    protected ExecuteProperties executeProperties;
 
     void showPermissionGrantedAndStartingScriptExecution() {
         console.br();
@@ -35,7 +41,11 @@ public class ExecutePermissionFromUserPage {
         while (!event.isApproved().isPresent())
         {
             // Display the prompt
-            console.prompt(yesNo);
+            if (executeProperties.getExecuteSql()) {
+                console.prompt(yesNo);
+            } else {
+                console.prompt(view);
+            }
 
             // Get user input
             String line = console.readLine();
