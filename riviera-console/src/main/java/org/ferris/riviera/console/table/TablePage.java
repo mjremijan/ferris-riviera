@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
 import static org.ferris.riviera.console.table.TableFinderEvent.VIEW;
-import org.jboss.weld.experimental.Priority;
+import javax.annotation.Priority;
 
 @Singleton
 public class TablePage {

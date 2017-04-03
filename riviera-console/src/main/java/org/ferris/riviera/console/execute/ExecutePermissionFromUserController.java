@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import static org.ferris.riviera.console.execute.ExecuteEvent.GET_PERMISSION_FROM_USER;
 import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Normal;
-import org.jboss.weld.experimental.Priority;
+import javax.annotation.Priority;
 
 /**
  *

@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import org.ferris.riviera.console.connection.ConnectionProperties;
 import static org.ferris.riviera.console.table.TableFinderEvent.FIND;
-import org.jboss.weld.experimental.Priority;
+import javax.annotation.Priority;
 
 /**
  *

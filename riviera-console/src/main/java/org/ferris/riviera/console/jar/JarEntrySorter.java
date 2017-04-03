@@ -5,7 +5,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import static org.ferris.riviera.console.jar.JarEntryFinderEvent.SORT;
-import org.jboss.weld.experimental.Priority;
+import javax.annotation.Priority;
 
 /**
  *

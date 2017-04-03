@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import static org.ferris.riviera.console.history.HistoryFinderEvent.VIEW;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
-import org.jboss.weld.experimental.Priority;
+import javax.annotation.Priority;
 
 /**
  *

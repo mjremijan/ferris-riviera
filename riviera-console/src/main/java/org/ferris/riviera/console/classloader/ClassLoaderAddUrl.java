@@ -3,13 +3,13 @@ package org.ferris.riviera.console.classloader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import javax.annotation.Priority;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.driver.DriverFile;
 import org.ferris.riviera.console.main.MainEvent;
 import static org.ferris.riviera.console.main.MainEvent.ADD_URL;
-import org.jboss.weld.experimental.Priority;
 
 /**
  *

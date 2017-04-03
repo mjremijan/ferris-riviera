@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.ferris.riviera.console.io.Console;
 import static org.ferris.riviera.console.jar.JarFinderEvent.VIEW;
 import org.ferris.riviera.console.messages.Key;
-import org.jboss.weld.experimental.Priority;
+import javax.annotation.Priority;
 
 @Singleton
 public class JarPage {

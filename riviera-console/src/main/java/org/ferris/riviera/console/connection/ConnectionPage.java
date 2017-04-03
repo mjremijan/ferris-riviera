@@ -7,7 +7,7 @@ import static org.ferris.riviera.console.connection.ConnectionValidationEvent.VI
 import org.ferris.riviera.console.driver.DriverFile;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
-import org.jboss.weld.experimental.Priority;
+import javax.annotation.Priority;
 
 /**
  * View of the welcome page

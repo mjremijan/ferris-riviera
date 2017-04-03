@@ -13,7 +13,7 @@ import org.ferris.riviera.console.exit.ExitEvent;
 import org.ferris.riviera.console.exit.qualifier.Abnormal;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
-import org.jboss.weld.experimental.Priority;
+import javax.annotation.Priority;
 
 @Singleton
 public class JarEntryPage {

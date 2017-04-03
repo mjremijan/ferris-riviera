@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.enterprise.event.Event;
-import javax.enterprise.inject.spi.CDI;
+import javax.enterprise.inject.se.SeContainer;
+import javax.enterprise.inject.se.SeContainerInitializer;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionValidationEvent;
@@ -26,9 +27,14 @@ import org.ferris.riviera.console.welcome.WelcomeEvent;
 public class Main {
 
     public static void main(String[] args) {
-        CDI<Object> cdi = CDI.getCDIProvider().initialize();
+//        CDI<Object> cdi = CDI.getCDIProvider().initialize();
+//        Main main
+//                = cdi.select(Main.class).get();
+//        main.main(Arrays.asList(args));
+        SeContainer container
+            = SeContainerInitializer.newInstance().initialize();
         Main main
-                = cdi.select(Main.class).get();
+            = container.select(Main.class).get();
         main.main(Arrays.asList(args));
     }
 

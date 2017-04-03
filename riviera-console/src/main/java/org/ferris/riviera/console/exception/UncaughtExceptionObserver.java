@@ -1,6 +1,7 @@
 package org.ferris.riviera.console.exception;
 
 import java.lang.Thread.UncaughtExceptionHandler;
+import javax.annotation.Priority;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -10,7 +11,6 @@ import org.ferris.riviera.console.exit.qualifier.Abnormal;
 import org.ferris.riviera.console.lang.ThreadTool;
 import org.ferris.riviera.console.main.MainEvent;
 import static org.ferris.riviera.console.main.MainEvent.EXCEPTION;
-import org.jboss.weld.experimental.Priority;
 
 /**
  * This observer is configured during application {@link MainEvent} to catch any

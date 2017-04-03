@@ -16,6 +16,10 @@ public class ExecuteEvent {
 
     public static final int EXECUTE_SCRIPTS_IN_JAR_FILE = 800;
 
+    public static final int INSERT_INTO_SCRIPT_HISTORY = 900;
+
+
+
     protected Optional<Boolean> approved;
     protected JarFile jarFile;
     protected List<JarEntry> jarEntries;

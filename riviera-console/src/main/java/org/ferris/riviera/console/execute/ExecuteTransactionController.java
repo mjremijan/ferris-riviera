@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import static org.ferris.riviera.console.execute.ExecuteEvent.START_TRANSACTION;
-import org.jboss.weld.experimental.Priority;
+import javax.annotation.Priority;
 
 /**
  *

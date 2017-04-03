@@ -252,7 +252,7 @@
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
-            <version>3.0.0.Alpha15</version> 
+            <version>3.0.0.CR2</version> 
             <!-- <version>3.0.0.CR1</version> -->
         </dependency>
         
