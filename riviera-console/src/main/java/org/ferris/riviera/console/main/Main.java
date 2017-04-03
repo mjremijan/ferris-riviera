@@ -112,7 +112,6 @@ public class Main {
         ExecuteEvent ee = new ExecuteEvent(jfe.getJarFile(), jefe.getJarEntries());
         executeEvent.fire(ee);
 
-
         log.info("Firing normal ExitEvent");
         exitEvent.fire(new ExitEvent());
     }

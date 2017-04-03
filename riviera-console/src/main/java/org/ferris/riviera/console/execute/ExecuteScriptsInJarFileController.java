@@ -10,7 +10,6 @@ import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import static org.ferris.riviera.console.execute.ExecuteEvent.EXECUTE_SCRIPTS_IN_JAR_FILE;
-import org.ferris.riviera.console.jar.JarEntryStatements;
 
 /**
  *
@@ -29,10 +28,11 @@ public class ExecuteScriptsInJarFileController {
     protected ExecuteScriptsInJarFilePage page;
 
     @Inject
-    protected ExecuteScriptHistoryInsert insert;
+    protected ExecuteScriptHistoryInsert scriptHistory;
 
     @Inject
-    protected ExecuteProperties executeProperties;
+    protected ExecuteScriptSqlStatement scriptSqlStatement;
+
 
     public void observeExecuteScriptsInJarFile(
         @Observes @Priority(EXECUTE_SCRIPTS_IN_JAR_FILE) ExecuteEvent event
@@ -55,23 +55,12 @@ public class ExecuteScriptsInJarFileController {
             event.getJarEntries().stream().forEach(je -> {
                 page.showFileThatsBeingRead(je.getName());
 
-                JarEntryStatements statements
-                    = event.getJarFile().getJarEntryStatements(je);
-
-                statements.stream().forEach(sql -> {
+                event.getJarFile().getJarEntryStatements(je).stream().forEach(sql -> {
                     page.showSQLStatementThatsBeingExecuted(sql);
-                    try {
-                        if (executeProperties.getExecuteSql()) {
-                            stmt.execute(sql);
-                        }
-                    } catch (SQLException e) {
-                        throw new RuntimeException("Exception executing statement", e);
-                    }
+                    scriptSqlStatement.execute(sql);
                 });
 
-                if (executeProperties.getExecuteSql()) {
-                    insert.insert(je);
-                }
+                scriptHistory.insert(je);
             });
         } catch (RuntimeException e) {
             event.setFailed(e);

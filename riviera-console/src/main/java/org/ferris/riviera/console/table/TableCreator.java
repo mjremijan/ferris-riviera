@@ -4,17 +4,19 @@ import static java.lang.String.format;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.StringJoiner;
+import javax.annotation.Priority;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import static org.ferris.riviera.console.table.TableFinderEvent.CREATE;
-import javax.annotation.Priority;
 
 /**
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
+@Singleton
 public class TableCreator {
 
     @Inject
