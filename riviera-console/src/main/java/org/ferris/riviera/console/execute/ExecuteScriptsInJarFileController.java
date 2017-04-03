@@ -3,6 +3,7 @@ package org.ferris.riviera.console.execute;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.annotation.Priority;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -10,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.ferris.riviera.console.connection.ConnectionHandler;
 import static org.ferris.riviera.console.execute.ExecuteEvent.EXECUTE_SCRIPTS_IN_JAR_FILE;
 import org.ferris.riviera.console.jar.JarEntryStatements;
-import javax.annotation.Priority;
 
 /**
  *
@@ -27,6 +27,9 @@ public class ExecuteScriptsInJarFileController {
 
     @Inject
     protected ExecuteScriptsInJarFilePage page;
+
+    @Inject
+    protected ExecuteScriptHistoryInsert insert;
 
     @Inject
     protected ExecuteProperties executeProperties;
@@ -65,6 +68,10 @@ public class ExecuteScriptsInJarFileController {
                         throw new RuntimeException("Exception executing statement", e);
                     }
                 });
+
+                if (executeProperties.getExecuteSql()) {
+                    insert.insert(je);
+                }
             });
         } catch (RuntimeException e) {
             event.setFailed(e);
