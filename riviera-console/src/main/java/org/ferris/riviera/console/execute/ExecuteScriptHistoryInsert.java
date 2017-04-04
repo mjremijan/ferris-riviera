@@ -19,9 +19,6 @@ public class ExecuteScriptHistoryInsert {
     @Inject
     protected Logger log;
 
-    @Inject
-    protected ExecuteProperties executeProperties;
-
     protected PreparedStatement stmt;
 
     @PostConstruct
@@ -62,12 +59,9 @@ public class ExecuteScriptHistoryInsert {
         }
     }
 
+    @ExecutionSkip
     public void insert(JarEntry jarEntry) {
         log.info("ENTER");
-        if (!executeProperties.getExecuteSql()) {
-            return;
-        }
-        
         try {
             log.info(String.format("Saving history for %s",jarEntry.getVersion()));
 
@@ -81,7 +75,7 @@ public class ExecuteScriptHistoryInsert {
             stmt.setString(8, jarEntry.getFileName());
             stmt.setTimestamp(9, new Timestamp(System.currentTimeMillis()));
 
-            stmt.execute();
+            stmt.executeUpdate();
 
         } catch (Exception e) {
             throw new RuntimeException(

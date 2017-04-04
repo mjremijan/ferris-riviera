@@ -18,9 +18,6 @@ public class ExecuteScriptSqlStatement {
     @Inject
     protected Logger log;
 
-    @Inject
-    protected ExecuteProperties executeProperties;
-
     protected Statement stmt;
 
     @PostConstruct
@@ -35,12 +32,9 @@ public class ExecuteScriptSqlStatement {
         }
     }
 
+    @ExecutionSkip
     protected void execute(String sql) {
         log.info("ENTER");
-        if (!executeProperties.getExecuteSql()) {
-            return;
-        }
-
         try {
             stmt.execute(sql);
         } catch (SQLException e) {

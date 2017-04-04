@@ -28,10 +28,10 @@ public class ExecuteScriptsInJarFileController {
     protected ExecuteScriptsInJarFilePage page;
 
     @Inject
-    protected ExecuteScriptHistoryInsert scriptHistory;
+    protected ExecuteScriptHistoryInsert history;
 
     @Inject
-    protected ExecuteScriptSqlStatement scriptSqlStatement;
+    protected ExecuteScriptSqlStatement sql;
 
 
     public void observeExecuteScriptsInJarFile(
@@ -57,10 +57,10 @@ public class ExecuteScriptsInJarFileController {
 
                 event.getJarFile().getJarEntryStatements(je).stream().forEach(sql -> {
                     page.showSQLStatementThatsBeingExecuted(sql);
-                    scriptSqlStatement.execute(sql);
+                    this.sql.execute(sql);
                 });
 
-                scriptHistory.insert(je);
+                history.insert(je);
             });
         } catch (RuntimeException e) {
             event.setFailed(e);
