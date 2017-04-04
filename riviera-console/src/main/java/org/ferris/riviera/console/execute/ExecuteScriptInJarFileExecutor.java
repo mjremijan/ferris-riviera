@@ -13,7 +13,7 @@ import org.ferris.riviera.console.connection.ConnectionHandler;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 @Singleton
-public class ExecuteScriptSqlStatement {
+public class ExecuteScriptInJarFileExecutor {
 
     @Inject
     protected Logger log;

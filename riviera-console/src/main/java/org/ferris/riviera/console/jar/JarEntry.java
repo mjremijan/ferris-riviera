@@ -22,6 +22,7 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
         );
 
     protected boolean matches;
+    protected long appliedOn;
 
     @Max(value=99, message = "{JarEntry.major.Max.message}")
     protected Integer major;
@@ -170,4 +171,13 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
 
         return retval;
     }
+
+    public void setAppliedOn(long currentTimeMillis) {
+        this.appliedOn = currentTimeMillis;
+    }
+
+    public long getAppliedOn() {
+        return this.appliedOn;
+    }
 }
+

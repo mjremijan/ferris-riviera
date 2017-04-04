@@ -14,7 +14,7 @@ import org.ferris.riviera.console.jar.JarEntry;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 @Singleton
-public class ExecuteScriptHistoryInsert {
+public class ExecuteScriptHistoryInserter {
 
     @Inject
     protected Logger log;
@@ -59,8 +59,9 @@ public class ExecuteScriptHistoryInsert {
         }
     }
 
+
     @ExecutionSkip
-    public void insert(JarEntry jarEntry) {
+    protected void insert(JarEntry jarEntry) {
         log.info("ENTER");
         try {
             log.info(String.format("Saving history for %s",jarEntry.getVersion()));

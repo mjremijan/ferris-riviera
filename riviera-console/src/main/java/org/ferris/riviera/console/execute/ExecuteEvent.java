@@ -16,9 +16,11 @@ public class ExecuteEvent {
 
     public static final int EXECUTE_SCRIPTS_IN_JAR_FILE = 800;
 
-    public static final int INSERT_INTO_SCRIPT_HISTORY = 900;
+    public static final int INSERT_SCRIPT_HISTORY = 800;
 
+    public static final int COMMIT_TRANSACTION = 900;
 
+    public static final int ROLLBACK_TRANSACTION = 1000;
 
     protected Optional<Boolean> approved;
     protected JarFile jarFile;

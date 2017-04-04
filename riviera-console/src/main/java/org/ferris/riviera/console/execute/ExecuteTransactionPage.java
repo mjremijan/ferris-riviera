@@ -18,9 +18,27 @@ public class ExecuteTransactionPage {
     @Inject @Key("ExecuteTransactionPage.TransactionStarted")
     protected String started;
 
+    @Inject @Key("ExecuteTransactionPage.TransactionCommitting")
+    protected String committing;
+
+    @Inject @Key("ExecuteTransactionPage.TransactionRollingBack")
+    protected String rollingBack;
+
     void showThatTransactionHasStarted() {
         log.info("ENTER");
         console.br();
         console.p(started);
+    }
+
+    void showThatTransactionIsCommitting() {
+        log.info("ENTER");
+        console.br();
+        console.p(committing);
+    }
+
+    void showThatTransactionIsRollingBack() {
+        log.info("ENTER");
+        console.br();
+        console.p(rollingBack);
     }
 }
