@@ -14,6 +14,6 @@ import javax.interceptor.InterceptorBinding;
 @InterceptorBinding
 @Target({TYPE, METHOD})
 @Retention(RUNTIME)
-public @interface ExecutionSkip {
+public @interface ExecuteSkip {
 
 }

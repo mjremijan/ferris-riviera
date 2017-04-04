@@ -18,10 +18,14 @@ public class ExecuteScriptInJarFileExecutor {
     @Inject
     protected Logger log;
 
+    @Inject
+    protected ConnectionHandler handler;
+
     protected Statement stmt;
 
     @PostConstruct
-    protected void postConstruct(ConnectionHandler handler) {
+    protected void postConstruct() {
+        log.info("ENTER ExecuteScriptJarFileExecutor#postConstruct");
         try {
             stmt = handler.getConnection().createStatement();
         } catch (Exception e) {
@@ -32,7 +36,7 @@ public class ExecuteScriptInJarFileExecutor {
         }
     }
 
-    @ExecutionSkip
+    @ExecuteSkip
     protected void execute(String sql) {
         log.info("ENTER");
         try {

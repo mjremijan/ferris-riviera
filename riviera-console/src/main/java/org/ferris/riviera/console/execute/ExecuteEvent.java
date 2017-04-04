@@ -10,6 +10,9 @@ import org.ferris.riviera.console.jar.JarFile;
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class ExecuteEvent {
+
+    public static final int EXECUTE_SHORT_CIRCUIT = 500;
+
     public static final int GET_PERMISSION_FROM_USER = 600;
 
     public static final int START_TRANSACTION = 700;

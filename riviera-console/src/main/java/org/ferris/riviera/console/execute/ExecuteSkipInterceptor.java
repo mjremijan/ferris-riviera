@@ -11,10 +11,10 @@ import org.apache.log4j.Logger;
  *
  * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
-@ExecutionSkip
+@ExecuteSkip
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION)
-public class ExecutionSkipInterceptor {
+public class ExecuteSkipInterceptor {
 
     @Inject
     protected Logger log;
