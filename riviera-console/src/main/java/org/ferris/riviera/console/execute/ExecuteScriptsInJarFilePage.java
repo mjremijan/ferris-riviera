@@ -38,7 +38,7 @@ public class ExecuteScriptsInJarFilePage {
 
     protected void showSQLStatementThatsBeingExecuted(String sqlStatement) {
         log.info("ENTER");
-        log.info(sqlStatement);
+        log.info(String.format("%n%s",sqlStatement));
         console.br();
         console.s(sqlStatementCountFormat, String.valueOf(++sqlStatementCount));
         console.br();

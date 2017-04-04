@@ -27,6 +27,7 @@ public class ExecuteTransactionController {
     @Inject
     protected ExecuteTransactionPage page;
 
+    @ExecutionSkip
     public void observeStartTransaction(
         @Observes @Priority(START_TRANSACTION) ExecuteEvent event
     ) {
@@ -44,6 +45,7 @@ public class ExecuteTransactionController {
     }
 
 
+    @ExecutionSkip
     public void observeCommitTransaction(
         @Observes @Priority(COMMIT_TRANSACTION) ExecuteEvent event
     ) {
@@ -63,6 +65,7 @@ public class ExecuteTransactionController {
     }
 
 
+    @ExecutionSkip
     public void observeRollbackTransaction(
         @Observes @Priority(ROLLBACK_TRANSACTION) ExecuteEvent event
     ) {
