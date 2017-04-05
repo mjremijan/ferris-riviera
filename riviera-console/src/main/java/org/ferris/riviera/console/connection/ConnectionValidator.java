@@ -5,11 +5,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.annotation.Priority;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import static org.ferris.riviera.console.connection.ConnectionValidationEvent.VALIDATE;
-import javax.annotation.Priority;
 
 /**
  *
@@ -28,7 +28,8 @@ public class ConnectionValidator {
 
 
     /**
-     *
+     * Validate the database connection
+     * @param event Event for processing
      */
     protected void validateDatabaseConnection(
         @Observes @Priority(VALIDATE) ConnectionValidationEvent event

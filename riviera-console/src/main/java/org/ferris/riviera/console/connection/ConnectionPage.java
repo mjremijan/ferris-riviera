@@ -1,5 +1,6 @@
 package org.ferris.riviera.console.connection;
 
+import javax.annotation.Priority;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
@@ -7,7 +8,6 @@ import static org.ferris.riviera.console.connection.ConnectionValidationEvent.VI
 import org.ferris.riviera.console.driver.DriverFile;
 import org.ferris.riviera.console.io.Console;
 import org.ferris.riviera.console.messages.Key;
-import javax.annotation.Priority;
 
 /**
  * View of the welcome page
@@ -48,6 +48,9 @@ public class ConnectionPage {
 
     /**
      * Show the user the welcome page
+     * @param event Event for processing
+     * @param driverFile JDBC driver file
+     * @param connectionProperties connection.properties
      */
     public void view(
         @Observes @Priority(VIEW) ConnectionValidationEvent event

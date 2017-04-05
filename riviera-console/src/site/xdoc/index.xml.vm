@@ -36,8 +36,16 @@
         <section name="About">
             <p>
                 Riviera is a database versioning source code management tool 
-                based on the Ode to Code Versioning Databases technique 
+                based on the <a href="http://odetocode.com/blogs/scott/archive/2008/01/30/three-rules-for-database-work.aspx">Ode to Code Versioning Databases technique</a>
                 by K. Scott Allen.              
+            </p>
+            <p>
+              The idea behind the application is very simple.  The entire history of all database changes
+              for each release is stored in a Java archive (JAR) file. Each SQL file in the archive file has
+              a version number.  Riviera executes all the scripts in the each SQL file then stores the 
+              SQL file's version number in the database.  Therefore, at any point in your database history,
+              Riviera can compare what it's stored in the database to what's in the archive file and bring
+              the database up-to-date by executing the missing scripts from the archive file.
             </p>            
         </section>
     </body>

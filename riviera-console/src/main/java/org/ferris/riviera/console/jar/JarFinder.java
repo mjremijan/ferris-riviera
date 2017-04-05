@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
+import javax.annotation.Priority;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import static org.ferris.riviera.console.jar.JarFinderEvent.FIND;
-import javax.annotation.Priority;
 
 /**
  *
@@ -23,8 +23,9 @@ public class JarFinder {
     protected JarDirectory directory;
 
     /**
-     *
-     * @param event
+     * Find the jar file on the file system
+     * @param event The event to process
+     * @throws IOException Thrown if anything goes wrong reading the JAR file
      */
     protected void findTheJarFile(
         @Observes @Priority(FIND) JarFinderEvent event

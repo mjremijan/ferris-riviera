@@ -42,7 +42,7 @@ public class JarEntry extends java.util.jar.JarEntry implements Comparable<JarEn
 
     /**
      * "1.0.0 - abc_zyz 123.789 - cool/1.0.0.1 - description.sql"
-     * @param name
+     * @param name Fully qualified name of the entry inside the jar file
      */
     public JarEntry(String name) {
 

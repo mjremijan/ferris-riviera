@@ -42,7 +42,7 @@ public class Console {
 
     /**
      * Print the string as heading1
-     *
+     * 
      * @param str The string to print
      */
     public void h1(String str) {
@@ -68,7 +68,7 @@ public class Console {
      * Formats the string with the given args then print the string as a
      * paragraph
      *
-     * @param str The format of the string to print
+     * @param format The format of the string to print
      * @param args The arguemnts for the format
      */
     public void p(String format, String... args) {

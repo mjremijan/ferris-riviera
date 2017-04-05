@@ -78,6 +78,8 @@ public class WelcomePage {
 
     /**
      * Show the user the welcome page
+     *
+     * @param event The event to process
      */
     public void view(@Observes WelcomeEvent event) {
         Application application

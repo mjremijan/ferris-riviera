@@ -27,10 +27,7 @@
 
         <menu name="Ferris Riviera">
             <item name="About" href="index.html" />
-            <item name="Installation" href="installation.html" />
-            <item name="Configuration" href="configuration.html" />                       
-            <item name="Logging" href="logging.html" />                                 
-            <item name="Scheduling to Run" href="scheduling.html" />               
+            <item name="Quick Start" href="quick.html" />
         </menu>
 
         <menu ref="reports"/>

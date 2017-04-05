@@ -11,7 +11,7 @@ import org.ferris.riviera.console.driver.DriverDirectory;
  * Uses a {@link ResourceBundle} to {@code /ApplicationMessages[__].properties}
  * at the root of the class-path to find localized strings for the application
  *
- * @author @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
  */
 public class StringProducer {
 
@@ -19,6 +19,8 @@ public class StringProducer {
 
     /**
      * Creates the {@link ResourceBundle}
+     *
+     * @param driverDirectoy The {@code driver} directory
      */
     @Inject
     public StringProducer(DriverDirectory driverDirectoy) {
