@@ -40,7 +40,7 @@
         </fileSet>
         
         <fileSet>
-            <directory>src/main/assemblies/linux/zulu1.8.0_60-8.9.0.4-x86lx64/jre</directory>
+            <directory>src/main/assemblies/linux/zulu8.20.0.5-jdk8.0.121-linux_x64/jre</directory>
             <outputDirectory>jre</outputDirectory>
             <includes>
                 <include>**</include>

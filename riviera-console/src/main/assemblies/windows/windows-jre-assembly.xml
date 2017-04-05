@@ -39,7 +39,7 @@
         </fileSet>
         
         <fileSet>
-            <directory>src/main/assemblies/windows/zulu1.8.0_60-8.9.0.4-win64/jre</directory>
+            <directory>src/main/assemblies/windows/zulu8.20.0.5-jdk8.0.121-win_x64/jre</directory>
             <outputDirectory>jre</outputDirectory>
             <includes>
                 <include>**</include>
