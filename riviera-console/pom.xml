@@ -13,64 +13,13 @@
     <artifactId>riviera-console</artifactId>
     <packaging>jar</packaging>
 
-    <organization>
-        <name>The Ferris Foundation</name>
-    </organization>
-
     <name>riviera-console</name>
-    <description>A database versioning source code management tool</description>
-    <url>http://mjremijan.github.io/ferris-riviera</url>
-
-    <issueManagement>
-        <url>https://github.com/mjremijan/ferris-riviera/issues</url>
-        <system>GitHub</system>
-    </issueManagement>        
-    
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-            <comments>A business-friendly OSS license</comments>
-        </license>
-    </licenses>
-	
-    <scm>
-        <url>https://github.com/mjremijan/ferris-riviera</url>
-        <connection>scm:git:git@github.com:mjremijan/ferris-riviera.git</connection>
-        <developerConnection>scm:git:git@github.com:mjremijan/ferris-riviera.git</developerConnection>
-    </scm>
-
-    <developers>
-        <developer>
-            <!-- if you have a gravatar image with this email it will show -->
-            <email>mjremijan@yahoo.com</email>
-            <id>mjremijan</id>
-            <name>Michael Remijan</name>
-            <organization>The Ferris Foundation</organization>			
-            <organizationUrl></organizationUrl>
-            <properties>
-                <twitter>@mjremijan</twitter>
-                <!-- picUrl></picUrl> Use this if no gravatar image -->
-            </properties>
-            <roles>
-                <role>Project Owner</role>
-                <role>Architect</role>
-                <role>Lead Developer</role>
-            </roles>
-            <timezone>America/Chicago</timezone>
-            <url>http://www.linkedin.com/in/mjremijan</url>
-        </developer>
-    </developers>
-	
+            
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
         <!-- Don't use the "." character for the property names. The site plugin
         cannot handle user-defined property names that contain "." -->
-        <ferrisJacocoVersion>0.7.5.201505241946</ferrisJacocoVersion>
+        <ferrisJacocoVersion>0.7.9</ferrisJacocoVersion>
         <ferrisWindowsAssemblyId>windows-x86-64-jre</ferrisWindowsAssemblyId>
         <ferrisLinuxAssemblyId>linux-x86-64-jre</ferrisLinuxAssemblyId>
     </properties>
@@ -191,6 +140,8 @@
         <!--
          | This is the riviera-scripts JAR which containss
          | example scripts that can be used to test Riviera.
+         | See the assemblies to include them in the /scripts
+         | directory when Riviera is built.
         -->
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -253,7 +204,6 @@
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
             <version>3.0.0.CR2</version> 
-            <!-- <version>3.0.0.CR1</version> -->
         </dependency>
         
         
@@ -336,19 +286,6 @@
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <version>${ferrisJacocoVersion}</version>
-                        <configuration>
-                            <excludes>
-                                <!--
-                                  These tools test System static method calls like Thread.sleep().
-                                  This testing involves creating mocks for these tool classes
-                                  so Jacoco does not recognize these classes are being tested
-                                  because, in practice, they really aren't being tested they
-                                  are being mocked and the mocks are being used so System
-                                  static methods can be tested.
-                                -->
-                                <exclude></exclude>
-                            </excludes>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>default-prepare-agent</id>
@@ -391,43 +328,8 @@
                                     </rules>
                                 </configuration>
                             </execution>
-                            <execution>
-                                <id>default-report</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>report</goal>
-                                </goals>
-                            </execution>
                         </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
-                        <executions>
-                            <execution>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <target>
-                                        <!-- Rename the ".resources" directory -->
-                                        <move file="target/site/jacoco/.resources" tofile="target/site/jacoco/resources"/>
-                                        <!-- Replace ".resources" in HTML files -->
-                                        <replaceregexp flags="g">
-                                            <regexp pattern="\.resources"/>
-                                            <substitution expression="resources"/>
-                                            <fileset dir="target/site/jacoco">
-                                                <include name="**/*.html"/>
-                                                <include name="**/*.css"/>
-                                                <include name="**/*.js"/>
-                                            </fileset>
-                                        </replaceregexp>
-                                    </target>
-                                </configuration>								
-                            </execution>
-                        </executions>
-                    </plugin>
+                    </plugin>                    
                 </plugins>
             </build>
         </profile>
@@ -562,7 +464,15 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${ferrisJacocoVersion}</version>                                
+                <version>${ferrisJacocoVersion}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <!-- select non-aggregate reports -->
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>                                
             </plugin>        
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
