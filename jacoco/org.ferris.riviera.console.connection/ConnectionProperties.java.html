@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConnectionProperties.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.connection</a> &gt; <span class="el_source">ConnectionProperties.java</span></div><h1>ConnectionProperties.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.connection;
+
+import javax.enterprise.inject.Vetoed;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+@Vetoed
+public class ConnectionProperties {
+
+    protected String url;
+    protected String username;
+    protected String password;
+    protected String validationSql;
+
+    protected String schemaSql;
+
+    protected String[] types;
+    protected String catalog;
+    protected String schemaPattern;
+    protected String namePattern;
+
+    public ConnectionProperties(
+        String url, String username, String password, String validationSql, String setSchema, String[] types, String catalog, String schemaPattern, String namePattern
+<span class="nc" id="L26">    ) {</span>
+<span class="nc" id="L27">        this.url = url;</span>
+<span class="nc" id="L28">        this.username = username;</span>
+<span class="nc" id="L29">        this.password = password;</span>
+<span class="nc" id="L30">        this.validationSql = validationSql;</span>
+
+<span class="nc" id="L32">        this.schemaSql = setSchema;</span>
+
+<span class="nc" id="L34">        this.types = types;</span>
+<span class="nc" id="L35">        this.catalog = catalog;</span>
+<span class="nc" id="L36">        this.schemaPattern = schemaPattern;</span>
+<span class="nc" id="L37">        this.namePattern = namePattern;</span>
+<span class="nc" id="L38">    }</span>
+
+    public String getUrl() {
+<span class="nc" id="L41">        return url;</span>
+    }
+
+    public String getUsername() {
+<span class="nc" id="L45">        return username;</span>
+    }
+
+    public String getPassword() {
+<span class="nc" id="L49">        return password;</span>
+    }
+
+    public String getSchemaSql() {
+<span class="nc" id="L53">        return schemaSql;</span>
+    }
+
+    public String[] getTypes() {
+<span class="nc" id="L57">        return types;</span>
+    }
+
+    public String getCatalog() {
+<span class="nc" id="L61">        return catalog;</span>
+    }
+
+    public String getSchemaPattern() {
+<span class="nc" id="L65">        return schemaPattern;</span>
+    }
+
+    public String getNamePattern() {
+<span class="nc" id="L69">        return namePattern;</span>
+    }
+
+    public String getValidationSql() {
+<span class="nc" id="L73">        return validationSql;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

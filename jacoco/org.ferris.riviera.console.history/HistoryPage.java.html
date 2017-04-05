@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HistoryPage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.history</a> &gt; <span class="el_source">HistoryPage.java</span></div><h1>HistoryPage.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.history;
+
+import static java.lang.String.valueOf;
+import java.util.Optional;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.log4j.Logger;
+import static org.ferris.riviera.console.history.HistoryFinderEvent.VIEW;
+import org.ferris.riviera.console.io.Console;
+import org.ferris.riviera.console.messages.Key;
+import javax.annotation.Priority;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+@Singleton
+<span class="nc" id="L19">public class HistoryPage {</span>
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected Console console;
+
+    @Inject
+    protected HistoryFormat formatter;
+
+    public void viewOfHistory(
+          @Observes @Priority(VIEW) HistoryFinderEvent event
+        , @Key(&quot;HistoryPage.Heading&quot;) String heading
+        , @Key(&quot;HistoryPage.CountFormat&quot;) String countFormat
+        , @Key(&quot;HistoryPage.LastAppliedVersionFormat&quot;) String lastAppliedVersionFormat
+        , @Key(&quot;HistoryPage.LastAppliedVersionNone&quot;) String lastAppliedVersionNone
+        , @Key(&quot;HistoryPage.LatestVersionFormat&quot;) String latestVersionFormat
+        , @Key(&quot;HistoryPage.LatestVersionNone&quot;) String latestVersionNone
+    ) {
+
+        // Heading
+        // Script History
+<span class="nc" id="L41">        console.h1(heading);</span>
+
+        // Loop and print each script history item
+        // 1.0.0.99     (Wed, 12 Dec 2007, 05:05 PM)    1.0.0.99 - First.sql
+<span class="nc" id="L45">        event.getHistory()</span>
+<span class="nc" id="L46">            .forEach(s -&gt; console.p(formatter.format(s)));</span>
+<span class="nc" id="L47">        console.br();</span>
+
+        // Script count: %s
+<span class="nc" id="L50">        console.p(countFormat</span>
+<span class="nc" id="L51">          , valueOf(event.getHistory().size())</span>
+        );
+<span class="nc" id="L53">        console.br();</span>
+
+        // Last applied version: %s || NONE
+<span class="nc" id="L56">        Optional&lt;History&gt; lastApplied = event.getHistory().getLastAppliedVersion();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (lastApplied.isPresent()) {</span>
+<span class="nc" id="L58">            console.p(lastAppliedVersionFormat, lastApplied.get().toVersionString());</span>
+        } else {
+<span class="nc" id="L60">            console.p(lastAppliedVersionNone);</span>
+        }
+<span class="nc" id="L62">        console.br();</span>
+
+        // Latest version: %s || NONE
+<span class="nc" id="L65">        Optional&lt;History&gt; latest = event.getHistory().getLatestVersion();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (latest.isPresent()) {</span>
+<span class="nc" id="L67">            console.p(latestVersionFormat, latest.get().toVersionString());</span>
+        } else {
+<span class="nc" id="L69">            console.p(latestVersionNone);</span>
+        }
+<span class="nc" id="L71">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

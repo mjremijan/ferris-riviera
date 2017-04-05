@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Console.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.io</a> &gt; <span class="el_source">Console.java</span></div><h1>Console.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.io;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collections;
+import javax.inject.Inject;
+
+/**
+ * A wrapper around {@code System.out} and {@code System.in} for the application
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+<span class="nc" id="L14">public class Console {</span>
+
+    private void indentf(int indent, String format, String newline, String... args) {
+<span class="nc" id="L17">        writer.printf(</span>
+<span class="nc" id="L18">                &quot;%s%s%s&quot;, Collections.nCopies(indent, &quot; &quot;).stream().reduce((t, u) -&gt; t + u).get(), String.format(format, args), newline</span>
+        );
+<span class="nc" id="L20">        writer.flush();</span>
+<span class="nc" id="L21">    }</span>
+
+    @Inject
+    protected PrintWriter writer;
+
+    @Inject
+    protected BufferedReader reader;
+
+    /**
+     * Print the string as title
+     *
+     * @param str The string to print
+     */
+    public void title(String str) {
+<span class="nc" id="L35">        writer.println(&quot;************************************************************&quot;);</span>
+<span class="nc" id="L36">        writer.println(&quot;*                                                          *&quot;);</span>
+<span class="nc" id="L37">        writer.printf(&quot;* %-57s*%n&quot;, str);</span>
+<span class="nc" id="L38">        writer.println(&quot;*                                                          *&quot;);</span>
+<span class="nc" id="L39">        writer.println(&quot;************************************************************&quot;);</span>
+<span class="nc" id="L40">        writer.flush();</span>
+<span class="nc" id="L41">    }</span>
+
+    /**
+     * Print the string as heading1
+     * 
+     * @param str The string to print
+     */
+    public void h1(String str) {
+<span class="nc" id="L49">        writer.printf(&quot;%n%n%s%n&quot;, str);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for (int i = 0; i &lt; str.length(); i++) {</span>
+<span class="nc" id="L51">            writer.print(&quot;-&quot;);</span>
+        }
+<span class="nc" id="L53">        writer.println();</span>
+<span class="nc" id="L54">        writer.println();</span>
+<span class="nc" id="L55">        writer.flush();</span>
+<span class="nc" id="L56">    }</span>
+
+    public void br() {
+<span class="nc" id="L59">        writer.println();</span>
+<span class="nc" id="L60">        writer.flush();</span>
+<span class="nc" id="L61">    }</span>
+
+    public void li(String str, String... args) {
+<span class="nc" id="L64">        indentf(6, &quot;* &quot; + str, &quot;\n&quot;, args);</span>
+<span class="nc" id="L65">    }</span>
+
+    /**
+     * Formats the string with the given args then print the string as a
+     * paragraph
+     *
+     * @param format The format of the string to print
+     * @param args The arguemnts for the format
+     */
+    public void p(String format, String... args) {
+<span class="nc" id="L75">        indentf(3, format, &quot;\n&quot;, args);</span>
+<span class="nc" id="L76">    }</span>
+
+    public void s(String format, String... args) {
+<span class="nc" id="L79">        writer.printf(format, args);</span>
+<span class="nc" id="L80">        writer.flush();</span>
+<span class="nc" id="L81">    }</span>
+
+    public void prompt(String format, String... args) {
+<span class="nc" id="L84">        indentf(3, format + &quot; &quot;, &quot;&quot;, args);</span>
+<span class="nc" id="L85">    }</span>
+
+    /**
+     * Print the throwable stack trace as a paragraph
+     *
+     * @param e The throwable to print
+     */
+    public void p(Throwable e) {
+<span class="nc" id="L93">        writer.println();</span>
+<span class="nc" id="L94">        e.printStackTrace(writer);</span>
+<span class="nc" id="L95">        writer.flush();</span>
+<span class="nc" id="L96">    }</span>
+
+    public String readLine() {
+        try {
+<span class="nc" id="L100">            return reader.readLine();</span>
+<span class="nc" id="L101">        } catch (IOException e) {</span>
+<span class="nc" id="L102">            throw new RuntimeException(e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

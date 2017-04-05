@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JarEntryValidationEvent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.jar</a> &gt; <span class="el_source">JarEntryValidationEvent.java</span></div><h1>JarEntryValidationEvent.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.jar;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+public class JarEntryValidationEvent {
+    public static final int VALIDATE = 100;
+    public static final int VIEW = 110;
+
+    protected List&lt;JarEntry&gt; jarEntries;
+    protected Map&lt;JarEntry, Set&lt;ConstraintViolation&lt;JarEntry&gt;&gt;&gt; jarEntryConstraintViolations;
+
+<span class="nc" id="L19">    public JarEntryValidationEvent(List&lt;JarEntry&gt; jarEntries) {</span>
+<span class="nc" id="L20">        this.jarEntries = jarEntries;</span>
+<span class="nc" id="L21">    }</span>
+
+    public List&lt;JarEntry&gt; getJarEntries() {
+<span class="nc" id="L24">        return this.jarEntries;</span>
+    }
+
+    void setJarEntryConstraintViolations(Map&lt;JarEntry, Set&lt;ConstraintViolation&lt;JarEntry&gt;&gt;&gt; jarEntryConstraintViolations) {
+<span class="nc" id="L28">        this.jarEntryConstraintViolations = jarEntryConstraintViolations;</span>
+<span class="nc" id="L29">    }</span>
+
+    Map&lt;JarEntry, Set&lt;ConstraintViolation&lt;JarEntry&gt;&gt;&gt; getJarEntryConstraintViolations() {
+<span class="nc" id="L32">        return jarEntryConstraintViolations;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

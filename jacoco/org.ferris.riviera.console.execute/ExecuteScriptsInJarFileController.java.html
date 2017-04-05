@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExecuteScriptsInJarFileController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.execute</a> &gt; <span class="el_source">ExecuteScriptsInJarFileController.java</span></div><h1>ExecuteScriptsInJarFileController.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.execute;
+
+import javax.annotation.Priority;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.log4j.Logger;
+import static org.ferris.riviera.console.execute.ExecuteEvent.EXECUTE_SCRIPTS_IN_JAR_FILE;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+@Singleton
+<span class="nc" id="L15">public class ExecuteScriptsInJarFileController {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected ExecuteScriptsInJarFilePage page;
+
+    @Inject
+    protected ExecuteScriptInJarFileExecutor executor;
+
+
+    public void observeExecuteScriptsInJarFile(
+        @Observes @Priority(EXECUTE_SCRIPTS_IN_JAR_FILE) ExecuteEvent event
+    ) {
+<span class="nc" id="L30">        log.info(&quot;ENTER&quot;);</span>
+
+        try {
+<span class="nc" id="L33">            event.getJarEntries().stream().forEach(je -&gt; {</span>
+<span class="nc" id="L34">                page.showFileThatsBeingRead(je.getName());</span>
+
+<span class="nc" id="L36">                je.setAppliedOn(System.currentTimeMillis());</span>
+<span class="nc" id="L37">                event.getJarFile().getJarEntryStatements(je).stream().forEach(sql -&gt; {</span>
+<span class="nc" id="L38">                    page.showSQLStatementThatsBeingExecuted(sql);</span>
+<span class="nc" id="L39">                    executor.execute(sql);</span>
+<span class="nc" id="L40">                });</span>
+<span class="nc" id="L41">            });</span>
+<span class="nc" id="L42">        } catch (RuntimeException e) {</span>
+<span class="nc" id="L43">            event.setFailed(e);</span>
+<span class="nc" id="L44">        }</span>
+<span class="nc" id="L45">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

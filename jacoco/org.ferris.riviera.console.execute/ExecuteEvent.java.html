@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExecuteEvent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.execute</a> &gt; <span class="el_source">ExecuteEvent.java</span></div><h1>ExecuteEvent.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.execute;
+
+import java.util.List;
+import java.util.Optional;
+import org.ferris.riviera.console.jar.JarEntry;
+import org.ferris.riviera.console.jar.JarFile;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+public class ExecuteEvent {
+
+    public static final int EXECUTE_SHORT_CIRCUIT = 500;
+
+    public static final int GET_PERMISSION_FROM_USER = 600;
+
+    public static final int START_TRANSACTION = 700;
+
+    public static final int EXECUTE_SCRIPTS_IN_JAR_FILE = 800;
+
+    public static final int INSERT_SCRIPT_HISTORY = 800;
+
+    public static final int COMMIT_TRANSACTION = 900;
+
+    public static final int ROLLBACK_TRANSACTION = 1000;
+
+    protected Optional&lt;Boolean&gt; approved;
+    protected JarFile jarFile;
+    protected List&lt;JarEntry&gt; jarEntries;
+    protected Optional&lt;RuntimeException&gt; failed;
+
+<span class="nc" id="L33">    public ExecuteEvent(JarFile jarFile, List&lt;JarEntry&gt; jarEntries) {</span>
+<span class="nc" id="L34">        this.approved = Optional.empty();</span>
+<span class="nc" id="L35">        this.failed = Optional.empty();</span>
+<span class="nc" id="L36">        this.jarFile = jarFile;</span>
+<span class="nc" id="L37">        this.jarEntries = jarEntries;</span>
+<span class="nc" id="L38">    }</span>
+
+    public Optional&lt;Boolean&gt; isApproved() {
+<span class="nc" id="L41">        return approved;</span>
+    }
+
+    public void setApproved(Boolean b) {
+<span class="nc" id="L45">        approved = Optional.of(b);</span>
+<span class="nc" id="L46">    }</span>
+
+    public void setFailed(RuntimeException failed) {
+<span class="nc" id="L49">        this.failed = Optional.of(failed);</span>
+<span class="nc" id="L50">    }</span>
+
+    public Optional&lt;RuntimeException&gt; getFailed() {
+<span class="nc" id="L53">        return failed;</span>
+    }
+
+    public JarFile getJarFile() {
+<span class="nc" id="L57">        return jarFile;</span>
+    }
+
+    public List&lt;JarEntry&gt; getJarEntries() {
+<span class="nc" id="L61">        return jarEntries;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExecuteTransactionController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.execute</a> &gt; <span class="el_source">ExecuteTransactionController.java</span></div><h1>ExecuteTransactionController.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.execute;
+
+import java.sql.SQLException;
+import javax.annotation.Priority;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.connection.ConnectionHandler;
+import static org.ferris.riviera.console.execute.ExecuteEvent.COMMIT_TRANSACTION;
+import static org.ferris.riviera.console.execute.ExecuteEvent.ROLLBACK_TRANSACTION;
+import static org.ferris.riviera.console.execute.ExecuteEvent.START_TRANSACTION;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+@Singleton
+<span class="nc" id="L19">public class ExecuteTransactionController {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected ConnectionHandler handler;
+
+    @Inject
+    protected ExecuteTransactionPage page;
+
+    @ExecuteSkip
+    public void observeStartTransaction(
+        @Observes @Priority(START_TRANSACTION) ExecuteEvent event
+    ) {
+<span class="nc" id="L34">        log.info(&quot;ENTER&quot;);</span>
+        try {
+<span class="nc" id="L36">            handler.getConnection().setAutoCommit(false);</span>
+<span class="nc" id="L37">        } catch (SQLException e) {</span>
+<span class="nc" id="L38">            throw new RuntimeException(</span>
+                  &quot;Unable to start a transaction with #setAutoCommit()&quot;
+                , e
+            );
+<span class="nc" id="L42">        }</span>
+
+<span class="nc" id="L44">        page.showThatTransactionHasStarted();</span>
+<span class="nc" id="L45">    }</span>
+
+
+    @ExecuteSkip
+    public void observeCommitTransaction(
+        @Observes @Priority(COMMIT_TRANSACTION) ExecuteEvent event
+    ) {
+<span class="nc" id="L52">        log.info(&quot;ENTER&quot;);</span>
+        try {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (!event.getFailed().isPresent()) {</span>
+<span class="nc" id="L55">                page.showThatTransactionIsCommitting();</span>
+<span class="nc" id="L56">                handler.getConnection().commit();</span>
+            }
+<span class="nc" id="L58">        } catch (SQLException e) {</span>
+<span class="nc" id="L59">            event.setFailed(</span>
+                new RuntimeException(
+                  &quot;Unable to commit the transaction&quot;
+                , e)
+            );
+<span class="nc" id="L64">        }</span>
+<span class="nc" id="L65">    }</span>
+
+
+    @ExecuteSkip
+    public void observeRollbackTransaction(
+        @Observes @Priority(ROLLBACK_TRANSACTION) ExecuteEvent event
+    ) {
+<span class="nc" id="L72">        log.info(&quot;ENTER&quot;);</span>
+        try {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (event.getFailed().isPresent()) {</span>
+<span class="nc" id="L75">                page.showThatTransactionIsRollingBack();</span>
+<span class="nc" id="L76">                handler.getConnection().rollback();</span>
+<span class="nc" id="L77">                throw event.getFailed().get();</span>
+            }
+<span class="nc" id="L79">        } catch (SQLException e) {</span>
+<span class="nc" id="L80">            throw</span>
+                new RuntimeException(
+                  &quot;Unable to rollback the transaction&quot;
+                , e
+            );
+<span class="nc" id="L85">        }</span>
+<span class="nc" id="L86">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

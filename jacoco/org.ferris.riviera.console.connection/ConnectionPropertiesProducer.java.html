@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConnectionPropertiesProducer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.connection</a> &gt; <span class="el_source">ConnectionPropertiesProducer.java</span></div><h1>ConnectionPropertiesProducer.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.connection;
+
+import java.io.File;
+import java.io.FileReader;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.driver.DriverDirectory;
+import org.ferris.riviera.console.lang.StringTool;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+@Singleton
+<span class="nc" id="L21">public class ConnectionPropertiesProducer {</span>
+
+    private ConnectionProperties connectionProperties;
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected DriverDirectory driverDirectory;
+
+    @Inject
+    protected StringTool strt;
+
+    @Produces
+    protected ConnectionProperties produceConnectionProperties() {
+
+<span class="nc" id="L37">        log.info(&quot;ENTER&quot;);</span>
+        
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (connectionProperties == null) {</span>
+<span class="nc" id="L40">            File propertiesFile</span>
+                = new File(driverDirectory, &quot;connection.properties&quot;);
+
+<span class="nc bnc" id="L43" title="All 2 branches missed.">            if (!propertiesFile.exists()) {</span>
+<span class="nc" id="L44">                throw new RuntimeException(</span>
+<span class="nc" id="L45">                    String.format(</span>
+<span class="nc" id="L46">                        &quot;File does not exist \&quot;%s\&quot;&quot;, propertiesFile.getAbsolutePath())</span>
+                );
+            }
+
+<span class="nc" id="L50">            Properties props = new Properties();</span>
+
+<span class="nc" id="L52">            try (FileReader reader = new FileReader(propertiesFile)) {</span>
+<span class="nc" id="L53">                props.load(reader);</span>
+<span class="nc bnc" id="L54" title="All 8 branches missed.">            } catch (Exception e) {</span>
+<span class="nc" id="L55">                throw new RuntimeException(</span>
+<span class="nc" id="L56">                    String.format(&quot;Cannot read file \&quot;%s\&quot;&quot;, propertiesFile.getAbsoluteFile())</span>
+                );
+<span class="nc" id="L58">            }</span>
+
+<span class="nc" id="L60">            Map&lt;String, String&gt; scrubbed</span>
+                = new HashMap&lt;&gt;();
+
+<span class="nc" id="L63">            Arrays.asList(&quot;url,username,password,schema_sql,validation_sql&quot;.split(&quot;,&quot;))</span>
+<span class="nc" id="L64">                .forEach(k -&gt; {</span>
+<span class="nc" id="L65">                    String v = strt.trimToNull(props.getProperty(k));</span>
+<span class="nc" id="L66">                    scrubbed.put(k, v);</span>
+<span class="nc" id="L67">                    log.info(String.format(&quot;Connection property %s=\&quot;%s\&quot;&quot;, k, v));</span>
+<span class="nc" id="L68">                });</span>
+
+<span class="nc" id="L70">            Arrays.asList(&quot;table_types,table_cat,table_schem_pattern,table_name_pattern&quot;.split(&quot;,&quot;))</span>
+<span class="nc" id="L71">                .forEach(k -&gt; {</span>
+<span class="nc" id="L72">                    String v = strt.trimUp(props.getProperty(k));</span>
+<span class="nc" id="L73">                    scrubbed.put(k, v);</span>
+<span class="nc" id="L74">                    log.info(String.format(&quot;Connection property %s=\&quot;%s\&quot;&quot;, k, v));</span>
+<span class="nc" id="L75">                });</span>
+
+<span class="nc" id="L77">            connectionProperties</span>
+                = new ConnectionProperties(
+<span class="nc bnc" id="L79" title="All 2 branches missed.">                    scrubbed.get(&quot;url&quot;), scrubbed.get(&quot;username&quot;), scrubbed.get(&quot;password&quot;), scrubbed.get(&quot;validation_sql&quot;), scrubbed.get(&quot;schema_sql&quot;), (scrubbed.get(&quot;table_types&quot;) != null ? scrubbed.get(&quot;table_types&quot;).split(&quot;,&quot;) : null), scrubbed.get(&quot;table_cat&quot;), scrubbed.get(&quot;table_schem_pattern&quot;), scrubbed.get(&quot;table_name_pattern&quot;)</span>
+                );
+        }
+<span class="nc" id="L82">        return connectionProperties;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

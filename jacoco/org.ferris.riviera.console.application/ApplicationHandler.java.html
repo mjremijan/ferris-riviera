@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApplicationHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.application</a> &gt; <span class="el_source">ApplicationHandler.java</span></div><h1>ApplicationHandler.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.application;
+
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
+import javax.inject.Inject;
+import org.apache.log4j.Logger;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+<span class="nc" id="L16">public class ApplicationHandler {</span>
+
+    @Inject
+    protected Logger log;
+
+    protected Attributes getAttributes() {
+<span class="nc" id="L22">        log.info(&quot;ENTER&quot;);</span>
+
+        // This is an example of a JarUrlConnection URL
+        //    URL: jar:file:/C:/Users/Michael/..../jboss-annotations-api_1.2_spec-1.0.0.Final.jar!/META-INF/MANIFEST.MF
+        //
+        // This is what the jarURL returns above
+        // jarURL:     file:/C:/Users/Michael/..../ferris-riviera-2.0.0.0-SNAPSHOT-windows.jar        
+        Attributes attributes;
+        try {
+<span class="nc" id="L31">            URL jarURL</span>
+<span class="nc" id="L32">                    = this.getClass().getProtectionDomain().getCodeSource().getLocation();</span>
+
+<span class="nc" id="L34">            URI manifestUri</span>
+<span class="nc" id="L35">                    = new URI(String.format(&quot;jar:%s!/%s&quot;, jarURL, JarFile.MANIFEST_NAME));</span>
+
+<span class="nc" id="L37">            InputStream is = manifestUri.toURL().openStream();</span>
+<span class="nc" id="L38">            Manifest manifest = new Manifest(is);</span>
+<span class="nc" id="L39">            attributes = manifest.getMainAttributes();</span>
+<span class="nc" id="L40">            is.close();</span>
+<span class="nc" id="L41">        } catch (Exception e) {</span>
+<span class="nc" id="L42">            attributes = new Attributes();</span>
+<span class="nc" id="L43">        }</span>
+
+<span class="nc" id="L45">        return attributes;</span>
+    }
+
+    public Application getApplication() {
+<span class="nc" id="L49">        log.info(&quot;ENTER&quot;);</span>
+
+<span class="nc" id="L51">        Attributes attributes</span>
+<span class="nc" id="L52">                = getAttributes();</span>
+
+<span class="nc" id="L54">        Application application</span>
+                = new Application();
+
+<span class="nc" id="L57">        application.setTitle(attributes.getValue(&quot;Implementation-Title&quot;));</span>
+<span class="nc" id="L58">        application.setVersion(attributes.getValue(&quot;Implementation-Version&quot;));</span>
+<span class="nc" id="L59">        application.setUrl(attributes.getValue(&quot;Implementation-URL&quot;));</span>
+<span class="nc" id="L60">        application.setBuildJdk(attributes.getValue(&quot;Build-Jdk&quot;));</span>
+<span class="nc" id="L61">        application.setCreatedBy(attributes.getValue(&quot;Created-By&quot;));</span>
+<span class="nc" id="L62">        application.setCreatedOn(attributes.getValue(&quot;Build-Time&quot;));</span>
+<span class="nc" id="L63">        application.setVendorId(attributes.getValue(&quot;Implementation-Vendor-Id&quot;));</span>
+<span class="nc" id="L64">        application.setVendor(attributes.getValue(&quot;Implementation-Vendor&quot;));</span>
+
+<span class="nc" id="L66">        return application;</span>
+    }
+
+//    private void fromStackOverflow() {
+//        Enumeration resEnum;
+//        try {
+//            resEnum = Thread.currentThread().getContextClassLoader().getResources(JarFile.MANIFEST_NAME);
+//            while (resEnum.hasMoreElements()) {
+//                try {
+//                    URL url = (URL)resEnum.nextElement();
+//                    System.out.printf(&quot;URL: %s%nCLASS: %s%n&quot;, url, url.getClass().getName());
+//                    InputStream is = url.openStream();
+//                    if (is != null) {
+//                        Manifest manifest = new Manifest(is);
+//                        Attributes mainAttribs = manifest.getMainAttributes();
+//                        String version = mainAttribs.getValue(&quot;Implementation-Version&quot;);
+//                        if(version != null) {
+//                            return version;
+//                        }
+//                    }
+//                }
+//                catch (Exception e) {
+//                    // Silently ignore wrong manifests on classpath?
+//                }
+//            }
+//            
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

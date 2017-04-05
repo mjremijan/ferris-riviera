@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExecuteScriptHistoryInserter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.execute</a> &gt; <span class="el_source">ExecuteScriptHistoryInserter.java</span></div><h1>ExecuteScriptHistoryInserter.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.execute;
+
+import java.sql.PreparedStatement;
+import java.sql.Timestamp;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.connection.ConnectionHandler;
+import org.ferris.riviera.console.jar.JarEntry;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+@Singleton
+<span class="nc" id="L17">public class ExecuteScriptHistoryInserter {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected ConnectionHandler handler;
+
+    protected PreparedStatement stmt;
+
+    @PostConstruct
+    protected void postConstruct() {
+<span class="nc" id="L29">        log.info(&quot;ENTER ExecuteScriptHistoryInserter#postConstruct&quot;);</span>
+        try {
+<span class="nc" id="L31">            StringBuilder sp = new StringBuilder();</span>
+<span class="nc" id="L32">            sp.append(&quot; INSERT INTO SCRIPT_HISTORY &quot;);</span>
+<span class="nc" id="L33">            sp.append(&quot; ( &quot;);</span>
+<span class="nc" id="L34">            sp.append(&quot;   RELEASE_VERSION &quot;);</span>
+<span class="nc" id="L35">            sp.append(&quot; , RELEASE_TITLE &quot;);</span>
+<span class="nc" id="L36">            sp.append(&quot; , MAJOR &quot;);</span>
+<span class="nc" id="L37">            sp.append(&quot; , FEATURE &quot;);</span>
+<span class="nc" id="L38">            sp.append(&quot; , BUG &quot;);</span>
+<span class="nc" id="L39">            sp.append(&quot; , BUILD &quot;);</span>
+<span class="nc" id="L40">            sp.append(&quot; , FILE_NAME &quot;);</span>
+<span class="nc" id="L41">            sp.append(&quot; , FILE_DESCRIPTION &quot;);</span>
+<span class="nc" id="L42">            sp.append(&quot; , APPLIED_ON &quot;);</span>
+<span class="nc" id="L43">            sp.append(&quot; ) &quot;);</span>
+<span class="nc" id="L44">            sp.append(&quot; VALUES &quot;);</span>
+<span class="nc" id="L45">            sp.append(&quot; ( &quot;);</span>
+<span class="nc" id="L46">            sp.append(&quot;   ? &quot;);</span>
+<span class="nc" id="L47">            sp.append(&quot; , ? &quot;);</span>
+<span class="nc" id="L48">            sp.append(&quot; , ? &quot;);</span>
+<span class="nc" id="L49">            sp.append(&quot; , ? &quot;);</span>
+<span class="nc" id="L50">            sp.append(&quot; , ? &quot;);</span>
+<span class="nc" id="L51">            sp.append(&quot; , ? &quot;);</span>
+<span class="nc" id="L52">            sp.append(&quot; , ? &quot;);</span>
+<span class="nc" id="L53">            sp.append(&quot; , ? &quot;);</span>
+<span class="nc" id="L54">            sp.append(&quot; , ? &quot;);</span>
+<span class="nc" id="L55">            sp.append(&quot; ) &quot;);</span>
+
+<span class="nc" id="L57">            stmt = handler.getConnection().prepareStatement(sp.toString());</span>
+<span class="nc" id="L58">        } catch (Exception e) {</span>
+<span class="nc" id="L59">            throw new RuntimeException(</span>
+<span class="nc" id="L60">                String.format(&quot;Exception preparing PreparedStatement object&quot;),</span>
+                 e
+            );
+<span class="nc" id="L63">        }</span>
+<span class="nc" id="L64">    }</span>
+
+    @ExecuteSkip
+    protected void insert(JarEntry jarEntry) {
+<span class="nc" id="L68">        log.info(&quot;ENTER&quot;);</span>
+        try {
+<span class="nc" id="L70">            log.info(String.format(&quot;Saving history for %s&quot;, jarEntry.getVersion()));</span>
+
+<span class="nc" id="L72">            log.info(String.format(&quot;getReleaseVersion %s&quot;, jarEntry.getReleaseVersion()));</span>
+<span class="nc" id="L73">            stmt.setString(1, jarEntry.getReleaseVersion());</span>
+
+<span class="nc" id="L75">            log.info(String.format(&quot;getReleaseTitle %s&quot;, jarEntry.getReleaseTitle()));</span>
+<span class="nc" id="L76">            stmt.setString(2, jarEntry.getReleaseTitle());</span>
+
+<span class="nc" id="L78">            log.info(String.format(&quot;getMajor %d&quot;, jarEntry.getMajor()));</span>
+<span class="nc" id="L79">            stmt.setInt(3, jarEntry.getMajor());</span>
+
+<span class="nc" id="L81">            log.info(String.format(&quot;getFeature %d&quot;, jarEntry.getFeature()));</span>
+<span class="nc" id="L82">            stmt.setInt(4, jarEntry.getFeature());</span>
+
+<span class="nc" id="L84">            log.info(String.format(&quot;getBug %d&quot;, jarEntry.getBug()));</span>
+<span class="nc" id="L85">            stmt.setInt(5, jarEntry.getBug());</span>
+
+<span class="nc" id="L87">            log.info(String.format(&quot;getBuild %d&quot;, jarEntry.getBuild()));</span>
+<span class="nc" id="L88">            stmt.setInt(6, jarEntry.getBuild());</span>
+
+<span class="nc" id="L90">            log.info(String.format(&quot;getFileName %s&quot;, jarEntry.getFileName()));</span>
+<span class="nc" id="L91">            stmt.setString(7, jarEntry.getFileName());</span>
+
+<span class="nc" id="L93">            log.info(String.format(&quot;getFileDescription %s&quot;, jarEntry.getFileDescription()));</span>
+<span class="nc" id="L94">            stmt.setString(8, jarEntry.getFileDescription());</span>
+
+<span class="nc" id="L96">            Timestamp ts = new Timestamp(System.currentTimeMillis());</span>
+<span class="nc" id="L97">            log.info(String.format(&quot;appliedOn %s&quot;, String.valueOf(ts)));</span>
+<span class="nc" id="L98">            stmt.setTimestamp(9, ts);</span>
+
+<span class="nc" id="L100">            stmt.executeUpdate();</span>
+
+<span class="nc" id="L102">        } catch (Exception e) {</span>
+<span class="nc" id="L103">            throw new RuntimeException(</span>
+<span class="nc" id="L104">                String.format(&quot;Exception inserting into script history table %s&quot;, jarEntry.getVersion()),</span>
+                 e
+            );
+<span class="nc" id="L107">        }</span>
+<span class="nc" id="L108">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

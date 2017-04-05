@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExecuteSkipInterceptor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.execute</a> &gt; <span class="el_source">ExecuteSkipInterceptor.java</span></div><h1>ExecuteSkipInterceptor.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.execute;
+
+import javax.annotation.Priority;
+import javax.inject.Inject;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.Interceptor;
+import javax.interceptor.InvocationContext;
+import org.apache.log4j.Logger;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+@ExecuteSkip
+@Interceptor
+@Priority(Interceptor.Priority.APPLICATION)
+<span class="nc" id="L17">public class ExecuteSkipInterceptor {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected ExecuteProperties executeProperties;
+
+    @AroundInvoke
+    public Object executionSkipOrNot(InvocationContext ctx) throws Exception {
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (executeProperties.getExecuteSql()) {</span>
+<span class="nc" id="L28">            log.info(&quot;Interceptor proceeds with execution&quot;);</span>
+<span class="nc" id="L29">            return ctx.proceed();</span>
+        } else {
+<span class="nc" id="L31">            log.info(&quot;Interceptor skips execution&quot;);</span>
+<span class="nc" id="L32">            return null;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>History.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.history</a> &gt; <span class="el_source">History.java</span></div><h1>History.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.history;
+
+import java.sql.Timestamp;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+public class History {
+    final private String releaseVersion;
+    final private String releaseTitle;
+    final private Integer major;
+    final private Integer feature;
+    final private Integer bug;
+    final private Integer build;
+    final private String fileName;
+    final private String fileDescription;
+    final private Timestamp appliedOn;
+
+    public History(
+        String releaseVersion,
+        String releaseTitle,
+        Integer major,
+        Integer feature,
+        Integer bug,
+        Integer build,
+        String fileName,
+        String fileDescription,
+        Timestamp appliedOn
+<span class="fc" id="L32">    ) {</span>
+<span class="fc" id="L33">        this.releaseVersion = releaseVersion;</span>
+<span class="fc" id="L34">        this.releaseTitle = releaseTitle;</span>
+<span class="fc" id="L35">        this.major = major;</span>
+<span class="fc" id="L36">        this.feature = feature;</span>
+<span class="fc" id="L37">        this.bug = bug;</span>
+<span class="fc" id="L38">        this.build = build;</span>
+<span class="fc" id="L39">        this.fileName = fileName;</span>
+<span class="fc" id="L40">        this.fileDescription = fileDescription;</span>
+<span class="fc" id="L41">        this.appliedOn = appliedOn;</span>
+<span class="fc" id="L42">    }</span>
+
+    public String toVersionString() {
+<span class="fc" id="L45">        return String.format(&quot;%d.%d.%d.%d&quot;,</span>
+            major,
+            feature,
+            bug,
+            build
+        );
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L55">        return this.fileName;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L60">        return new HashCodeBuilder()</span>
+<span class="fc" id="L61">            .append(major)</span>
+<span class="fc" id="L62">            .append(feature)</span>
+<span class="fc" id="L63">            .append(bug)</span>
+<span class="fc" id="L64">            .append(build)</span>
+<span class="fc" id="L65">            .toHashCode();</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L71">            return false;</span>
+        }
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (obj == this) {</span>
+<span class="fc" id="L74">            return true;</span>
+        }
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (obj.getClass() != getClass()) {</span>
+<span class="fc" id="L77">            return false;</span>
+        }
+<span class="fc" id="L79">        History rhs = (History) obj;</span>
+<span class="fc" id="L80">        return new EqualsBuilder()</span>
+<span class="fc" id="L81">            .append(major, rhs.major)</span>
+<span class="fc" id="L82">            .append(feature, rhs.feature)</span>
+<span class="fc" id="L83">            .append(bug, rhs.bug)</span>
+<span class="fc" id="L84">            .append(build, rhs.build)</span>
+<span class="fc" id="L85">            .isEquals();</span>
+    }
+
+    public String getReleaseVersion() {
+<span class="fc" id="L89">        return releaseVersion;</span>
+    }
+
+    public String getReleaseTitle() {
+<span class="fc" id="L93">        return releaseTitle;</span>
+    }
+
+    public Integer getMajor() {
+<span class="fc" id="L97">        return major;</span>
+    }
+
+    public Integer getFeature() {
+<span class="fc" id="L101">        return feature;</span>
+    }
+
+    public Integer getBug() {
+<span class="fc" id="L105">        return bug;</span>
+    }
+
+    public Integer getBuild() {
+<span class="fc" id="L109">        return build;</span>
+    }
+
+    public String getFileName() {
+<span class="fc" id="L113">        return fileName;</span>
+    }
+
+    public String getFileDescription() {
+<span class="fc" id="L117">        return fileDescription;</span>
+    }
+
+    public Timestamp getAppliedOn() {
+<span class="fc" id="L121">        return appliedOn;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

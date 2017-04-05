@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExecuteScriptsInJarFilePage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.execute</a> &gt; <span class="el_source">ExecuteScriptsInJarFilePage.java</span></div><h1>ExecuteScriptsInJarFilePage.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.execute;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.io.Console;
+import org.ferris.riviera.console.messages.Key;
+
+@Singleton
+<span class="nc" id="L10">public class ExecuteScriptsInJarFilePage {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected Console console;
+
+    @Inject
+    @Key(&quot;ExecuteScriptsInJarFilePage.JarFileFormat&quot;)
+    protected String jarFileFormat;
+
+    @Inject
+    @Key(&quot;ExecuteScriptsInJarFilePage.SqlStatementCountFormat&quot;)
+    protected String sqlStatementCountFormat;
+    private int sqlStatementCount;
+
+    @Inject
+    @Key(&quot;ExecuteScriptsInJarFilePage.SqlStatementFormat&quot;)
+    protected String sqlStatementFormat;
+
+    protected void showFileThatsBeingRead(String fileName) {
+<span class="nc" id="L32">        log.info(&quot;ENTER&quot;);</span>
+<span class="nc" id="L33">        sqlStatementCount = 0;</span>
+<span class="nc" id="L34">        console.br();</span>
+<span class="nc" id="L35">        console.p(jarFileFormat, fileName);</span>
+<span class="nc" id="L36">        console.br();</span>
+<span class="nc" id="L37">    }</span>
+
+    protected void showSQLStatementThatsBeingExecuted(String sqlStatement) {
+<span class="nc" id="L40">        log.info(&quot;ENTER&quot;);</span>
+<span class="nc" id="L41">        log.info(String.format(&quot;%n%s&quot;,sqlStatement));</span>
+<span class="nc" id="L42">        console.br();</span>
+<span class="nc" id="L43">        console.s(sqlStatementCountFormat, String.valueOf(++sqlStatementCount));</span>
+<span class="nc" id="L44">        console.br();</span>
+<span class="nc" id="L45">        console.s(sqlStatementFormat, sqlStatement);</span>
+<span class="nc" id="L46">        console.br();</span>
+<span class="nc" id="L47">        console.br();</span>
+<span class="nc" id="L48">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

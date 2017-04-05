@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WelcomePage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.welcome</a> &gt; <span class="el_source">WelcomePage.java</span></div><h1>WelcomePage.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.welcome;
+
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.application.Application;
+import org.ferris.riviera.console.application.ApplicationDirectory;
+import org.ferris.riviera.console.application.ApplicationHandler;
+import org.ferris.riviera.console.io.Console;
+import org.ferris.riviera.console.messages.Key;
+
+/**
+ * View of the welcome page
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+<span class="nc" id="L17">public class WelcomePage {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected Console console;
+
+    @Inject
+    @Key(&quot;WelcomePage.Title&quot;)
+    protected String title;
+
+    @Inject
+    @Key(&quot;WelcomePage.VendorHeading&quot;)
+    protected String vendorHeading;
+
+    @Inject
+    @Key(&quot;WelcomePage.VendorNameFormat&quot;)
+    protected String vendorNameFormat;
+
+    @Inject
+    @Key(&quot;WelcomePage.VendorIdFormat&quot;)
+    protected String vendorIdFormat;
+
+    @Inject
+    @Key(&quot;WelcomePage.ApplicationProperties&quot;)
+    protected String applicationProperties;
+
+    @Inject
+    @Key(&quot;WelcomePage.NameFormat&quot;)
+    protected String nameFormat;
+
+    @Inject
+    @Key(&quot;WelcomePage.VersionFormat&quot;)
+    protected String versionFormat;
+
+    @Inject
+    @Key(&quot;WelcomePage.SiteFormat&quot;)
+    protected String siteFormat;
+
+    @Inject
+    @Key(&quot;WelcomePage.MavenVersionFormat&quot;)
+    protected String mavenVersionFormat;
+
+    @Inject
+    @Key(&quot;WelcomePage.JdkVersionFormat&quot;)
+    protected String jdkVersionFormat;
+
+    @Inject
+    @Key(&quot;WelcomePage.DirectoryFormat&quot;)
+    protected String directoryFormat;
+
+    @Inject
+    @Key(&quot;WelcomePage.TimestampFormat&quot;)
+    protected String timestampFormat;
+
+    @Inject
+    protected ApplicationDirectory applicationDirectory;
+
+    @Inject
+    protected ApplicationHandler applicationHandler;
+
+    /**
+     * Show the user the welcome page
+     *
+     * @param event The event to process
+     */
+    public void view(@Observes WelcomeEvent event) {
+<span class="nc" id="L85">        Application application</span>
+<span class="nc" id="L86">                = applicationHandler.getApplication();</span>
+
+<span class="nc" id="L88">        console.title(title);</span>
+
+<span class="nc" id="L90">        console.h1(vendorHeading);</span>
+<span class="nc" id="L91">        console.p(vendorNameFormat, application.getVendor());</span>
+<span class="nc" id="L92">        console.p(vendorIdFormat, application.getVendorId());</span>
+
+<span class="nc" id="L94">        console.h1(applicationProperties);</span>
+<span class="nc" id="L95">        console.p(nameFormat, application.getTitle());</span>
+<span class="nc" id="L96">        console.p(versionFormat, application.getVersion());</span>
+<span class="nc" id="L97">        console.p(siteFormat, application.getUrl());</span>
+<span class="nc" id="L98">        console.p(mavenVersionFormat, application.getCreatedBy());</span>
+<span class="nc" id="L99">        console.p(timestampFormat, application.getCreatedOn());</span>
+<span class="nc" id="L100">        console.p(jdkVersionFormat, application.getBuildJdk());</span>
+<span class="nc" id="L101">        console.p(directoryFormat, applicationDirectory.getAbsolutePath());</span>
+<span class="nc" id="L102">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

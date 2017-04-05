@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HistoryFinder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.history</a> &gt; <span class="el_source">HistoryFinder.java</span></div><h1>HistoryFinder.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.history;
+
+import static java.lang.String.format;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.StringJoiner;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.connection.ConnectionHandler;
+import static org.ferris.riviera.console.history.HistoryFinderEvent.FIND;
+import javax.annotation.Priority;
+
+@Singleton
+<span class="fc" id="L17">public class HistoryFinder {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected ConnectionHandler handler;
+
+    protected void retrieveScriptsFromDatabaseOrderedAscending(
+        @Observes @Priority(FIND) HistoryFinderEvent event
+    ) {
+<span class="fc" id="L28">        log.info(&quot;ENTER&quot;);</span>
+
+<span class="fc" id="L30">        String sql =</span>
+            new StringJoiner(&quot;,&quot;, &quot; SELECT &quot;, &quot; FROM SCRIPT_HISTORY &quot;)
+<span class="fc" id="L32">                .add(&quot; RELEASE_VERSION &quot;)</span>
+<span class="fc" id="L33">                .add(&quot; RELEASE_TITLE &quot;)</span>
+<span class="fc" id="L34">                .add(&quot; MAJOR &quot;)</span>
+<span class="fc" id="L35">                .add(&quot; FEATURE &quot;)</span>
+<span class="fc" id="L36">                .add(&quot; BUG &quot;)</span>
+<span class="fc" id="L37">                .add(&quot; BUILD &quot;)</span>
+<span class="fc" id="L38">                .add(&quot; FILE_NAME &quot;)</span>
+<span class="fc" id="L39">                .add(&quot; FILE_DESCRIPTION &quot;)</span>
+<span class="fc" id="L40">                .add(&quot; APPLIED_ON &quot;)</span>
+<span class="fc" id="L41">            .toString()</span>
+            +
+            new StringJoiner(&quot;,&quot;, &quot; ORDER BY &quot;, &quot; ASC &quot;)
+<span class="fc" id="L44">                .add(&quot; MAJOR &quot;)</span>
+<span class="fc" id="L45">                .add(&quot; FEATURE &quot;)</span>
+<span class="fc" id="L46">                .add(&quot; BUG &quot;)</span>
+<span class="fc" id="L47">                .add(&quot; BUILD &quot;)</span>
+<span class="fc" id="L48">            .toString()</span>
+        ;
+<span class="fc" id="L50">        log.debug(sql);</span>
+
+<span class="fc" id="L52">        try (</span>
+<span class="fc" id="L53">            Connection conn = handler.getConnection();</span>
+<span class="fc" id="L54">            Statement stmt = conn.createStatement();</span>
+<span class="fc" id="L55">            ResultSet rs = stmt.executeQuery(sql);</span>
+        ){
+<span class="fc" id="L57">            HistoryList list</span>
+                = new HistoryList();
+
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L61">                list.add(</span>
+                    new History(
+<span class="fc" id="L63">                        rs.getString(&quot;RELEASE_VERSION&quot;)</span>
+<span class="fc" id="L64">                      , rs.getString(&quot;RELEASE_TITLE&quot;)</span>
+<span class="fc" id="L65">                      , rs.getInt(&quot;MAJOR&quot;)</span>
+<span class="fc" id="L66">                      , rs.getInt(&quot;FEATURE&quot;)</span>
+<span class="fc" id="L67">                      , rs.getInt(&quot;BUG&quot;)</span>
+<span class="fc" id="L68">                      , rs.getInt(&quot;BUILD&quot;)</span>
+<span class="fc" id="L69">                      , rs.getString(&quot;FILE_NAME&quot;)</span>
+<span class="fc" id="L70">                      , rs.getString(&quot;FILE_DESCRIPTION&quot;)</span>
+<span class="fc" id="L71">                      , rs.getTimestamp(&quot;APPLIED_ON&quot;)</span>
+                  )
+                );
+            }
+
+<span class="fc" id="L76">            log.info(format(</span>
+<span class="fc" id="L77">                &quot;Found %d scripts in database&quot;, list.size())</span>
+            );
+
+<span class="fc" id="L80">            event.setHistory(list);</span>
+
+<span class="pc bpc" id="L82" title="12 of 24 branches missed.">        } catch (Exception e) {</span>
+<span class="fc" id="L83">            throw new RuntimeException(e);</span>
+<span class="fc" id="L84">        }</span>
+<span class="fc" id="L85">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

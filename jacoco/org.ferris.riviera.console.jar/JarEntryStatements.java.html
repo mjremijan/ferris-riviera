@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JarEntryStatements.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.jar</a> &gt; <span class="el_source">JarEntryStatements.java</span></div><h1>JarEntryStatements.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.jar;
+
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.StringReader;
+import java.util.LinkedList;
+
+/**
+ *  *
+ *  * @author Michael Remijan mjremijan@yahoo.com @mjremijan  
+ */
+public class JarEntryStatements extends LinkedList&lt;String&gt; {
+
+    private static final long serialVersionUID = 1989475038247087234L;
+
+<span class="fc" id="L16">    public JarEntryStatements(String fileContents) throws IOException {</span>
+<span class="fc" id="L17">        StringReader sr = new StringReader(fileContents + &quot;\n&quot; + &quot;;&quot;);</span>
+<span class="fc" id="L18">        LineNumberReader reader = new LineNumberReader(sr);</span>
+<span class="fc" id="L19">        StringBuilder sp = new StringBuilder();</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        for (String line = reader.readLine(); line != null; line = reader.readLine()) {</span>
+<span class="fc" id="L21">            String lineTrimmed = line.trim();</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">            if (!lineTrimmed.isEmpty()) {</span>
+<span class="fc" id="L23">                String lineRemovedCommentsTrimmed</span>
+                    = //&quot;(?m)--(.*?)$&quot;
+                    //[^,;]
+<span class="fc" id="L26">                    lineTrimmed.replaceAll( //&quot;(?m)--(.*?)$&quot;</span>
+                        //[^,;]
+<span class="fc" id="L28">                        &quot;(?m)--[^']*?$&quot;, &quot;&quot;).trim();</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">                if (lineRemovedCommentsTrimmed.isEmpty()) {</span>
+<span class="fc" id="L30">                    continue;</span>
+                }
+<span class="fc bfc" id="L32" title="All 2 branches covered.">                if (';' == lineRemovedCommentsTrimmed.charAt(lineRemovedCommentsTrimmed.length() - 1)) {</span>
+<span class="fc" id="L33">                    String lineNoSemicolon = lineRemovedCommentsTrimmed.substring(0, lineRemovedCommentsTrimmed.length() - 1).trim();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">                    if (!lineNoSemicolon.isEmpty()) {</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">                        if (sp.length() &gt; 0) {</span>
+<span class="fc" id="L36">                            sp.append(&quot;\n&quot;);</span>
+                        }
+<span class="fc" id="L38">                        sp.append(lineNoSemicolon);</span>
+                    }
+<span class="fc bfc" id="L40" title="All 2 branches covered.">                    if (sp.length() &gt; 0) {</span>
+<span class="fc" id="L41">                        super.add(sp.toString());</span>
+<span class="fc" id="L42">                        sp.setLength(0);</span>
+                    }
+<span class="fc" id="L44">                } else {</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">                    if (sp.length() &gt; 0) {</span>
+<span class="fc" id="L46">                        sp.append(&quot;\n&quot;);</span>
+                    }
+<span class="fc" id="L48">                    sp.append(lineRemovedCommentsTrimmed);</span>
+                }
+            }
+        }
+<span class="fc" id="L52">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

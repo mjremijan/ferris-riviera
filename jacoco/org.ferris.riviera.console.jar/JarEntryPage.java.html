@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JarEntryPage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.jar</a> &gt; <span class="el_source">JarEntryPage.java</span></div><h1>JarEntryPage.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.jar;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.validation.ConstraintViolation;
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.exit.ExitEvent;
+import org.ferris.riviera.console.exit.qualifier.Abnormal;
+import org.ferris.riviera.console.io.Console;
+import org.ferris.riviera.console.messages.Key;
+import javax.annotation.Priority;
+
+@Singleton
+<span class="nc" id="L19">public class JarEntryPage {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected Console console;
+
+    @Inject
+    @Abnormal
+    protected Event&lt;ExitEvent&gt; exitEvent;
+
+    @Inject @Key(&quot;JarEntryPage.ConstraintViolations.Heading&quot;)
+    protected String violationHeading;
+
+    @Inject @Key(&quot;JarEntryPage.ConstraintViolations.Message.singular&quot;)
+    protected String violationSingularMessage;
+
+    @Inject @Key(&quot;JarEntryPage.ConstraintViolations.Message.pluralFormat&quot;)
+    protected String violationPluralMessageFormat;
+
+    @Inject @Key(&quot;JarEntryPage.ConstraintViolations.FileFormat&quot;)
+    protected String violationFileFormat;
+
+    @Inject @Key(&quot;JarEntryPage.Ready.Heading&quot;)
+    protected String readyHeading;
+
+    @Inject @Key(&quot;JarEntryPage.Ready.FileFormat&quot;)
+    protected String readyFileFormat;
+
+    @Inject @Key(&quot;JarEntryPage.Ready.ScriptCountFormat&quot;)
+    protected String readyScriptCountFormat;
+
+    @Inject @Key(&quot;JarEntryPage.Ready.FutureVersionFormat&quot;)
+    protected String readyFutureVersionFormat;
+
+    @Inject @Key(&quot;JarEntryPage.Ready.FutureVersionUpToDate&quot;)
+    protected String readyFutureVersionUpToDate;
+
+    public void viewJarEntries(
+        @Observes @Priority(JarEntryValidationEvent.VIEW) JarEntryValidationEvent event
+    ) {
+<span class="nc" id="L61">        log.info(&quot;ENTER&quot;);</span>
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (event.getJarEntryConstraintViolations().isEmpty()) {</span>
+<span class="nc" id="L64">            ready(event);</span>
+        } else {
+<span class="nc" id="L66">            violations(event);</span>
+        }
+<span class="nc" id="L68">    }</span>
+
+    protected void ready(JarEntryValidationEvent event) {
+
+        // Output the heading
+<span class="nc" id="L73">        console.h1(readyHeading);</span>
+
+        // Get list for easy access
+<span class="nc" id="L76">        List&lt;JarEntry&gt; entries</span>
+<span class="nc" id="L77">            = event.getJarEntries();</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (entries.isEmpty()) {</span>
+
+            // Display script count
+<span class="nc" id="L82">            console.p(readyScriptCountFormat, &quot;0&quot;);</span>
+
+            // Display newline
+<span class="nc" id="L85">            console.br();</span>
+
+            // Display future version up to date
+<span class="nc" id="L88">            console.p(readyFutureVersionUpToDate);</span>
+        }
+        else {
+            // Loop over and display all JarEntry
+<span class="nc" id="L92">            entries.stream().forEach(j -&gt; {</span>
+                // Display JarEntry
+<span class="nc" id="L94">                console.p(readyFileFormat, j.getName());</span>
+<span class="nc" id="L95">            });</span>
+
+            // Display newline
+<span class="nc" id="L98">            console.br();</span>
+
+            // Display script count
+<span class="nc" id="L101">            console.p(readyScriptCountFormat, String.valueOf(entries.size()));</span>
+
+            // Display newline
+<span class="nc" id="L104">            console.br();</span>
+
+            // Display future version
+<span class="nc" id="L107">            console.p(readyFutureVersionFormat, entries.get(entries.size() - 1).getVersion());</span>
+        }
+<span class="nc" id="L109">    }</span>
+
+    protected void violations(JarEntryValidationEvent event) {
+
+        // Output the heading
+<span class="nc" id="L114">        console.h1(violationHeading);</span>
+
+        // Get the constraint violations for easy access
+<span class="nc" id="L117">        Map&lt;JarEntry, Set&lt;ConstraintViolation&lt;JarEntry&gt;&gt;&gt; constraintViolations</span>
+<span class="nc" id="L118">            = event.getJarEntryConstraintViolations();</span>
+
+        // If there is only 1 violation, use singular message
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (constraintViolations.size() == 1) {</span>
+<span class="nc" id="L122">            console.p(violationSingularMessage);</span>
+<span class="nc" id="L123">            console.br();</span>
+        } // Otherwise use the plural message
+        else {
+<span class="nc" id="L126">            console.p(violationPluralMessageFormat, String.valueOf(constraintViolations.size()));</span>
+<span class="nc" id="L127">            console.br();</span>
+        }
+
+        // Loop over all the JarEntries
+<span class="nc" id="L131">        constraintViolations.entrySet().stream().forEach(es -&gt; {</span>
+            // Display JarEntry
+<span class="nc" id="L133">            console.p(violationFileFormat, es.getKey().getName());</span>
+<span class="nc" id="L134">            console.br();</span>
+
+            // Loop over and display constraint violations
+<span class="nc" id="L137">            es.getValue().forEach(cv -&gt; console.li(cv.getMessage()));</span>
+
+            // Display newline
+<span class="nc" id="L140">            console.br();</span>
+<span class="nc" id="L141">        });</span>
+
+        // Abnormal exit
+<span class="nc" id="L144">        log.info(&quot;Firing abnormal ExitEvent&quot;);</span>
+<span class="nc" id="L145">        exitEvent.fire(new ExitEvent());</span>
+<span class="nc" id="L146">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

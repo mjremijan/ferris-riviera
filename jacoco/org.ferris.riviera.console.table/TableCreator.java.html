@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TableCreator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.table</a> &gt; <span class="el_source">TableCreator.java</span></div><h1>TableCreator.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.table;
+
+import static java.lang.String.format;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.StringJoiner;
+import javax.annotation.Priority;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.connection.ConnectionHandler;
+import static org.ferris.riviera.console.table.TableFinderEvent.CREATE;
+
+/**
+ *
+ * @author Michael Remijan mjremijan@yahoo.com @mjremijan
+ */
+@Singleton
+<span class="nc" id="L20">public class TableCreator {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected ConnectionHandler handler;
+
+    protected void createScriptTable(
+        @Observes @Priority(CREATE) TableFinderEvent event
+    ) {
+<span class="nc" id="L31">        log.info(&quot;ENTER&quot;);</span>
+
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (event.wasFound()) {</span>
+<span class="nc" id="L34">            log.debug(&quot;Table already exists, do not create it again&quot;);</span>
+<span class="nc" id="L35">            event.setWasCreated(false);</span>
+<span class="nc" id="L36">            return;</span>
+        }
+
+<span class="nc" id="L39">        String sql = new StringJoiner(&quot;,&quot;, &quot;CREATE TABLE SCRIPT_HISTORY (&quot;, &quot;)&quot;)</span>
+<span class="nc" id="L40">            .add(&quot;RELEASE_VERSION VARCHAR(8) NOT NULL&quot;)</span>
+<span class="nc" id="L41">            .add(&quot;RELEASE_TITLE VARCHAR(50)&quot;)</span>
+<span class="nc" id="L42">            .add(&quot;MAJOR INT NOT NULL&quot;)</span>
+<span class="nc" id="L43">            .add(&quot;FEATURE INT NOT NULL&quot;)</span>
+<span class="nc" id="L44">            .add(&quot;BUG INT NOT NULL&quot;)</span>
+<span class="nc" id="L45">            .add(&quot;BUILD INT NOT NULL&quot;)</span>
+<span class="nc" id="L46">            .add(&quot;FILE_DESCRIPTION VARCHAR(50)&quot;)</span>
+<span class="nc" id="L47">            .add(&quot;FILE_NAME VARCHAR(100) NOT NULL&quot;)</span>
+<span class="nc" id="L48">            .add(&quot;APPLIED_ON TIMESTAMP NOT NULL&quot;)</span>
+<span class="nc" id="L49">            .add(</span>
+                new StringJoiner(&quot;,&quot;, &quot;PRIMARY KEY (&quot;, &quot;)&quot;)
+<span class="nc" id="L51">                    .add(&quot;MAJOR&quot;).add(&quot;FEATURE&quot;).add(&quot;BUG&quot;).add(&quot;BUILD&quot;)</span>
+<span class="nc" id="L52">                    .toString()</span>
+            )
+<span class="nc" id="L54">            .toString();</span>
+
+<span class="nc" id="L56">        try (</span>
+<span class="nc" id="L57">            Connection conn = handler.getConnection();</span>
+<span class="nc" id="L58">            Statement stmt = conn.createStatement();</span>
+        ) {
+<span class="nc" id="L60">            log.info(format(&quot;Creating script table:%n%s&quot;, sql));</span>
+<span class="nc" id="L61">            event.setWasCreated(</span>
+<span class="nc" id="L62">                stmt.execute(sql)</span>
+            );
+<span class="nc bnc" id="L64" title="All 16 branches missed.">        } catch (Exception e) {</span>
+<span class="nc" id="L65">            throw new RuntimeException(e);</span>
+<span class="nc" id="L66">        }</span>
+<span class="nc" id="L67">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

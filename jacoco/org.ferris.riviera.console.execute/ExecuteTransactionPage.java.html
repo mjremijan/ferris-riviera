@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExecuteTransactionPage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">riviera-console</a> &gt; <a href="index.source.html" class="el_package">org.ferris.riviera.console.execute</a> &gt; <span class="el_source">ExecuteTransactionPage.java</span></div><h1>ExecuteTransactionPage.java</h1><pre class="source lang-java linenums">package org.ferris.riviera.console.execute;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.apache.log4j.Logger;
+import org.ferris.riviera.console.io.Console;
+import org.ferris.riviera.console.messages.Key;
+
+@Singleton
+<span class="nc" id="L10">public class ExecuteTransactionPage {</span>
+
+    @Inject
+    protected Logger log;
+
+    @Inject
+    protected Console console;
+
+    @Inject @Key(&quot;ExecuteTransactionPage.TransactionStarted&quot;)
+    protected String started;
+
+    @Inject @Key(&quot;ExecuteTransactionPage.TransactionCommitting&quot;)
+    protected String committing;
+
+    @Inject @Key(&quot;ExecuteTransactionPage.TransactionRollingBack&quot;)
+    protected String rollingBack;
+
+    void showThatTransactionHasStarted() {
+<span class="nc" id="L28">        log.info(&quot;ENTER&quot;);</span>
+<span class="nc" id="L29">        console.br();</span>
+<span class="nc" id="L30">        console.p(started);</span>
+<span class="nc" id="L31">    }</span>
+
+    void showThatTransactionIsCommitting() {
+<span class="nc" id="L34">        log.info(&quot;ENTER&quot;);</span>
+<span class="nc" id="L35">        console.br();</span>
+<span class="nc" id="L36">        console.p(committing);</span>
+<span class="nc" id="L37">    }</span>
+
+    void showThatTransactionIsRollingBack() {
+<span class="nc" id="L40">        log.info(&quot;ENTER&quot;);</span>
+<span class="nc" id="L41">        console.br();</span>
+<span class="nc" id="L42">        console.p(rollingBack);</span>
+<span class="nc" id="L43">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
