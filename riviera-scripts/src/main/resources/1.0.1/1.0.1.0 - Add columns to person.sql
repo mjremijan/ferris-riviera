@@ -6,6 +6,5 @@ alter table person
 
 alter table person
   -- year the person was born
-  add column born integer 
-;
+  add column born integer;
 

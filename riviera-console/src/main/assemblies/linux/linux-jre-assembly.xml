@@ -95,7 +95,8 @@
             <includes>
                 <include>${project.groupId}:riviera-scripts:jar:patch</include>                
             </includes>
-        </dependencySet>  
+        </dependencySet> 
+        <!-- 
         <dependencySet>
             <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>scripts</outputDirectory>
@@ -135,6 +136,7 @@
             <includes>
                 <include>${project.groupId}:riviera-scripts:jar:bad-file-description</include>                
             </includes>
-        </dependencySet>          
+        </dependencySet> 
+        -->         
     </dependencySets>
 </assembly>
