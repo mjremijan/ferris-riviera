@@ -44,7 +44,7 @@
           <subsection name="Script Archive File">
             <p>
               Create a properly formatted Script Archive File containing the scripts you want to run against
-              the database (see <i>Script Archive File Format</i> below)<br /><br />              
+              the database.
             </p>
             <p>
               <b>Script Archive File format</b>
@@ -81,7 +81,7 @@
                   <li>Any characters</li>
                   <li>50 character max</li>
                 </ul>
-                <br /><br />
+                <br />
               </li>
               <li>
                 All SQL files must be put into a release folder.<br /><br />
@@ -140,10 +140,10 @@ app-scripts-1.0.1.jar
             <ol>
               <li>
                 Copy the Script Archive File to the <code>[RIVIERA_HOME]/scripts</code>
-                directory.  This should be the <i>ONLY</i> file in this directory ending in <code>.jar</code>.
+                directory.  This should be the <i>ONLY</i> file in this directory ending in <code>.jar</code>.<br /><br />
               </li>
               <li>
-                Execute <code>[RIVIERA_HOME]/bin/start-riviera.[bat|sh]</code><br /><br />.
+                Execute <code>[RIVIERA_HOME]/bin/start-riviera.[bat|sh]</code><br /><br />
               </li>
               <li>
                 Follow the prompts, and good luck!
